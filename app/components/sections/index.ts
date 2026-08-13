@@ -1,0 +1,10 @@
+export { default as HeroSection } from "./HeroSection";
+export { default as Slide2Intro } from "./Slide2Intro";
+export { default as Slide3Brand } from "./Slide3Brand";
+export { default as Slide4TargetAudience } from "./Slide4TargetAudience";
+export { default as Slide5PartnerStories } from "./Slide5PartnerStories";
+export { default as Slide6Mensenwerk } from "./Slide6Mensenwerk";
+export { default as CinematicStatement } from "./CinematicStatement";
+export { default as TVSection } from "./TVSection";
+export { default as MethodRoadmap } from "./MethodRoadmap";
+export { default as BuiltToRentHarder } from "./BuiltToRentHarder";

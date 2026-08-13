@@ -1,0 +1,62 @@
+import React from "react";
+import Image from "next/image";
+import styles from "./MethodRoadmap.module.scss";
+
+export default function MethodRoadmap() {
+  const steps = [
+    { title: "WAAR WIL JE NAARTOE?", desc: "We brengen jouw ambities, assortiment, werkwijze en kansen in kaart. We beginnen niet met techniek, maar met waar jij naartoe wilt." },
+    { title: "WE MAKEN EEN PLAN.", desc: "We vertalen jouw doelen naar een praktische digitale route. Realistisch waar nodig. Ambitieus waar het kan. Geen dikke rapporten, wel een concreet groeiplan." },
+    { title: "WE BOUWEN JE FUNDAMENT.", desc: "Geen standaard website die over twee jaar weer vervangen moet worden. We bouwen een snel, veilig en schaalbaar digitaal fundament dat kan meegroeien met jouw verhuurbedrijf." },
+    { title: "WE DIGITALISEREN JE VERHUUR.", desc: "Aanvragen, planning, klanten, content en vindbaarheid worden één logisch geheel. Minder gedoe. Meer overzicht." },
+    { title: "WE LATEN JE GROEIEN.", desc: "Een platform alleen brengt geen verhuur. We blijven werken aan zichtbaarheid, content, vindbaarheid en commerciële kansen." },
+    { title: "WE BLIJVEN MEEDENKEN.", desc: "Geen project opleveren en verdwijnen. Rent Harder blijft je digitale sidekick. We kijken mee, verbeteren wat beter kan en zien nieuwe kansen voordat ze blijven liggen." },
+  ];
+
+  return (
+    <section className={styles.section}>
+      <div className={styles.inner}>
+        {/* Intro */}
+        <div className={styles.intro}>
+          <div className={styles.eyebrow}>
+            <Image
+              src="/images/Rent_Harder_beeldmerk.svg"
+              alt=""
+              width={24}
+              height={24}
+              className={styles.eyebrowIcon}
+            />
+            <span>DE RENT HARDER METHODE.</span>
+          </div>
+          <h2 className={styles.title}>
+            VAN AMBITIE<br />NAAR HARDER VERHUREN.
+          </h2>
+          <p className={styles.description}>
+            Geen dikke rapporten of vage trajecten. Met de Rent Harder Methode bouwen
+            we stap voor stap aan een verhuurbedrijf dat beter zichtbaar is, slimmer
+            werkt en sterker groeit.
+          </p>
+        </div>
+
+        {/* Timeline */}
+        <div className={styles.timeline}>
+          <div className={styles.line} />
+          <div className={styles.steps}>
+            {steps.map((step, i) => (
+              <div
+                key={i}
+                className={`${styles.step} ${i % 2 === 0 ? styles.stepRight : styles.stepLeft}`}
+              >
+                <div className={styles.dot} />
+                <div className={styles.stepContent}>
+                  <span className={styles.stepNum}>0{i + 1}.</span>
+                  <h3 className={styles.stepTitle}>{step.title}</h3>
+                  <p className={styles.stepDesc}>{step.desc}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

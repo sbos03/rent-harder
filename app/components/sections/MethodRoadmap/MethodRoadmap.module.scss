@@ -1,0 +1,241 @@
+@use '../../../styles/variables' as *;
+
+.section {
+  padding: 8rem 2rem;
+  background-color: $rent-grey-bg;
+  position: relative;
+  overflow: hidden;
+  color: $rent-black;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 12rem 6rem;
+  }
+}
+
+.inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  position: relative;
+  z-index: 10;
+}
+
+// ─── INTRO ─────────────────────────────────────────────────────────────────
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 6rem;
+
+  @media (min-width: $bp-md) {
+    align-items: flex-start;
+    text-align: left;
+    margin-bottom: 8rem;
+  }
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: $bp-md) {
+    gap: 1rem;
+  }
+
+  span {
+    font-family: $font-display;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.75rem;
+    color: rgba($rent-black, 0.6);
+
+    @media (min-width: $bp-md) {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.eyebrowIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+  opacity: 0.8;
+
+  @media (min-width: $bp-md) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.title {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-black;
+  margin-bottom: 2rem;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+}
+
+.description {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1.125rem;
+  color: rgba($rent-black, 0.7);
+  line-height: 1.5;
+  max-width: 42rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.25rem;
+  }
+}
+
+// ─── TIMELINE ──────────────────────────────────────────────────────────────
+.timeline {
+  position: relative;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.line {
+  position: absolute;
+  left: 15px;
+  top: 1rem;
+  bottom: 1rem;
+  width: 1px;
+  background-color: rgba($rent-black, 0.1);
+
+  @media (min-width: $bp-md) {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+
+  @media (min-width: $bp-md) {
+    gap: 6rem;
+  }
+}
+
+.step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 3rem;
+
+  @media (min-width: $bp-md) {
+    flex-direction: row;
+    align-items: center;
+    padding-left: 0;
+  }
+}
+
+.stepRight {
+  @media (min-width: $bp-md) {
+    flex-direction: row-reverse;
+
+    .stepContent {
+      padding-left: 4rem;
+      text-align: left;
+    }
+  }
+}
+
+.stepLeft {
+  @media (min-width: $bp-md) {
+    .stepContent {
+      padding-right: 4rem;
+      text-align: right;
+      margin-left: auto;
+    }
+  }
+}
+
+.dot {
+  position: absolute;
+  left: 11px;
+  top: 18px;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background-color: $rent-sunset;
+  z-index: 10;
+  box-shadow: 0 0 0 4px $rent-grey-bg;
+
+  @media (min-width: $bp-md) {
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+  }
+}
+
+.stepContent {
+  width: 100%;
+
+  @media (min-width: $bp-md) {
+    width: 50%;
+  }
+}
+
+.stepNum {
+  font-family: $font-display;
+  font-weight: 900;
+  color: rgba($rent-black, 0.1);
+  font-size: 3rem;
+  line-height: 1;
+  display: block;
+  margin-bottom: 1rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 3.75rem;
+  }
+}
+
+.stepTitle {
+  font-family: $font-display;
+  font-weight: 900;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-black;
+  margin-bottom: 1rem;
+  line-height: 1.1;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.875rem;
+  }
+}
+
+.stepDesc {
+  font-family: $font-body;
+  font-size: 1rem;
+  font-weight: 300;
+  color: rgba($rent-black, 0.7);
+  line-height: 1.5;
+  max-width: 24rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.125rem;
+  }
+}
+
+.stepLeft .stepDesc {
+  @media (min-width: $bp-md) {
+    margin-left: auto;
+  }
+}

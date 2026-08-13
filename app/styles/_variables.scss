@@ -1,0 +1,49 @@
+// ─── RENT HARDER — DESIGN TOKENS ───────────────────────────────────────────
+
+// Colors
+$rent-black: #0B0B0B;
+$rent-dark: #121212;
+$rent-warm-grey: #E5E5E5;
+$rent-sand: #D8C6A2;
+$rent-purple: #1D1633;
+$rent-blue: #1C2B39;
+$rent-burnt: #D96A1C;
+$rent-sunset: #FF5A00;
+$rent-white: #FFFFFF;
+$rent-red: #FE0000;
+$rent-red-hover: #FF3B00;
+$rent-grey-dark: #1A1C1E;
+$rent-grey-mid: #414549;
+$rent-grey-border: #A6ABAB;
+$rent-grey-bg: #F9F9F9;
+$rent-card-dark: #111111;
+$rent-card-darker: #010101;
+$rent-card-mid: #2A2D30;
+$rent-card-subtle: #25282B;
+
+// Fonts
+$font-display: 'Archivo', sans-serif;
+$font-body: 'Inter', sans-serif;
+
+// Breakpoints
+$bp-sm: 640px;
+$bp-md: 768px;
+$bp-lg: 1024px;
+$bp-xl: 1280px;
+$bp-2xl: 1400px;
+
+// Spacing
+$section-padding-x: 2rem;
+$section-padding-x-md: 3rem;
+$section-padding-x-lg: 6rem;
+
+// Transitions
+$transition-fast: 180ms ease-out;
+$transition-normal: 300ms ease-out;
+$transition-slow: 500ms ease-out;
+$transition-cinematic: 700ms ease-out;
+
+// Tracking
+$tracking-wide: 0.2em;
+$tracking-wider: 0.3em;
+$tracking-tight: -0.02em;

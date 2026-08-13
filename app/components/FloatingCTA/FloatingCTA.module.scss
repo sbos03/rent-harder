@@ -1,0 +1,63 @@
+@use '../../styles/variables' as *;
+
+.wrapper {
+  position: fixed;
+  bottom: 3rem;
+  right: 3rem;
+  z-index: 50;
+  display: none;
+
+  @media (min-width: $bp-md) {
+    display: block;
+  }
+}
+
+.button {
+  display: flex;
+  align-items: center;
+  background-color: $rent-sunset;
+  color: $rent-black;
+  padding: 1rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  transition: background-color $transition-normal, color $transition-normal;
+  overflow: hidden;
+
+  &:hover {
+    background-color: $rent-black;
+    color: $rent-white;
+
+    .textWrap {
+      width: 220px;
+    }
+  }
+}
+
+.iconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+}
+
+.icon {
+  width: 2rem;
+  height: 2rem;
+}
+
+.textWrap {
+  width: 0;
+  overflow: hidden;
+  transition: width $transition-slow;
+  white-space: nowrap;
+}
+
+.text {
+  font-family: $font-display;
+  font-weight: 900;
+  letter-spacing: 0.1em;
+  padding-left: 1rem;
+  font-size: 1.25rem;
+  text-transform: uppercase;
+}

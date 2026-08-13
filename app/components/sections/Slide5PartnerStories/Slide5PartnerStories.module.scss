@@ -1,0 +1,233 @@
+@use '../../../styles/variables' as *;
+
+.section {
+  background-color: $rent-grey-dark;
+  padding: 8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 3rem;
+    min-height: 85vh;
+  }
+}
+
+.inner {
+  max-width: 80rem;
+  margin: 0 auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.top {
+  margin-bottom: 5rem;
+
+  @media (min-width: $bp-md) {
+    margin-bottom: 6rem;
+  }
+}
+
+.title {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: #F2F2F2;
+  margin-bottom: 2rem;
+  font-size: clamp(3rem, 7vw, 6rem);
+}
+
+.description {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1.125rem;
+  color: $rent-grey-border;
+  line-height: 1.5;
+  max-width: 42rem;
+  margin: 0 auto;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.25rem;
+  }
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  width: 100%;
+  margin-bottom: 5rem;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 6rem;
+  }
+}
+
+.card {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  background-color: $rent-card-mid;
+  overflow: hidden;
+  border-radius: 8px;
+
+  @media (min-width: $bp-md) {
+    aspect-ratio: 4 / 3;
+  }
+
+  &:hover {
+    .cardBg {
+      transform: scale(1.03);
+      filter: brightness(0.75);
+    }
+
+    .cardArrow {
+      background-color: $rent-red-hover;
+    }
+
+    .arrowIcon {
+      transform: translate(2px, -2px);
+    }
+  }
+}
+
+.cardBg {
+  position: absolute;
+  inset: 0;
+  background-color: $rent-card-subtle;
+  transition: all 220ms ease-out;
+}
+
+.cardGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.2), transparent);
+}
+
+.cardContent {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+
+  @media (min-width: $bp-md) {
+    padding: 2.5rem;
+  }
+}
+
+.cardLabel {
+  font-family: $font-display;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.625rem;
+  color: rgba($rent-white, 0.7);
+  margin-bottom: 0.75rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 0.75rem;
+  }
+}
+
+.cardTitle {
+  font-family: $font-display;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-white;
+  font-size: 1.875rem;
+  line-height: 1;
+  margin-bottom: 0.75rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 2.5rem;
+  }
+}
+
+.cardDesc {
+  font-family: $font-body;
+  font-weight: 300;
+  color: rgba($rent-white, 0.7);
+  font-size: 0.875rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1rem;
+  }
+}
+
+.cardArrow {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 4rem;
+  height: 4rem;
+  background-color: $rent-red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 220ms ease-out;
+
+  @media (min-width: $bp-md) {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+.arrowIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: $rent-white;
+  transition: transform 220ms ease-out;
+
+  @media (min-width: $bp-md) {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.cta {
+  font-family: $font-display;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 1.25rem 2.5rem;
+  background-color: $rent-grey-mid;
+  border: 1px solid $rent-grey-border;
+  border-radius: 4px;
+  color: $rent-white;
+  transition: all $transition-fast;
+  transform-origin: center;
+
+  @media (min-width: $bp-md) {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background-color: $rent-sunset;
+    border-color: $rent-sunset;
+    transform: skewX(-6deg);
+
+    .ctaInner {
+      transform: skewX(6deg);
+    }
+  }
+}
+
+.ctaInner {
+  transition: transform $transition-fast;
+}

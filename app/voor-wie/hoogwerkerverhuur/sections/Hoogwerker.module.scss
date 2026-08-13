@@ -1,0 +1,883 @@
+@use '../../../styles/variables' as *;
+
+// ─── SHARED ────────────────────────────────────────────────────────────────
+.sectionLabel {
+  font-family: $font-display;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  color: rgba($rent-white, 0.6);
+  display: block;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 0.875rem;
+  }
+}
+
+.sectionLabelMuted {
+  @extend .sectionLabel;
+  color: rgba($rent-black, 0.5);
+}
+
+.sectionTitle {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: 0.85;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-black;
+  margin-bottom: 2rem;
+  font-size: clamp(3rem, 7vw, 6rem);
+}
+
+.sectionTitleWhite {
+  @extend .sectionTitle;
+  color: $rent-white;
+}
+
+.sectionDesc {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1.25rem;
+  color: rgba($rent-black, 0.7);
+  line-height: 1.5;
+  max-width: 48rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.5rem;
+  }
+}
+
+.sunset {
+  color: $rent-sunset;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: $bp-md) {
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  span {
+    font-family: $font-display;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.75rem;
+    color: rgba($rent-white, 0.7);
+
+    @media (min-width: $bp-md) {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+.eyebrowIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+
+  @media (min-width: $bp-md) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.skewCta {
+  font-family: $font-display;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 1.25rem 2.5rem;
+  background-color: $rent-grey-mid;
+  border: 1px solid $rent-grey-border;
+  border-radius: 4px;
+  color: $rent-white;
+  transition: all $transition-fast;
+  transform-origin: center;
+
+  @media (min-width: $bp-md) {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background-color: $rent-sunset;
+    border-color: $rent-sunset;
+    transform: skewX(-6deg);
+
+    .skewCtaInner {
+      transform: skewX(6deg);
+    }
+  }
+}
+
+.skewCtaOutline {
+  @extend .skewCta;
+  background-color: transparent;
+  border-color: rgba($rent-white, 0.3);
+
+  &:hover {
+    background-color: $rent-white;
+    border-color: $rent-white;
+    color: $rent-black;
+  }
+}
+
+.skewCtaInner {
+  transition: transform $transition-fast;
+}
+
+.bulletList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 3rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-family: $font-display;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.875rem;
+    color: rgba($rent-white, 0.9);
+
+    @media (min-width: $bp-md) {
+      font-size: 1rem;
+    }
+  }
+}
+
+.bulletDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: $rent-sunset;
+  flex-shrink: 0;
+}
+
+// ─── HERO ──────────────────────────────────────────────────────────────────
+.hero {
+  position: relative;
+  min-height: 80vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+  background-color: $rent-black;
+  padding: 8rem 2rem 6rem;
+
+  @media (min-width: $bp-md) {
+    height: 100vh;
+    padding: 12rem 3rem 8rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 12rem 6rem 8rem;
+  }
+}
+
+.heroBgWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.heroBgImage {
+  object-fit: cover;
+  opacity: 0.6;
+  filter: grayscale(1);
+}
+
+.heroGradientRight {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, $rent-black, rgba($rent-black, 0.8), transparent);
+}
+
+.heroGradientBottom {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, $rent-black, transparent, transparent);
+}
+
+.heroContent {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  max-width: 64rem;
+}
+
+.heroTitle {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: 0.85;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-white;
+  margin-bottom: 2rem;
+  font-size: clamp(3.5rem, 8vw, 7rem);
+
+  @media (min-width: $bp-md) {
+    margin-bottom: 2.5rem;
+  }
+}
+
+.heroDescription {
+  font-family: $font-body;
+  font-size: 1.25rem;
+  font-weight: 300;
+  color: rgba($rent-white, 0.8);
+  line-height: 1.5;
+  margin-bottom: 3rem;
+  max-width: 42rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.5rem;
+  }
+}
+
+// ─── EXAMPLE SECTION ───────────────────────────────────────────────────────
+.exampleSection {
+  background-color: $rent-card-dark;
+  padding: 8rem 2rem;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 12rem 6rem;
+  }
+}
+
+.exampleGrid {
+  max-width: 87.5rem;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: 5fr 7fr;
+  }
+}
+
+.exampleText {
+  position: relative;
+  z-index: 10;
+  color: $rent-white;
+}
+
+.exampleHighlights {
+  font-family: $font-display;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: $rent-sunset;
+  font-size: 1.25rem;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.5rem;
+  }
+}
+
+.exampleImageWrap {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: $bp-md) {
+    justify-content: flex-end;
+  }
+}
+
+.exampleImage {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 8px;
+  opacity: 0.8;
+  mix-blend-mode: luminosity;
+  filter: grayscale(1);
+
+  @media (min-width: $bp-md) {
+    aspect-ratio: 1;
+  }
+
+  @media (min-width: $bp-lg) {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+// ─── PRINCIPLE SECTION ─────────────────────────────────────────────────────
+.principleSection {
+  background-color: $rent-grey-bg;
+  padding: 8rem 2rem;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 12rem 6rem;
+  }
+}
+
+.principleInner {
+  max-width: 80rem;
+  margin: 0 auto;
+}
+
+.principleSteps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  margin-top: 6rem;
+  position: relative;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.principleStep {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 4rem;
+
+  @media (min-width: $bp-md) {
+    padding-left: 0;
+  }
+}
+
+.principleNum {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background-color: $rent-white;
+  border: 1px solid rgba($rent-black, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: $font-display;
+  font-weight: 900;
+  font-size: 1.5rem;
+  color: $rent-black;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+  position: absolute;
+  left: 0;
+
+  @media (min-width: $bp-md) {
+    position: relative;
+    left: auto;
+  }
+}
+
+.principleStepTitle {
+  font-family: $font-display;
+  font-weight: 900;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-black;
+  margin-bottom: 1rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.875rem;
+  }
+}
+
+.principleStepDesc {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1.125rem;
+  color: rgba($rent-black, 0.7);
+  line-height: 1.5;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.25rem;
+  }
+}
+
+// ─── SEO SECTION ───────────────────────────────────────────────────────────
+.seoSection {
+  background-color: $rent-white;
+  padding: 8rem 2rem;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 3rem;
+  }
+}
+
+.seoInner {
+  max-width: 50rem;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.seoTitle {
+  font-family: $font-display;
+  font-weight: 900;
+  font-size: 1.875rem;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-black;
+  margin-bottom: 2rem;
+  line-height: 1.1;
+
+  @media (min-width: $bp-md) {
+    font-size: 3rem;
+  }
+}
+
+.seoBody {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1.125rem;
+  color: rgba($rent-black, 0.8);
+  line-height: 1.6;
+  margin-bottom: 5rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.25rem;
+  }
+
+  p {
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.seoHighlight {
+  background-color: $rent-black;
+  padding: 4rem 2.5rem;
+  text-align: center;
+  margin: 4rem 0;
+
+  @media (min-width: $bp-md) {
+    padding: 4rem;
+  }
+}
+
+.seoHighlightTitle {
+  font-family: $font-display;
+  font-weight: 900;
+  font-size: 2.5rem;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-white;
+  line-height: 0.9;
+
+  @media (min-width: $bp-md) {
+    font-size: 3.75rem;
+  }
+}
+
+// ─── OPEN MARKT SECTION ────────────────────────────────────────────────────
+.openMarktSection {
+  background-color: $rent-black;
+  color: $rent-white;
+  padding: 8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  min-height: 60vh;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 12rem 6rem;
+  }
+}
+
+.openMarktInner {
+  position: relative;
+  z-index: 10;
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.openMarktDesc {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1.25rem;
+  color: rgba($rent-white, 0.7);
+  line-height: 1.5;
+  margin-bottom: 3rem;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.5rem;
+  }
+}
+
+// ─── CASES SECTION ─────────────────────────────────────────────────────────
+.casesSection {
+  background-color: $rent-card-dark;
+  color: $rent-white;
+  padding: 8rem 2rem;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 12rem 6rem;
+  }
+}
+
+.casesInner {
+  max-width: 87.5rem;
+  margin: 0 auto;
+}
+
+.casesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  margin-top: 4rem;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.caseCard {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  background-color: $rent-black;
+  min-height: 60vh;
+  border-radius: 4px;
+
+  @media (min-width: $bp-md) {
+    min-height: 70vh;
+  }
+
+  &:hover {
+    .caseCardImage {
+      transform: scale(1.03);
+      filter: brightness(0.5) grayscale(1);
+    }
+
+    .caseCardArrow {
+      background-color: $rent-red-hover;
+    }
+  }
+}
+
+.caseCardImage {
+  object-fit: cover;
+  opacity: 0.7;
+  filter: grayscale(1);
+  transition: all 400ms ease-out;
+}
+
+.caseCardGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.4), transparent);
+}
+
+.caseCardContent {
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 2rem;
+
+  @media (min-width: $bp-md) {
+    padding: 3rem;
+  }
+}
+
+.caseCardLabel {
+  font-family: $font-display;
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.625rem;
+  color: rgba($rent-white, 0.6);
+  letter-spacing: $tracking-wide;
+  margin-bottom: 1rem;
+  display: block;
+
+  @media (min-width: $bp-md) {
+    font-size: 0.75rem;
+  }
+}
+
+.caseCardName {
+  font-family: $font-display;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-white;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  font-size: 2.5rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    font-size: 3.75rem;
+  }
+}
+
+.caseCardTransform {
+  font-family: $font-display;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  color: $rent-sunset;
+  line-height: 0.9;
+  margin-bottom: 2rem;
+  font-size: 1.25rem;
+  max-width: 24rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.5rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    font-size: 1.875rem;
+  }
+
+  span {
+    display: block;
+  }
+}
+
+.caseCardArrow {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 4rem;
+  height: 4rem;
+  background-color: $rent-red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 400ms ease-out;
+
+  @media (min-width: $bp-md) {
+    width: 5rem;
+    height: 5rem;
+  }
+}
+
+.caseArrowIcon {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: $rent-white;
+  transition: transform 400ms ease-out;
+
+  @media (min-width: $bp-md) {
+    width: 2rem;
+    height: 2rem;
+  }
+
+  .caseCard:hover & {
+    transform: translate(2px, -2px);
+  }
+}
+
+// ─── OTHER MARKETS ─────────────────────────────────────────────────────────
+.otherMarketsSection {
+  background-color: $rent-white;
+  padding: 8rem 2rem;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 12rem 6rem;
+  }
+}
+
+.otherMarketsInner {
+  max-width: 87.5rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 4rem;
+
+  @media (min-width: $bp-md) {
+    flex-direction: row;
+    gap: 6rem;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+}
+
+.otherMarketsLeft {
+  max-width: 28rem;
+}
+
+.otherMarketsList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+
+  @media (min-width: $bp-md) {
+    gap: 2rem;
+    width: auto;
+    min-width: 25rem;
+  }
+}
+
+.marketItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba($rent-black, 0.1);
+  padding-bottom: 1rem;
+
+  @media (min-width: $bp-md) {
+    min-width: 25rem;
+  }
+
+  &:hover {
+    .marketName {
+      color: $rent-sunset;
+    }
+
+    .marketArrow {
+      color: $rent-sunset;
+      transform: translateX(0.5rem);
+    }
+  }
+}
+
+.marketName {
+  font-family: $font-display;
+  font-weight: 900;
+  text-transform: uppercase;
+  font-size: 1.5rem;
+  letter-spacing: -0.05em;
+  color: rgba($rent-black, 0.6);
+  transition: color $transition-normal;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.875rem;
+  }
+}
+
+.marketArrow {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: rgba($rent-black, 0.4);
+  transition: all $transition-normal;
+}
+
+// ─── METHODE CTA SECTION ───────────────────────────────────────────────────
+.methodeCTASection {
+  background-color: $rent-black;
+  color: $rent-white;
+  padding: 8rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 12rem 6rem;
+  }
+}
+
+.methodeCTAInner {
+  max-width: 64rem;
+  margin: 0 auto;
+}
+
+.methodeCTATitle {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: 0.85;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-white;
+  margin-bottom: 2rem;
+  font-size: clamp(3.5rem, 8vw, 7.5rem);
+}
+
+.methodeCTADesc {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1.25rem;
+  color: rgba($rent-white, 0.7);
+  line-height: 1.5;
+  margin-bottom: 4rem;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.5rem;
+  }
+}
+
+.methodeCTAButtons {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  justify-content: center;
+
+  @media (min-width: $bp-sm) {
+    flex-direction: row;
+  }
+}

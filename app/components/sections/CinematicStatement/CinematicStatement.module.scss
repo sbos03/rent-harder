@@ -1,0 +1,92 @@
+@use '../../../styles/variables' as *;
+
+.section {
+  height: 80vh;
+  width: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  overflow: hidden;
+  background-color: $rent-purple;
+
+  @media (min-width: $bp-md) {
+    height: 100vh;
+    padding: 3rem;
+  }
+}
+
+.bgWrap {
+  position: absolute;
+  inset: 0;
+}
+
+.bgImage {
+  object-fit: cover;
+  opacity: 0.4;
+  mix-blend-mode: luminosity;
+  filter: grayscale(1);
+}
+
+.overlayGradient {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, $rent-purple, rgba($rent-purple, 0.6), transparent);
+}
+
+.overlayColor {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, transparent, transparent, rgba($rent-sunset, 0.2));
+  mix-blend-mode: overlay;
+}
+
+.content {
+  position: relative;
+  z-index: 10;
+  max-width: 72rem;
+  margin: 0 auto;
+  margin-top: 6rem;
+}
+
+.title {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: 0.85;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-white;
+  margin-bottom: 4rem;
+  text-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+  font-size: 8vw;
+
+  @media (min-width: $bp-md) {
+    font-size: 6vw;
+  }
+}
+
+.textReveal {
+  font-family: $font-body;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.5rem;
+  color: $rent-white;
+  max-width: 64rem;
+  margin: 0 auto;
+  text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  justify-content: center;
+
+  @media (min-width: $bp-md) {
+    font-size: 2.25rem;
+  }
+}
+
+.word {
+  opacity: 0.9;
+}

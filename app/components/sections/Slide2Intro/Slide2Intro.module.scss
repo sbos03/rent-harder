@@ -1,0 +1,138 @@
+@use '../../../styles/variables' as *;
+
+.section {
+  background-color: $rent-purple;
+  padding: 8rem 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 90vh;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 6rem;
+  }
+}
+
+.grid {
+  max-width: 80rem;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+  }
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  color: $rent-white;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+
+  span {
+    font-family: $font-display;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-size: 0.875rem;
+    color: rgba($rent-white, 0.8);
+  }
+}
+
+.eyebrowIcon {
+  width: 1.25rem;
+  height: 1.25rem;
+
+  @media (min-width: $bp-md) {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+}
+
+.title {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  color: $rent-white;
+  margin-bottom: 2.5rem;
+  font-size: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.description {
+  font-family: $font-body;
+  font-size: 1.5rem;
+  font-weight: 300;
+  color: rgba($rent-white, 0.9);
+  line-height: 1.5;
+  margin-bottom: 3rem;
+  max-width: 32rem;
+}
+
+.cta {
+  font-family: $font-display;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.875rem;
+  font-weight: 700;
+  padding: 1.25rem 2.5rem;
+  background-color: $rent-grey-mid;
+  border: 1px solid $rent-grey-border;
+  color: $rent-white;
+  transition: all $transition-fast;
+  transform-origin: center;
+
+  @media (min-width: $bp-md) {
+    font-size: 1rem;
+  }
+
+  &:hover {
+    background-color: $rent-sunset;
+    border-color: $rent-sunset;
+    transform: skewX(-6deg);
+
+    .ctaInner {
+      transform: skewX(6deg);
+    }
+  }
+}
+
+.ctaInner {
+  transition: transform $transition-fast;
+}
+
+.right {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+  @media (min-width: $bp-md) {
+    justify-content: flex-end;
+  }
+}
+
+.image {
+  width: 100%;
+  max-width: 24rem;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  border-radius: 1.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+
+  @media (min-width: $bp-md) {
+    border-radius: 2rem;
+  }
+}
