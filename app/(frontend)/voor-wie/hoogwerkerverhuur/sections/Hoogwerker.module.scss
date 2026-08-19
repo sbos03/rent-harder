@@ -1,4 +1,4 @@
-@use '../../../styles/variables' as *;
+@use '../../../../styles/variables' as *;
 
 // ─── SHARED ────────────────────────────────────────────────────────────────
 .sectionLabel {
@@ -216,9 +216,11 @@
   z-index: 10;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   width: 100%;
   max-width: 64rem;
+  margin: 0 auto;
 }
 
 .heroTitle {

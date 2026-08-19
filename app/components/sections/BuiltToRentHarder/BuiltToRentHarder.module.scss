@@ -3,12 +3,12 @@
 .section {
   background-color: $rent-card-dark;
   color: $rent-white;
-  padding: 8rem 2rem;
+  padding: 6rem 1.5rem;
   min-height: 100vh;
   overflow: hidden;
 
   @media (min-width: $bp-md) {
-    padding: 12rem 3rem;
+    padding: 10rem 3rem;
   }
 
   @media (min-width: $bp-lg) {
@@ -26,12 +26,13 @@
 .intro {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
+  text-align: center;
   max-width: 64rem;
-  margin-bottom: 6rem;
+  margin: 0 auto 4rem;
 
   @media (min-width: $bp-md) {
-    margin-bottom: 8rem;
+    margin-bottom: 6rem;
   }
 }
 

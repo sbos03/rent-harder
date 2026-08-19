@@ -8,15 +8,26 @@ import styles from "./TVSection.module.scss";
 
 interface Props {
   onContactClick: () => void;
+  episodes?: any[] | null;
 }
 
-export default function TVSection({ onContactClick }: Props) {
-  const episodes = [
+export default function TVSection({ onContactClick, episodes: cmsEpisodes }: Props) {
+  const defaultEpisodes = [
     { meta: "RH.TV / 001 · DOCUMENTARY SHORT", title: "WAAR LIGT IN JOUW REGIO NOG EEN OPEN VERHUURMARKT?", time: "06:42" },
     { meta: "RH.TV / 002 · ON SITE", title: "HOE BOUW JE EEN VERHUURMERK DAT NIEMAND MIST?", time: "05:18" },
     { meta: "RH.TV / 003 · DOCUMENTARY SHORT", title: "MEER BEREIK MET VIDEO VAN JE MATERIEEL.", time: "04:37" },
     { meta: "RH.TV / 004 · HARDER TALK", title: "WAT MAAKT EEN VERHUURBEDRIJF KLAAR VOOR DE VOLGENDE GROEIFASE?", time: "08:24" },
   ];
+
+  // Use CMS episodes if available, otherwise fall back to defaults
+  const episodes = cmsEpisodes && cmsEpisodes.length > 0
+    ? cmsEpisodes.map((ep: any) => ({
+        meta: ep.meta || '',
+        title: ep.title || '',
+        time: ep.duration || '',
+        thumbnail: ep.thumbnail?.url || null,
+      }))
+    : defaultEpisodes;
 
   return (
     <section className={styles.section}>

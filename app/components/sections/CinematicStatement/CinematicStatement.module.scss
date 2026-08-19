@@ -1,7 +1,7 @@
 @use '../../../styles/variables' as *;
 
 .section {
-  height: 80vh;
+  min-height: 80vh;
   width: 100%;
   position: relative;
   display: flex;
@@ -9,7 +9,7 @@
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 2rem;
+  padding: 4rem 1.5rem;
   overflow: hidden;
   background-color: $rent-purple;
 
@@ -59,12 +59,14 @@
   text-transform: uppercase;
   letter-spacing: -0.05em;
   color: $rent-white;
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
   text-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  font-size: 8vw;
+  font-size: clamp(2.5rem, 8vw, 7rem);
+  text-align: center;
 
   @media (min-width: $bp-md) {
-    font-size: 6vw;
+    font-size: clamp(4rem, 6vw, 8rem);
+    margin-bottom: 4rem;
   }
 }
 

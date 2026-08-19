@@ -2,16 +2,16 @@ import React from "react";
 import Image from "next/image";
 import styles from "./MethodRoadmap.module.scss";
 
-export default function MethodRoadmap() {
-  const steps = [
-    { title: "WAAR WIL JE NAARTOE?", desc: "We brengen jouw ambities, assortiment, werkwijze en kansen in kaart. We beginnen niet met techniek, maar met waar jij naartoe wilt." },
-    { title: "WE MAKEN EEN PLAN.", desc: "We vertalen jouw doelen naar een praktische digitale route. Realistisch waar nodig. Ambitieus waar het kan. Geen dikke rapporten, wel een concreet groeiplan." },
-    { title: "WE BOUWEN JE FUNDAMENT.", desc: "Geen standaard website die over twee jaar weer vervangen moet worden. We bouwen een snel, veilig en schaalbaar digitaal fundament dat kan meegroeien met jouw verhuurbedrijf." },
-    { title: "WE DIGITALISEREN JE VERHUUR.", desc: "Aanvragen, planning, klanten, content en vindbaarheid worden één logisch geheel. Minder gedoe. Meer overzicht." },
-    { title: "WE LATEN JE GROEIEN.", desc: "Een platform alleen brengt geen verhuur. We blijven werken aan zichtbaarheid, content, vindbaarheid en commerciële kansen." },
-    { title: "WE BLIJVEN MEEDENKEN.", desc: "Geen project opleveren en verdwijnen. Rent Harder blijft je digitale sidekick. We kijken mee, verbeteren wat beter kan en zien nieuwe kansen voordat ze blijven liggen." },
-  ];
+const steps = [
+  { num: "01", title: "WAAR WIL JE NAARTOE?", desc: "We brengen jouw ambities, assortiment, werkwijze en kansen in kaart. We beginnen niet met techniek, maar met waar jij naartoe wilt.", side: "right" },
+  { num: "02", title: "WE MAKEN EEN PLAN.", desc: "We vertalen jouw doelen naar een praktische digitale route. Realistisch waar nodig. Ambitieus waar het kan. Geen dikke rapporten, wel een concreet groeiplan.", side: "left" },
+  { num: "03", title: "WE BOUWEN JE FUNDAMENT.", desc: "Geen standaard website die over twee jaar weer vervangen moet worden. We bouwen een snel, veilig en schaalbaar digitaal fundament dat kan meegroeien met jouw verhuurbedrijf.", side: "right" },
+  { num: "04", title: "WE DIGITALISEREN JE VERHUUR.", desc: "Aanvragen, planning, klanten, content en vindbaarheid worden één logisch geheel. Minder gedoe. Meer overzicht.", side: "left" },
+  { num: "05", title: "WE LATEN JE GROEIEN.", desc: "Een platform alleen brengt geen verhuur. We blijven werken aan zichtbaarheid, content, vindbaarheid en commerciële kansen.", side: "right" },
+  { num: "06", title: "WE BLIJVEN MEEDENKEN.", desc: "Geen project opleveren en verdwijnen. Rent Harder blijft je digitale sidekick. We kijken mee, verbeteren wat beter kan en zien nieuwe kansen voordat ze blijven liggen.", side: "left" },
+];
 
+export default function MethodRoadmap() {
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
@@ -40,21 +40,20 @@ export default function MethodRoadmap() {
         {/* Timeline */}
         <div className={styles.timeline}>
           <div className={styles.line} />
-          <div className={styles.steps}>
-            {steps.map((step, i) => (
-              <div
-                key={i}
-                className={`${styles.step} ${i % 2 === 0 ? styles.stepRight : styles.stepLeft}`}
-              >
-                <div className={styles.dot} />
-                <div className={styles.stepContent}>
-                  <span className={styles.stepNum}>0{i + 1}.</span>
-                  <h3 className={styles.stepTitle}>{step.title}</h3>
-                  <p className={styles.stepDesc}>{step.desc}</p>
-                </div>
+
+          {steps.map((step) => (
+            <div
+              key={step.num}
+              className={`${styles.step} ${step.side === 'left' ? styles.stepLeft : styles.stepRight}`}
+            >
+              <div className={styles.dot} />
+              <div className={styles.stepCard}>
+                <span className={styles.stepNum}>{step.num}.</span>
+                <h3 className={styles.stepTitle}>{step.title}</h3>
+                <p className={styles.stepDesc}>{step.desc}</p>
               </div>
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

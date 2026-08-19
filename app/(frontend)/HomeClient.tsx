@@ -18,16 +18,30 @@ import {
   BuiltToRentHarder,
 } from "@/app/components/sections";
 
-export default function HomeClient() {
+export interface CMSContent {
+  partners: any[];
+  episodes: any[];
+  settings: any;
+}
+
+interface Props {
+  cmsContent?: CMSContent | null;
+}
+
+export default function HomeClient({ cmsContent }: Props) {
   const [isPopupOpen, setPopupOpen] = useState(false);
 
   const openContact = () => setPopupOpen(true);
   const closeContact = () => setPopupOpen(false);
 
+  // Extract CMS data with fallbacks
+  const episodes = cmsContent?.episodes || null;
+  const settings = cmsContent?.settings || null;
+
   return (
     <>
       <div className="noise-overlay" aria-hidden="true" />
-      <Header onContactClick={openContact} />
+      <Header onContactClick={openContact} settings={settings} />
 
       <main>
         <HeroSection onContactClick={openContact} />
@@ -42,7 +56,7 @@ export default function HomeClient() {
         <Slide6Mensenwerk />
         <CinematicStatement />
         <div id="rent-harder-tv">
-          <TVSection onContactClick={openContact} />
+          <TVSection onContactClick={openContact} episodes={episodes} />
         </div>
         <div id="methode">
           <MethodRoadmap />
@@ -52,9 +66,9 @@ export default function HomeClient() {
         </div>
       </main>
 
-      <Footer />
+      <Footer settings={settings} />
       <FloatingCTA onClick={openContact} />
-      <ContactPopup isOpen={isPopupOpen} onClose={closeContact} />
+      <ContactPopup isOpen={isPopupOpen} onClose={closeContact} settings={settings} />
     </>
   );
 }

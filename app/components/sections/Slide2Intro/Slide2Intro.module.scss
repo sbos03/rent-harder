@@ -2,13 +2,17 @@
 
 .section {
   background-color: $rent-purple;
-  padding: 8rem 2rem;
+  padding: 6rem 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 90vh;
 
   @media (min-width: $bp-md) {
+    padding: 10rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
     padding: 12rem 6rem;
   }
 }
@@ -94,6 +98,7 @@
   color: $rent-white;
   transition: all $transition-fast;
   transform-origin: center;
+  align-self: center;
 
   @media (min-width: $bp-md) {
     font-size: 1rem;

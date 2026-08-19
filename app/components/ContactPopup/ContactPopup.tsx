@@ -8,9 +8,10 @@ import styles from "./ContactPopup.module.scss";
 interface ContactPopupProps {
   isOpen: boolean;
   onClose: () => void;
+  settings?: any;
 }
 
-export default function ContactPopup({ isOpen, onClose }: ContactPopupProps) {
+export default function ContactPopup({ isOpen, onClose, settings }: ContactPopupProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

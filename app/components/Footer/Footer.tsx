@@ -4,7 +4,11 @@ import Link from "next/link";
 import { LinkedinIcon, InstagramIcon, YoutubeIcon } from "@/app/components/SocialIcons";
 import styles from "./Footer.module.scss";
 
-export default function Footer() {
+interface FooterProps {
+  settings?: any;
+}
+
+export default function Footer({ settings }: FooterProps = {}) {
   return (
     <footer className={styles.footer}>
       <div className={styles.noiseOverlay}>

@@ -9,9 +9,10 @@ import styles from "./Header.module.scss";
 
 interface HeaderProps {
   onContactClick: () => void;
+  settings?: any;
 }
 
-export default function Header({ onContactClick }: HeaderProps) {
+export default function Header({ onContactClick, settings }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const { scrollY } = useScroll();

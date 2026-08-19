@@ -1,14 +1,14 @@
 @use '../../../styles/variables' as *;
 
 .section {
-  padding: 8rem 2rem;
+  padding: 6rem 1.5rem;
   background-color: $rent-grey-bg;
   position: relative;
   overflow: hidden;
   color: $rent-black;
 
   @media (min-width: $bp-md) {
-    padding: 12rem 3rem;
+    padding: 10rem 3rem;
   }
 
   @media (min-width: $bp-lg) {
@@ -29,12 +29,10 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-bottom: 6rem;
+  margin-bottom: 4rem;
 
   @media (min-width: $bp-md) {
-    align-items: flex-start;
-    text-align: left;
-    margin-bottom: 8rem;
+    margin-bottom: 6rem;
   }
 }
 
@@ -91,6 +89,8 @@
   color: rgba($rent-black, 0.7);
   line-height: 1.5;
   max-width: 42rem;
+  text-align: center;
+  margin: 0 auto;
 
   @media (min-width: $bp-md) {
     font-size: 1.25rem;
@@ -101,141 +101,123 @@
 .timeline {
   position: relative;
   width: 100%;
-  max-width: 72rem;
+  max-width: 52rem;
   margin: 0 auto;
+  padding: 2rem 0;
 }
 
 .line {
   position: absolute;
-  left: 15px;
-  top: 1rem;
-  bottom: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  bottom: 0;
   width: 1px;
-  background-color: rgba($rent-black, 0.1);
+  background-color: rgba($rent-black, 0.12);
+  display: none;
 
   @media (min-width: $bp-md) {
-    left: 50%;
-    transform: translateX(-50%);
+    display: block;
   }
 }
 
-.steps {
-  display: flex;
-  flex-direction: column;
-  gap: 4rem;
-
-  @media (min-width: $bp-md) {
-    gap: 6rem;
-  }
-}
-
+// ─── STEP (each row) ───────────────────────────────────────────────────────
 .step {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  padding-left: 3rem;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0;
+  padding: 3rem 0;
 
   @media (min-width: $bp-md) {
-    flex-direction: row;
-    align-items: center;
-    padding-left: 0;
-  }
-}
-
-.stepRight {
-  @media (min-width: $bp-md) {
-    flex-direction: row-reverse;
-
-    .stepContent {
-      padding-left: 4rem;
-      text-align: left;
-    }
-  }
-}
-
-.stepLeft {
-  @media (min-width: $bp-md) {
-    .stepContent {
-      padding-right: 4rem;
-      text-align: right;
-      margin-left: auto;
-    }
+    grid-template-columns: 1fr 1fr;
+    padding: 4rem 0;
   }
 }
 
 .dot {
   position: absolute;
-  left: 11px;
-  top: 18px;
-  width: 9px;
-  height: 9px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background-color: $rent-sunset;
   z-index: 10;
   box-shadow: 0 0 0 4px $rent-grey-bg;
+  display: none;
 
   @media (min-width: $bp-md) {
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    display: block;
     width: 12px;
     height: 12px;
   }
 }
 
-.stepContent {
-  width: 100%;
+// ─── STEP CARD ─────────────────────────────────────────────────────────────
+.stepCard {
+  text-align: center;
+  padding: 0 1.5rem;
 
   @media (min-width: $bp-md) {
-    width: 50%;
+    padding: 0 3rem;
   }
+}
+
+// Right side: card sits in the right column (column 2)
+.stepRight .stepCard {
+  grid-column: 1;
+
+  @media (min-width: $bp-md) {
+    grid-column: 2;
+  }
+}
+
+// Left side: card sits in the left column (column 1)
+.stepLeft .stepCard {
+  grid-column: 1;
 }
 
 .stepNum {
   font-family: $font-display;
   font-weight: 900;
-  color: rgba($rent-black, 0.1);
+  color: rgba($rent-black, 0.08);
   font-size: 3rem;
   line-height: 1;
   display: block;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
 
   @media (min-width: $bp-md) {
-    font-size: 3.75rem;
+    font-size: 4rem;
   }
 }
 
 .stepTitle {
   font-family: $font-display;
   font-weight: 900;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   text-transform: uppercase;
-  letter-spacing: -0.05em;
+  letter-spacing: -0.04em;
   color: $rent-black;
   margin-bottom: 1rem;
   line-height: 1.1;
 
   @media (min-width: $bp-md) {
-    font-size: 1.875rem;
+    font-size: 1.5rem;
   }
 }
 
 .stepDesc {
   font-family: $font-body;
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 300;
-  color: rgba($rent-black, 0.7);
-  line-height: 1.5;
-  max-width: 24rem;
+  color: rgba($rent-black, 0.65);
+  line-height: 1.55;
+  max-width: 22rem;
+  margin: 0 auto;
 
   @media (min-width: $bp-md) {
-    font-size: 1.125rem;
-  }
-}
-
-.stepLeft .stepDesc {
-  @media (min-width: $bp-md) {
-    margin-left: auto;
+    font-size: 1rem;
   }
 }
