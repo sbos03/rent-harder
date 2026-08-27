@@ -19,6 +19,8 @@ import {
 } from "@/app/components/sections";
 
 export interface CMSContent {
+  sections: Record<string, any>;
+  seo: any;
   partners: any[];
   episodes: any[];
   settings: any;
@@ -34,7 +36,7 @@ export default function HomeClient({ cmsContent }: Props) {
   const openContact = () => setPopupOpen(true);
   const closeContact = () => setPopupOpen(false);
 
-  // Extract CMS data with fallbacks
+  const s = cmsContent?.sections || {};
   const episodes = cmsContent?.episodes || null;
   const settings = cmsContent?.settings || null;
 
@@ -44,25 +46,25 @@ export default function HomeClient({ cmsContent }: Props) {
       <Header onContactClick={openContact} settings={settings} />
 
       <main>
-        <HeroSection onContactClick={openContact} />
+        <HeroSection onContactClick={openContact} content={s.heroSection} />
         <div id="wat-we-bouwen">
-          <Slide2Intro onContactClick={openContact} />
+          <Slide2Intro onContactClick={openContact} content={s.introSection} />
         </div>
-        <Slide3Brand />
+        <Slide3Brand content={s.brandStatement} />
         <div id="voor-wie">
-          <Slide4TargetAudience onContactClick={openContact} />
+          <Slide4TargetAudience onContactClick={openContact} content={s.targetAudience} />
         </div>
-        <Slide5PartnerStories onContactClick={openContact} />
-        <Slide6Mensenwerk />
-        <CinematicStatement />
+        <Slide5PartnerStories onContactClick={openContact} content={s.partnerStories} />
+        <Slide6Mensenwerk content={s.fullscreenStatement} />
+        <CinematicStatement content={s.cinematicStatement} />
         <div id="rent-harder-tv">
-          <TVSection onContactClick={openContact} episodes={episodes} />
+          <TVSection onContactClick={openContact} content={s.tvSection} episodes={episodes} />
         </div>
         <div id="methode">
-          <MethodRoadmap />
+          <MethodRoadmap content={s.methodRoadmap} />
         </div>
         <div id="built-to-rent-harder">
-          <BuiltToRentHarder onContactClick={openContact} />
+          <BuiltToRentHarder onContactClick={openContact} content={s.caseShowcase} />
         </div>
       </main>
 

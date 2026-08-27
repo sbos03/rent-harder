@@ -5,7 +5,16 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import styles from "./Slide6Mensenwerk.module.scss";
 
-export default function Slide6Mensenwerk() {
+interface Props {
+  content?: {
+    eyebrow?: string;
+    title?: string;
+    bottomText?: string;
+    backgroundImage?: { url?: string } | null;
+  };
+}
+
+export default function Slide6Mensenwerk({ content }: Props) {
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -13,11 +22,18 @@ export default function Slide6Mensenwerk() {
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-15%", "15%"]);
 
+  const eyebrow = content?.eyebrow || "VAN NEDERLAND TOT CURAÇAO.";
+  const title = content?.title || "DIGITALISEREN IS|MENSENWERK.";
+  const bottomText =
+    content?.bottomText ||
+    "GROTE KANS DAT ER MEER IN JOUW VERHUURBEDRIJF ZIT DAN JE NU LAAT ZIEN.";
+  const bgImage = content?.backgroundImage?.url || "/images/afvalcontainer-2.jpg";
+
   return (
     <section ref={targetRef} className={styles.section}>
       <motion.div style={{ y }} className={styles.bgWrap}>
         <Image
-          src="/images/afvalcontainer-2.jpg"
+          src={bgImage}
           alt="Truck at sunset"
           fill
           className={styles.bgImage}
@@ -40,7 +56,7 @@ export default function Slide6Mensenwerk() {
           height={24}
           className={styles.eyebrowIcon}
         />
-        <span>VAN NEDERLAND TOT CURAÇAO.</span>
+        <span>{eyebrow}</span>
       </motion.div>
 
       <motion.h2
@@ -50,8 +66,9 @@ export default function Slide6Mensenwerk() {
         viewport={{ once: true, margin: "-50px" }}
         className={styles.title}
       >
-        <span>DIGITALISEREN IS</span>
-        <span>MENSENWERK.</span>
+        {title.split("|").map((line, i) => (
+          <span key={i}>{line.trim()}</span>
+        ))}
       </motion.h2>
 
       <motion.p
@@ -61,7 +78,7 @@ export default function Slide6Mensenwerk() {
         viewport={{ once: true, margin: "-50px" }}
         className={styles.bottomText}
       >
-        GROTE KANS DAT ER MEER IN JOUW VERHUURBEDRIJF ZIT DAN JE NU LAAT ZIEN.
+        {bottomText}
       </motion.p>
     </section>
   );

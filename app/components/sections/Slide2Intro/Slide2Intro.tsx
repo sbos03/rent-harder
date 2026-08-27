@@ -3,12 +3,29 @@
 import React from "react";
 import Image from "next/image";
 import styles from "./Slide2Intro.module.scss";
+import { withLineBreaks } from "@/app/lib/renderText";
 
 interface Slide2IntroProps {
   onContactClick: () => void;
+  content?: {
+    eyebrow?: string;
+    title?: string;
+    description?: string;
+    ctaText?: string;
+    image?: { url?: string; alt?: string } | null;
+  };
 }
 
-export default function Slide2Intro({ onContactClick }: Slide2IntroProps) {
+export default function Slide2Intro({ onContactClick, content }: Slide2IntroProps) {
+  const eyebrow = content?.eyebrow || "DE DIGITALE SIDEKICK ACHTER JOUW VERHUUR.";
+  const title = content?.title || "BETER ZICHTBAAR.|SLIMMER GEREGELD.|STERKER GROEIEN.";
+  const description =
+    content?.description ||
+    "Rent Harder helpt ambitieuze verhuurbedrijven digitaal sterker te worden. Zodat je beter zichtbaar bent, slimmer werkt en meer uit je verhuurbedrijf haalt.";
+  const ctaText = content?.ctaText || "LAAT ZIEN WAT JE VERHUURT";
+  const imageSrc = content?.image?.url || "/images/Bulldozer-verhuur.jpg";
+  const imageAlt = content?.image?.alt || "Ambitieus verhuurbedrijf";
+
   return (
     <section className={styles.section}>
       <div className={styles.grid}>
@@ -22,30 +39,23 @@ export default function Slide2Intro({ onContactClick }: Slide2IntroProps) {
               height={24}
               className={styles.eyebrowIcon}
             />
-            <span>DE DIGITALE SIDEKICK ACHTER JOUW VERHUUR.</span>
+            <span>{eyebrow}</span>
           </div>
 
-          <h2 className={styles.title}>
-            BETER ZICHTBAAR.<br />
-            SLIMMER GEREGELD.<br />
-            STERKER GROEIEN.
-          </h2>
+          <h2 className={styles.title}>{withLineBreaks(title)}</h2>
 
-          <p className={styles.description}>
-            Rent Harder helpt ambitieuze verhuurbedrijven digitaal sterker te worden.
-            Zodat je beter zichtbaar bent, slimmer werkt en meer uit je verhuurbedrijf haalt.
-          </p>
+          <p className={styles.description}>{description}</p>
 
           <button onClick={onContactClick} className={styles.cta}>
-            <div className={styles.ctaInner}>LAAT ZIEN WAT JE VERHUURT</div>
+            <div className={styles.ctaInner}>{ctaText}</div>
           </button>
         </div>
 
         {/* Right Column */}
         <div className={styles.right}>
           <Image
-            src="/images/Bulldozer-verhuur.jpg"
-            alt="Ambitieus verhuurbedrijf"
+            src={imageSrc}
+            alt={imageAlt}
             width={400}
             height={711}
             className={styles.image}

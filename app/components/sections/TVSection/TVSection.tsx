@@ -9,9 +9,20 @@ import styles from "./TVSection.module.scss";
 interface Props {
   onContactClick: () => void;
   episodes?: any[] | null;
+  content?: {
+    eyebrow?: string;
+    title?: string;
+    description?: string;
+    ctaText?: string;
+  };
 }
 
-export default function TVSection({ onContactClick, episodes: cmsEpisodes }: Props) {
+export default function TVSection({ onContactClick, episodes: cmsEpisodes, content }: Props) {
+  const eyebrow = content?.eyebrow || "RENT HARDER.TV";
+  const title = content?.title || "ECHTE MACHINES.|ECHTE ONDERNEMERS.|ECHTE GROEI.";
+  const description =
+    content?.description ||
+    "Verhalen, inzichten en ideeën uit de wereld van verhuur. Op locatie, tussen het materieel en met de mensen die het iedere dag doen.";
   const defaultEpisodes = [
     { meta: "RH.TV / 001 · DOCUMENTARY SHORT", title: "WAAR LIGT IN JOUW REGIO NOG EEN OPEN VERHUURMARKT?", time: "06:42" },
     { meta: "RH.TV / 002 · ON SITE", title: "HOE BOUW JE EEN VERHUURMERK DAT NIEMAND MIST?", time: "05:18" },
@@ -38,16 +49,16 @@ export default function TVSection({ onContactClick, episodes: cmsEpisodes }: Pro
           viewport={{ once: true, margin: "-50px" }}
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
-          <p className={styles.eyebrow}>RENT HARDER.TV</p>
+          <p className={styles.eyebrow}>{eyebrow}</p>
           <h2 className={styles.title}>
-            ECHTE MACHINES.<br />
-            ECHTE ONDERNEMERS.<br />
-            ECHTE GROEI.
+            {title.split("|").map((line, i, arr) => (
+              <React.Fragment key={i}>
+                {line.trim()}
+                {i < arr.length - 1 && <br />}
+              </React.Fragment>
+            ))}
           </h2>
-          <p className={styles.description}>
-            Verhalen, inzichten en ideeën uit de wereld van verhuur. Op locatie,
-            tussen het materieel en met de mensen die het iedere dag doen.
-          </p>
+          <p className={styles.description}>{description}</p>
         </motion.div>
       </div>
 
