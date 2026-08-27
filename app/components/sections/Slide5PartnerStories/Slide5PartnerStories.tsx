@@ -6,25 +6,36 @@ import styles from "./Slide5PartnerStories.module.scss";
 
 interface Props {
   onContactClick: () => void;
+  content?: {
+    title?: string;
+    description?: string;
+    stories?: { name?: string }[];
+    ctaText?: string;
+  };
 }
 
-export default function Slide5PartnerStories({ onContactClick }: Props) {
-  const stories = [
-    { title: "LEIDINGVERHUUR" },
-    { title: "WATERPOMPOPLOSSINGEN" },
-    { title: "AFVALCONTAINERS" },
-    { title: "HEFTRUCKVERHUUR" },
-  ];
+export default function Slide5PartnerStories({ onContactClick, content }: Props) {
+  const title = content?.title || "HARDER VERHUREN.";
+  const description =
+    content?.description ||
+    "Partners, geen klanten. We werken naast verhuurbedrijven om ze iedere dag een beetje zichtbaarder, slimmer en sterker te maken.";
+  const ctaText = content?.ctaText || "MEER PARTNERVERHALEN";
+  const stories =
+    content?.stories && content.stories.length > 0
+      ? content.stories.map((s) => ({ title: s.name || "" }))
+      : [
+          { title: "LEIDINGVERHUUR" },
+          { title: "WATERPOMPOPLOSSINGEN" },
+          { title: "AFVALCONTAINERS" },
+          { title: "HEFTRUCKVERHUUR" },
+        ];
 
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.top}>
-          <h2 className={styles.title}>HARDER VERHUREN.</h2>
-          <p className={styles.description}>
-            Partners, geen klanten. We werken naast verhuurbedrijven om ze iedere
-            dag een beetje zichtbaarder, slimmer en sterker te maken.
-          </p>
+          <h2 className={styles.title}>{title}</h2>
+          <p className={styles.description}>{description}</p>
         </div>
 
         <div className={styles.grid}>
@@ -50,7 +61,7 @@ export default function Slide5PartnerStories({ onContactClick }: Props) {
         </div>
 
         <button onClick={onContactClick} className={styles.cta}>
-          <div className={styles.ctaInner}>MEER PARTNERVERHALEN</div>
+          <div className={styles.ctaInner}>{ctaText}</div>
         </button>
       </div>
     </section>

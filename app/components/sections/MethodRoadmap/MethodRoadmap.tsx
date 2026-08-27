@@ -1,8 +1,9 @@
 import React from "react";
 import Image from "next/image";
 import styles from "./MethodRoadmap.module.scss";
+import { withLineBreaks } from "@/app/lib/renderText";
 
-const steps = [
+const defaultSteps = [
   { num: "01", title: "WAAR WIL JE NAARTOE?", desc: "We brengen jouw ambities, assortiment, werkwijze en kansen in kaart. We beginnen niet met techniek, maar met waar jij naartoe wilt.", side: "right" },
   { num: "02", title: "WE MAKEN EEN PLAN.", desc: "We vertalen jouw doelen naar een praktische digitale route. Realistisch waar nodig. Ambitieus waar het kan. Geen dikke rapporten, wel een concreet groeiplan.", side: "left" },
   { num: "03", title: "WE BOUWEN JE FUNDAMENT.", desc: "Geen standaard website die over twee jaar weer vervangen moet worden. We bouwen een snel, veilig en schaalbaar digitaal fundament dat kan meegroeien met jouw verhuurbedrijf.", side: "right" },
@@ -11,7 +12,31 @@ const steps = [
   { num: "06", title: "WE BLIJVEN MEEDENKEN.", desc: "Geen project opleveren en verdwijnen. Rent Harder blijft je digitale sidekick. We kijken mee, verbeteren wat beter kan en zien nieuwe kansen voordat ze blijven liggen.", side: "left" },
 ];
 
-export default function MethodRoadmap() {
+interface Props {
+  content?: {
+    eyebrow?: string;
+    title?: string;
+    description?: string;
+    steps?: { num?: string; title?: string; description?: string; side?: string }[];
+  };
+}
+
+export default function MethodRoadmap({ content }: Props) {
+  const eyebrow = content?.eyebrow || "DE RENT HARDER METHODE.";
+  const title = content?.title || "VAN AMBITIE|NAAR HARDER VERHUREN.";
+  const description =
+    content?.description ||
+    "Geen dikke rapporten of vage trajecten. Met de Rent Harder Methode bouwen we stap voor stap aan een verhuurbedrijf dat beter zichtbaar is, slimmer werkt en sterker groeit.";
+  const steps =
+    content?.steps && content.steps.length > 0
+      ? content.steps.map((st) => ({
+          num: st.num || "",
+          title: st.title || "",
+          desc: st.description || "",
+          side: st.side || "right",
+        }))
+      : defaultSteps;
+
   return (
     <section className={styles.section}>
       <div className={styles.inner}>
@@ -25,16 +50,10 @@ export default function MethodRoadmap() {
               height={24}
               className={styles.eyebrowIcon}
             />
-            <span>DE RENT HARDER METHODE.</span>
+            <span>{eyebrow}</span>
           </div>
-          <h2 className={styles.title}>
-            VAN AMBITIE<br />NAAR HARDER VERHUREN.
-          </h2>
-          <p className={styles.description}>
-            Geen dikke rapporten of vage trajecten. Met de Rent Harder Methode bouwen
-            we stap voor stap aan een verhuurbedrijf dat beter zichtbaar is, slimmer
-            werkt en sterker groeit.
-          </p>
+          <h2 className={styles.title}>{withLineBreaks(title)}</h2>
+          <p className={styles.description}>{description}</p>
         </div>
 
         {/* Timeline */}
