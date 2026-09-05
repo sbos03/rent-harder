@@ -11,9 +11,10 @@ import styles from "./PartnerPage.module.scss";
 
 interface Props {
   partner: any;
+  settings?: any;
 }
 
-export default function PartnerClient({ partner }: Props) {
+export default function PartnerClient({ partner, settings }: Props) {
   const [isPopupOpen, setPopupOpen] = useState(false);
   const openContact = () => setPopupOpen(true);
   const closeContact = () => setPopupOpen(false);
@@ -24,7 +25,7 @@ export default function PartnerClient({ partner }: Props) {
   return (
     <>
       <div className="noise-overlay" aria-hidden="true" />
-      <Header onContactClick={openContact} />
+      <Header onContactClick={openContact} settings={settings} />
 
       <main>
         {/* Intro */}
@@ -63,9 +64,9 @@ export default function PartnerClient({ partner }: Props) {
         <SectionRenderer sections={partner?.sections || []} onContactClick={openContact} />
       </main>
 
-      <Footer />
+      <Footer settings={settings} />
       <FloatingCTA onClick={openContact} />
-      <ContactPopup isOpen={isPopupOpen} onClose={closeContact} />
+      <ContactPopup isOpen={isPopupOpen} onClose={closeContact} settings={settings} />
     </>
   );
 }

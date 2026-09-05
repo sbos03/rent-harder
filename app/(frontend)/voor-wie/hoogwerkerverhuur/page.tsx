@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getPageContent } from "@/lib/payload";
+import { getPageContent, getSiteSettings } from "@/lib/payload";
 import HoogwerkerverhuurClient from "./HoogwerkerverhuurClient";
 
 // Re-fetch on every request so CMS edits appear immediately
@@ -25,6 +25,9 @@ export const metadata: Metadata = {
 };
 
 export default async function HoogwerkerverhuurPage() {
-  const content = await getPageContent("voor-wie/hoogwerkerverhuur");
-  return <HoogwerkerverhuurClient cmsContent={content} />;
+  const [content, settings] = await Promise.all([
+    getPageContent("voor-wie/hoogwerkerverhuur"),
+    getSiteSettings(),
+  ]);
+  return <HoogwerkerverhuurClient cmsContent={content} settings={settings} />;
 }

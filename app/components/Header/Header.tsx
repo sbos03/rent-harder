@@ -12,11 +12,59 @@ interface HeaderProps {
   settings?: any;
 }
 
+interface MenuItem {
+  label: string;
+  href: string;
+  num: string;
+  isContact?: boolean;
+  children?: { label: string; href: string }[];
+}
+
+const FALLBACK_MENU: MenuItem[] = [
+  { label: "HOME", href: "/", num: "01" },
+  { label: "WAT WE DOEN", href: "/#wat-we-bouwen", num: "02" },
+  {
+    label: "VOOR WIE",
+    href: "/#voor-wie",
+    num: "03",
+    children: [
+      { label: "Machineverhuur", href: "/machineverhuur" },
+      { label: "Containerverhuur", href: "/containerverhuur" },
+      { label: "Pomp- en wateroplossingen", href: "/pomp-en-wateroplossingen" },
+      { label: "Hoogwerkerverhuur", href: "/voor-wie/hoogwerkerverhuur" },
+    ],
+  },
+  { label: "PARTNERVERHALEN", href: "/#built-to-rent-harder", num: "04" },
+  { label: "DE METHODE", href: "/#methode", num: "05" },
+  { label: "CONTACT", href: "#", num: "06", isContact: true },
+];
+
+function buildMenuFromSettings(settings?: any): MenuItem[] {
+  const nav = settings?.navigation;
+  if (!Array.isArray(nav) || nav.length === 0) return FALLBACK_MENU;
+  return nav.map((item: any, i: number): MenuItem => {
+    const children = Array.isArray(item.children) && item.children.length > 0
+      ? item.children
+          .filter((c: any) => c?.label)
+          .map((c: any) => ({ label: c.label, href: c.href || "#" }))
+      : undefined;
+    return {
+      label: item.label ?? "",
+      href: item.href || "#",
+      num: String(i + 1).padStart(2, "0"),
+      isContact: item.type === "contact",
+      children,
+    };
+  });
+}
+
 export default function Header({ onContactClick, settings }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [submenuOpen, setSubmenuOpen] = useState(false);
+  const [openSubmenus, setOpenSubmenus] = useState<Record<number, boolean>>({});
   const { scrollY } = useScroll();
+
+  const menuItems = buildMenuFromSettings(settings);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setScrolled(latest > 50);
@@ -40,31 +88,6 @@ export default function Header({ onContactClick, settings }: HeaderProps) {
     }
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
-
-  const menuItems: {
-    label: string;
-    href: string;
-    num: string;
-    isContact?: boolean;
-    children?: { label: string; href: string }[];
-  }[] = [
-    { label: "HOME", href: "/", num: "01" },
-    { label: "WAT WE DOEN", href: "/#wat-we-bouwen", num: "02" },
-    {
-      label: "VOOR WIE",
-      href: "/#voor-wie",
-      num: "03",
-      children: [
-        { label: "Machineverhuur", href: "/machineverhuur" },
-        { label: "Containerverhuur", href: "/containerverhuur" },
-        { label: "Pomp- en wateroplossingen", href: "/pomp-en-wateroplossingen" },
-        { label: "Hoogwerkerverhuur", href: "/voor-wie/hoogwerkerverhuur" },
-      ],
-    },
-    { label: "PARTNERVERHALEN", href: "/#built-to-rent-harder", num: "04" },
-    { label: "DE METHODE", href: "/#methode", num: "05" },
-    { label: "CONTACT", href: "#", num: "06", isContact: true },
-  ];
 
   return (
     <>
@@ -157,17 +180,17 @@ export default function Header({ onContactClick, settings }: HeaderProps) {
                         </Link>
                         <button
                           type="button"
-                          onClick={() => setSubmenuOpen((v) => !v)}
+                          onClick={() => setOpenSubmenus((prev) => ({ ...prev, [i]: !prev[i] }))}
                           className={styles.submenuToggle}
-                          aria-label={submenuOpen ? "Submenu inklappen" : "Submenu uitklappen"}
-                          aria-expanded={submenuOpen}
+                          aria-label={openSubmenus[i] ? "Submenu inklappen" : "Submenu uitklappen"}
+                          aria-expanded={!!openSubmenus[i]}
                         >
-                          {submenuOpen ? "−" : "+"}
+                          {openSubmenus[i] ? "−" : "+"}
                         </button>
                       </div>
 
                       <AnimatePresence initial={false}>
-                        {submenuOpen && (
+                        {openSubmenus[i] && (
                           <motion.ul
                             initial={{ height: 0, opacity: 0 }}
                             animate={{ height: "auto", opacity: 1 }}
