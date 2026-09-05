@@ -19,7 +19,6 @@ export const Partners: CollectionConfig = {
     {
       name: 'slug',
       type: 'text',
-      required: true,
       unique: true,
       admin: {
         position: 'sidebar',
@@ -39,6 +38,12 @@ export const Partners: CollectionConfig = {
       label: 'Volgorde',
       admin: { position: 'sidebar', description: 'Lagere nummers eerst.' },
     },
+    // ── Legacy fields kept so existing databases upgrade without data loss.
+    //    Hidden in the admin; safe to remove later via a proper migration.
+    { name: 'headline', type: 'text', admin: { hidden: true } },
+    { name: 'description', type: 'textarea', admin: { hidden: true } },
+    { name: 'image', type: 'upload', relationTo: 'media', admin: { hidden: true } },
+    { name: 'logo', type: 'upload', relationTo: 'media', admin: { hidden: true } },
     {
       type: 'tabs',
       tabs: [
@@ -65,7 +70,6 @@ export const Partners: CollectionConfig = {
               name: 'cardImage',
               type: 'upload',
               relationTo: 'media',
-              required: true,
               label: 'Kaart achtergrond afbeelding',
             },
             {
