@@ -122,6 +122,20 @@ export async function getHomePageContent() {
 }
 
 /**
+ * Fetch the global site settings (nav, footer, contact, socials).
+ * Falls back to null if unavailable.
+ */
+export async function getSiteSettings() {
+  try {
+    const payload = await getPayload()
+    const settings = await payload.findGlobal({ slug: 'site-settings' })
+    return bustImageCache(settings)
+  } catch {
+    return null
+  }
+}
+
+/**
  * Fetch all published partners (for the homepage case cards).
  */
 export async function getPartners() {

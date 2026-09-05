@@ -37,17 +37,56 @@ export const SiteSettings: GlobalConfig = {
         },
         {
           label: 'Footer',
+          description: 'Teksten, navigatiekolommen en juridische links in de footer.',
           fields: [
             { name: 'footerTagline', type: 'text', label: 'Tagline', defaultValue: 'De digitale sidekick achter jouw verhuur.' },
-            { name: 'footerDescription', type: 'text', label: 'Beschrijving', defaultValue: 'Jij verhuurt het materieel.' },
-            { name: 'footerDescriptionBold', type: 'text', label: 'Beschrijving (vet)', defaultValue: 'Wij bouwen en ontwikkelen jouw complete digitale verhuurtak.' },
-            { name: 'poweredBy', type: 'text', label: 'Powered by', defaultValue: 'Powered by KIX.' },
-            { name: 'builtBy', type: 'text', label: 'Built by', defaultValue: 'Software built by Fuse-IT.' },
+            { name: 'footerBrandLine1', type: 'text', label: 'Merktekst regel 1', defaultValue: 'Jij verhuurt het materieel.' },
+            { name: 'footerBrandLine2', type: 'text', label: 'Merktekst regel 2 (vet)', defaultValue: 'Wij bouwen de digitale verhuurtak erachter.' },
+            { name: 'footerSocialsTitle', type: 'text', label: 'Socials titel', defaultValue: 'Volg Rent Harder.' },
+            { name: 'footerCopyright', type: 'text', label: 'Copyright tekst', defaultValue: '© 2026 RENT HARDER.' },
+            {
+              name: 'footerColumns',
+              type: 'array',
+              label: 'Navigatiekolommen',
+              admin: { description: 'Kolommen met links onderaan de footer (bijv. "Ontdek", "Contact").' },
+              fields: [
+                { name: 'title', type: 'text', required: true, label: 'Kolomtitel' },
+                {
+                  name: 'links',
+                  type: 'array',
+                  label: 'Links',
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        { name: 'label', type: 'text', required: true, label: 'Label', admin: { width: '50%' } },
+                        { name: 'href', type: 'text', label: 'Link (leeg = geen link)', admin: { width: '50%' } },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              name: 'legalLinks',
+              type: 'array',
+              label: 'Juridische links',
+              admin: { description: 'Links naast het copyright (bijv. Privacy, Voorwaarden).' },
+              fields: [
+                {
+                  type: 'row',
+                  fields: [
+                    { name: 'label', type: 'text', required: true, label: 'Label', admin: { width: '50%' } },
+                    { name: 'href', type: 'text', required: true, label: 'Link', admin: { width: '50%' } },
+                  ],
+                },
+              ],
+            },
           ],
         },
         {
           label: 'Navigatie',
-          description: 'Menu items — sleep om te herordenen.',
+          description: 'Hoofdmenu items — sleep om te herordenen. Voeg submenu-items toe voor een uitklapbaar menu.',
           fields: [
             {
               name: 'navigation',
@@ -58,7 +97,7 @@ export const SiteSettings: GlobalConfig = {
                   type: 'row',
                   fields: [
                     { name: 'label', type: 'text', required: true, label: 'Label', admin: { width: '35%' } },
-                    { name: 'href', type: 'text', required: true, label: 'Link', admin: { width: '35%' } },
+                    { name: 'href', type: 'text', label: 'Link', admin: { width: '35%' } },
                     {
                       name: 'type',
                       type: 'select',
@@ -70,6 +109,21 @@ export const SiteSettings: GlobalConfig = {
                       ],
                       defaultValue: 'page',
                       admin: { width: '30%' },
+                    },
+                  ],
+                },
+                {
+                  name: 'children',
+                  type: 'array',
+                  label: 'Submenu items',
+                  admin: { description: 'Optioneel. Als je hier items toevoegt, wordt dit menu-item uitklapbaar (+ / −).' },
+                  fields: [
+                    {
+                      type: 'row',
+                      fields: [
+                        { name: 'label', type: 'text', required: true, label: 'Label', admin: { width: '50%' } },
+                        { name: 'href', type: 'text', required: true, label: 'Link', admin: { width: '50%' } },
+                      ],
                     },
                   ],
                 },

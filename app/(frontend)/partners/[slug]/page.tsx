@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getPartnerBySlug } from "@/lib/payload";
+import { getPartnerBySlug, getSiteSettings } from "@/lib/payload";
 import PartnerClient from "./PartnerClient";
 
 export const dynamic = "force-dynamic";
@@ -21,7 +21,10 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 
 export default async function PartnerPage({ params }: PageProps) {
   const { slug } = await params;
-  const partner = await getPartnerBySlug(slug);
+  const [partner, settings] = await Promise.all([
+    getPartnerBySlug(slug),
+    getSiteSettings(),
+  ]);
   if (!partner) notFound();
-  return <PartnerClient partner={partner} />;
+  return <PartnerClient partner={partner} settings={settings} />;
 }

@@ -19,9 +19,10 @@ interface Props {
     sections: Record<string, any>;
     seo: any;
   } | null;
+  settings?: any;
 }
 
-export default function HoogwerkerverhuurClient({ cmsContent }: Props) {
+export default function HoogwerkerverhuurClient({ cmsContent, settings }: Props) {
   const [isPopupOpen, setPopupOpen] = useState(false);
 
   const openContact = () => setPopupOpen(true);
@@ -32,7 +33,7 @@ export default function HoogwerkerverhuurClient({ cmsContent }: Props) {
   return (
     <>
       <div className="noise-overlay" aria-hidden="true" />
-      <Header onContactClick={openContact} />
+      <Header onContactClick={openContact} settings={settings} />
 
       <main>
         <HoogwerkerHero onContactClick={openContact} content={s.heroSection} />
@@ -45,9 +46,9 @@ export default function HoogwerkerverhuurClient({ cmsContent }: Props) {
         <HoogwerkerMethodeCTA onContactClick={openContact} content={s.methodeCTA} />
       </main>
 
-      <Footer />
+      <Footer settings={settings} />
       <FloatingCTA onClick={openContact} />
-      <ContactPopup isOpen={isPopupOpen} onClose={closeContact} />
+      <ContactPopup isOpen={isPopupOpen} onClose={closeContact} settings={settings} />
     </>
   );
 }
