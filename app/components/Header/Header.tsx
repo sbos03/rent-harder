@@ -15,6 +15,7 @@ interface HeaderProps {
 export default function Header({ onContactClick, settings }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [submenuOpen, setSubmenuOpen] = useState(false);
   const { scrollY } = useScroll();
 
   useMotionValueEvent(scrollY, "change", (latest) => {
@@ -40,15 +41,29 @@ export default function Header({ onContactClick, settings }: HeaderProps) {
     return () => { document.body.style.overflow = ""; };
   }, [menuOpen]);
 
-  const menuItems = [
+  const menuItems: {
+    label: string;
+    href: string;
+    num: string;
+    isContact?: boolean;
+    children?: { label: string; href: string }[];
+  }[] = [
     { label: "HOME", href: "/", num: "01" },
-    { label: "WAT WE BOUWEN", href: "/#wat-we-bouwen", num: "02" },
-    { label: "VOOR WIE", href: "/#voor-wie", num: "03" },
-    { label: "HOOGWERKERVERHUUR", href: "/voor-wie/hoogwerkerverhuur", num: "03.1" },
-    { label: "DE METHODE", href: "/#methode", num: "04" },
-    { label: "BUILT TO RENT HARDER", href: "/#built-to-rent-harder", num: "05" },
-    { label: "RENT HARDER.TV", href: "/#rent-harder-tv", num: "06" },
-    { label: "CONTACT", href: "#", num: "07", isContact: true },
+    { label: "WAT WE DOEN", href: "/#wat-we-bouwen", num: "02" },
+    {
+      label: "VOOR WIE",
+      href: "/#voor-wie",
+      num: "03",
+      children: [
+        { label: "Machineverhuur", href: "/machineverhuur" },
+        { label: "Containerverhuur", href: "/containerverhuur" },
+        { label: "Pomp- en wateroplossingen", href: "/pomp-en-wateroplossingen" },
+        { label: "Hoogwerkerverhuur", href: "/voor-wie/hoogwerkerverhuur" },
+      ],
+    },
+    { label: "PARTNERVERHALEN", href: "/#built-to-rent-harder", num: "04" },
+    { label: "DE METHODE", href: "/#methode", num: "05" },
+    { label: "CONTACT", href: "#", num: "06", isContact: true },
   ];
 
   return (
@@ -129,6 +144,53 @@ export default function Header({ onContactClick, settings }: HeaderProps) {
                       <span className={styles.navNum}>{item.num}</span>
                       <span className={styles.navLabel}>{item.label}</span>
                     </button>
+                  ) : item.children ? (
+                    <>
+                      <div className={styles.navItem}>
+                        <span className={styles.navNum}>{item.num}</span>
+                        <Link
+                          href={item.href}
+                          onClick={() => setMenuOpen(false)}
+                          className={styles.navLabel}
+                        >
+                          {item.label}
+                        </Link>
+                        <button
+                          type="button"
+                          onClick={() => setSubmenuOpen((v) => !v)}
+                          className={styles.submenuToggle}
+                          aria-label={submenuOpen ? "Submenu inklappen" : "Submenu uitklappen"}
+                          aria-expanded={submenuOpen}
+                        >
+                          {submenuOpen ? "−" : "+"}
+                        </button>
+                      </div>
+
+                      <AnimatePresence initial={false}>
+                        {submenuOpen && (
+                          <motion.ul
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.35, ease: "easeOut" }}
+                            className={styles.submenu}
+                          >
+                            {item.children.map((child) => (
+                              <li key={child.label}>
+                                <Link
+                                  href={child.href}
+                                  onClick={() => setMenuOpen(false)}
+                                  className={styles.submenuItem}
+                                >
+                                  <span className={styles.submenuArrow}>→</span>
+                                  {child.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </motion.ul>
+                        )}
+                      </AnimatePresence>
+                    </>
                   ) : (
                     <Link
                       href={item.href}

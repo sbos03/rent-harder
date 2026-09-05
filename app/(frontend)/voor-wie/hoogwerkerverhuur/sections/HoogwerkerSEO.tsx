@@ -1,7 +1,12 @@
 import React from "react";
 import styles from "./Hoogwerker.module.scss";
 
-export default function HoogwerkerSEO() {
+interface Props {
+  content?: { articles?: { title?: string; body?: any }[] };
+}
+
+export default function HoogwerkerSEO({ content }: Props) {
+  void content; // reserved for future CMS wiring; currently uses static SEO copy
   return (
     <section className={styles.seoSection}>
       <div className={styles.seoInner}>

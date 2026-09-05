@@ -53,12 +53,12 @@ export async function GET() {
             title: 'HARDER VERHUREN.',
             description: 'Partners, geen klanten. We werken naast verhuurbedrijven die serieus willen groeien.',
             stories: [
-              { name: 'LEIDINGVERHUUR' },
-              { name: 'WATERPOMPOPLOSSINGEN' },
-              { name: 'AFVALCONTAINERS' },
-              { name: 'HEFTRUCKVERHUUR' },
+              { eyebrow: 'Voor infra & tijdelijke installaties', name: 'LEIDINGVERHUUR', intro: 'Meer aanvragen, grip op beschikbaarheid en een slimmer proces van offerte tot retour.' },
+              { eyebrow: 'Voor bouw, infra & waterbeheer', name: 'POMPVERHUUR & WATEROPLOSSINGEN', intro: 'Maak technische kennis beter zichtbaar en stroomlijn aanvraag, planning en uitvoering.' },
+              { eyebrow: 'Voor particulier & zakelijk verhuur', name: 'VERHUUR CONTAINERS', intro: 'Beter gevonden worden, makkelijker laten huren en slimmer werken van bestelling tot ophalen.' },
+              { eyebrow: 'Voor industrie, logistiek & bouw', name: 'MACHINEVERHUUR', intro: 'Meer uit je machinepark halen met betere vindbaarheid, snellere aanvragen en meer grip op verhuur.' },
             ],
-            ctaText: 'MEER PARTNERVERHALEN',
+            ctaText: 'Bekijk alle verhuurbranches',
           },
           {
             blockType: 'fullscreenStatement',

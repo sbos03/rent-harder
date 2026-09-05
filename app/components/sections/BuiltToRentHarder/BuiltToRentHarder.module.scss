@@ -102,6 +102,7 @@
 .grid {
   display: grid;
   grid-template-columns: 1fr;
+  align-items: stretch;
   gap: 2rem;
   margin-bottom: 8rem;
 
@@ -115,10 +116,12 @@
   display: block;
   overflow: hidden;
   background-color: $rent-black;
-  min-height: 60vh;
+  min-height: 55vh;
 
+  // Non-featured cards in the 2-column row share one equal height
   @media (min-width: $bp-md) {
-    min-height: 70vh;
+    min-height: 60vh;
+    height: 100%;
   }
 
   &:hover {
@@ -131,10 +134,10 @@
 
 .cardFeatured {
   grid-column: 1 / -1;
-  min-height: 70vh;
+  min-height: 60vh;
 
   @media (min-width: $bp-md) {
-    min-height: 85vh;
+    min-height: 80vh;
   }
 }
 
@@ -369,9 +372,9 @@
   font-size: 0.875rem;
   font-weight: 700;
   padding: 1.25rem 2.5rem;
-  background-color: $rent-grey-mid;
-  border: 1px solid $rent-grey-border;
-  border-radius: 4px;
+  background-color: $rent-cta;
+  border: 1px solid $rent-cta;
+  border-radius: 0;
   color: $rent-white;
   transition: all $transition-fast;
   transform-origin: center;

@@ -109,6 +109,11 @@
     left: 3rem;
     right: 3rem;
   }
+
+  // Clear space so the fixed FloatingCTA (bottom-right) doesn't overlap the button
+  @media (min-width: $bp-md) {
+    padding-right: 5rem;
+  }
 }
 
 .bottomText {

@@ -42,5 +42,6 @@ next-env.d.ts
 
 # payload
 /public/media
+/media-uploads
 payload-types.ts
 /data

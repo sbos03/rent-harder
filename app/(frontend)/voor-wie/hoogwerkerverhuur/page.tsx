@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
+import { getPageContent } from "@/lib/payload";
 import HoogwerkerverhuurClient from "./HoogwerkerverhuurClient";
+
+// Re-fetch on every request so CMS edits appear immediately
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Hoogwerkerverhuur — Digitaal sterker verhuren",
@@ -20,6 +24,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function HoogwerkerverhuurPage() {
-  return <HoogwerkerverhuurClient />;
+export default async function HoogwerkerverhuurPage() {
+  const content = await getPageContent("voor-wie/hoogwerkerverhuur");
+  return <HoogwerkerverhuurClient cmsContent={content} />;
 }

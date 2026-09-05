@@ -1,4 +1,8 @@
 import type { CollectionConfig } from 'payload'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const dirname = path.dirname(fileURLToPath(import.meta.url))
 
 export const Media: CollectionConfig = {
   slug: 'media',
@@ -15,34 +19,16 @@ export const Media: CollectionConfig = {
     read: () => true,
   },
   upload: {
-    staticDir: 'public/media',
+    // Store uploads outside /public so they are served through Payload's
+    // own media route (/api/media/file/...) and are not statically cached.
+    staticDir: path.resolve(dirname, '../media-uploads'),
     mimeTypes: ['image/*', 'video/*'],
     focalPoint: true,
     imageSizes: [
-      {
-        name: 'thumbnail',
-        width: 400,
-        height: 300,
-        position: 'focalPoint',
-      },
-      {
-        name: 'card',
-        width: 768,
-        height: 512,
-        position: 'focalPoint',
-      },
-      {
-        name: 'hero',
-        width: 1920,
-        height: 1080,
-        position: 'focalPoint',
-      },
-      {
-        name: 'portrait',
-        width: 600,
-        height: 1067,
-        position: 'focalPoint',
-      },
+      { name: 'thumbnail', width: 400, height: 300, position: 'focalPoint' },
+      { name: 'card', width: 768, height: 512, position: 'focalPoint' },
+      { name: 'hero', width: 1920, height: 1080, position: 'focalPoint' },
+      { name: 'portrait', width: 600, height: 1067, position: 'focalPoint' },
     ],
   },
   fields: [

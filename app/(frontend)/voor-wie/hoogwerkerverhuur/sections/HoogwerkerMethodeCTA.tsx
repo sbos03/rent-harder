@@ -6,9 +6,11 @@ import styles from "./Hoogwerker.module.scss";
 
 interface Props {
   onContactClick: () => void;
+  content?: any;
 }
 
-export default function HoogwerkerMethodeCTA({ onContactClick }: Props) {
+export default function HoogwerkerMethodeCTA({ onContactClick, content }: Props) {
+  void content; // reserved for future CMS wiring; currently uses static copy
   return (
     <section className={styles.methodeCTASection}>
       <div className={styles.methodeCTAInner}>

@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import styles from "./Slide2Intro.module.scss";
 import { withLineBreaks } from "@/app/lib/renderText";
+import { makeCtaHandler } from "@/app/lib/ctaAction";
 
 interface Slide2IntroProps {
   onContactClick: () => void;
@@ -12,6 +13,7 @@ interface Slide2IntroProps {
     title?: string;
     description?: string;
     ctaText?: string;
+    ctaLink?: string;
     image?: { url?: string; alt?: string } | null;
   };
 }
@@ -23,6 +25,7 @@ export default function Slide2Intro({ onContactClick, content }: Slide2IntroProp
     content?.description ||
     "Rent Harder helpt ambitieuze verhuurbedrijven digitaal sterker te worden. Zodat je beter zichtbaar bent, slimmer werkt en meer uit je verhuurbedrijf haalt.";
   const ctaText = content?.ctaText || "LAAT ZIEN WAT JE VERHUURT";
+  const handleCta = makeCtaHandler(content?.ctaLink, onContactClick);
   const imageSrc = content?.image?.url || "/images/Bulldozer-verhuur.jpg";
   const imageAlt = content?.image?.alt || "Ambitieus verhuurbedrijf";
 
@@ -46,7 +49,7 @@ export default function Slide2Intro({ onContactClick, content }: Slide2IntroProp
 
           <p className={styles.description}>{description}</p>
 
-          <button onClick={onContactClick} className={styles.cta}>
+          <button onClick={handleCta} className={styles.cta}>
             <div className={styles.ctaInner}>{ctaText}</div>
           </button>
         </div>
