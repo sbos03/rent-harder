@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Button from "@/app/components/Button";
 import styles from "./HeroSection.module.scss";
+import { makeCtaHandler } from "@/app/lib/ctaAction";
 
 interface HeroSectionProps {
   onContactClick: () => void;
@@ -13,6 +14,7 @@ interface HeroSectionProps {
     subtitle?: string;
     bottomText?: string;
     buttonText?: string;
+    buttonLink?: string;
     backgroundImage?: { url?: string } | null;
   };
 }
@@ -31,6 +33,7 @@ export default function HeroSection({ onContactClick, content }: HeroSectionProp
     content?.bottomText ||
     "Grote kans dat er meer in jouw verhuurbedrijf zit dan je nu laat zien.";
   const buttonText = content?.buttonText || "LAAT ZIEN WAT JE VERHUURT.";
+  const handleCta = makeCtaHandler(content?.buttonLink, onContactClick);
   const bgImage = content?.backgroundImage?.url || "/images/afvalcontainer-1.jpg";
 
   const titleLines = title.split("|");
@@ -73,7 +76,7 @@ export default function HeroSection({ onContactClick, content }: HeroSectionProp
 
       <div className={styles.bottomBar}>
         <div className={styles.bottomText}>{bottomText}</div>
-        <Button onClick={onContactClick} variant="outline">
+        <Button onClick={handleCta} variant="outline">
           {buttonText}
         </Button>
       </div>

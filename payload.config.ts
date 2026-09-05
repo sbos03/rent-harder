@@ -35,6 +35,8 @@ export default buildConfig({
     client: {
       url: process.env.DATABASE_URL || 'file:./data/payload.db',
     },
+    // Auto-sync schema on startup. Works on all Node versions.
+    push: true,
   }),
 
   sharp,

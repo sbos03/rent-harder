@@ -14,11 +14,20 @@ import HoogwerkerCases from "./sections/HoogwerkerCases";
 import HoogwerkerOtherMarkets from "./sections/HoogwerkerOtherMarkets";
 import HoogwerkerMethodeCTA from "./sections/HoogwerkerMethodeCTA";
 
-export default function HoogwerkerverhuurClient() {
+interface Props {
+  cmsContent?: {
+    sections: Record<string, any>;
+    seo: any;
+  } | null;
+}
+
+export default function HoogwerkerverhuurClient({ cmsContent }: Props) {
   const [isPopupOpen, setPopupOpen] = useState(false);
 
   const openContact = () => setPopupOpen(true);
   const closeContact = () => setPopupOpen(false);
+
+  const s = cmsContent?.sections || {};
 
   return (
     <>
@@ -26,14 +35,14 @@ export default function HoogwerkerverhuurClient() {
       <Header onContactClick={openContact} />
 
       <main>
-        <HoogwerkerHero onContactClick={openContact} />
-        <HoogwerkerExample onContactClick={openContact} />
-        <HoogwerkerPrinciple />
-        <HoogwerkerSEO />
-        <HoogwerkerOpenMarkt onContactClick={openContact} />
-        <HoogwerkerCases />
-        <HoogwerkerOtherMarkets />
-        <HoogwerkerMethodeCTA onContactClick={openContact} />
+        <HoogwerkerHero onContactClick={openContact} content={s.heroSection} />
+        <HoogwerkerExample onContactClick={openContact} content={s.caseExample} />
+        <HoogwerkerPrinciple content={s.principleSteps} />
+        <HoogwerkerSEO content={s.seoContent} />
+        <HoogwerkerOpenMarkt onContactClick={openContact} content={s.ctaSection} />
+        <HoogwerkerCases content={s.caseShowcase} />
+        <HoogwerkerOtherMarkets content={s.otherMarkets} />
+        <HoogwerkerMethodeCTA onContactClick={openContact} content={s.methodeCTA} />
       </main>
 
       <Footer />

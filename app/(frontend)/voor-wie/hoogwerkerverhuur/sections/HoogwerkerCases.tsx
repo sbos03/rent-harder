@@ -3,7 +3,12 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import styles from "./Hoogwerker.module.scss";
 
-export default function HoogwerkerCases() {
+interface Props {
+  content?: any;
+}
+
+export default function HoogwerkerCases({ content }: Props) {
+  void content; // reserved for future CMS wiring; currently uses static case cards
   return (
     <section className={styles.casesSection}>
       <div className={styles.casesInner}>

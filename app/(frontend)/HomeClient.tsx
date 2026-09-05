@@ -64,7 +64,7 @@ export default function HomeClient({ cmsContent }: Props) {
           <MethodRoadmap content={s.methodRoadmap} />
         </div>
         <div id="built-to-rent-harder">
-          <BuiltToRentHarder onContactClick={openContact} content={s.caseShowcase} />
+          <BuiltToRentHarder onContactClick={openContact} content={s.caseShowcase} partners={cmsContent?.partners || null} />
         </div>
       </main>
 

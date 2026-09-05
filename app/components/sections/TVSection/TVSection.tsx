@@ -5,6 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
 import styles from "./TVSection.module.scss";
+import { makeCtaHandler } from "@/app/lib/ctaAction";
 
 interface Props {
   onContactClick: () => void;
@@ -14,6 +15,7 @@ interface Props {
     title?: string;
     description?: string;
     ctaText?: string;
+    ctaLink?: string;
   };
 }
 
@@ -23,6 +25,8 @@ export default function TVSection({ onContactClick, episodes: cmsEpisodes, conte
   const description =
     content?.description ||
     "Verhalen, inzichten en ideeën uit de wereld van verhuur. Op locatie, tussen het materieel en met de mensen die het iedere dag doen.";
+  const ctaText = content?.ctaText || "BEKIJK ALLES OP RENT HARDER.TV";
+  const handleCta = makeCtaHandler(content?.ctaLink, onContactClick);
   const defaultEpisodes = [
     { meta: "RH.TV / 001 · DOCUMENTARY SHORT", title: "WAAR LIGT IN JOUW REGIO NOG EEN OPEN VERHUURMARKT?", time: "06:42" },
     { meta: "RH.TV / 002 · ON SITE", title: "HOE BOUW JE EEN VERHUURMERK DAT NIEMAND MIST?", time: "05:18" },
@@ -103,8 +107,8 @@ export default function TVSection({ onContactClick, episodes: cmsEpisodes, conte
       </div>
 
       <div className={styles.ctaWrap}>
-        <button onClick={onContactClick} className={styles.cta}>
-          <div className={styles.ctaInner}>BEKIJK ALLES OP RENT HARDER.TV</div>
+        <button onClick={handleCta} className={styles.cta}>
+          <div className={styles.ctaInner}>{ctaText}</div>
         </button>
       </div>
     </section>

@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import styles from "./Slide4TargetAudience.module.scss";
+import { makeCtaHandler } from "@/app/lib/ctaAction";
 
 interface Props {
   onContactClick: () => void;
@@ -11,6 +12,7 @@ interface Props {
     title?: string;
     categories?: string;
     ctaText?: string;
+    ctaLink?: string;
   };
 }
 
@@ -21,6 +23,7 @@ export default function Slide4TargetAudience({ onContactClick, content }: Props)
     content?.categories ||
     "Hoogwerkers. Aggregaten. Opleggers. Pompen. Containers. Heftrucks. Verreikers. Kranen. En waarschijnlijk nog veel meer.";
   const ctaText = content?.ctaText || "VOORBEELDEN ZIEN?";
+  const handleCta = makeCtaHandler(content?.ctaLink, onContactClick);
 
   return (
     <section className={styles.section}>
@@ -43,7 +46,7 @@ export default function Slide4TargetAudience({ onContactClick, content }: Props)
 
       <p className={styles.categories}>{categories}</p>
 
-      <button onClick={onContactClick} className={styles.cta}>
+      <button onClick={handleCta} className={styles.cta}>
         <div className={styles.ctaInner}>{ctaText}</div>
       </button>
     </section>

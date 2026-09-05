@@ -1,4 +1,5 @@
 import type { CollectionConfig } from 'payload'
+import { pageSectionBlocks } from './pageBlocks'
 
 export const Partners: CollectionConfig = {
   slug: 'partners',
@@ -8,49 +9,21 @@ export const Partners: CollectionConfig = {
   },
   admin: {
     useAsTitle: 'name',
-    defaultColumns: ['name', 'headline', 'published', 'updatedAt'],
-    description: 'Partnerverhalen — bedrijven waarmee RENT HARDER samenwerkt.',
+    defaultColumns: ['name', 'slug', 'published', 'updatedAt'],
+    description: 'Partnerverhalen — elk met een eigen pagina opgebouwd uit secties.',
+  },
+  access: {
+    read: () => true,
   },
   fields: [
     {
-      name: 'name',
+      name: 'slug',
       type: 'text',
-      required: true,
-      label: 'Bedrijfsnaam',
-    },
-    {
-      name: 'headline',
-      type: 'text',
-      required: true,
-      label: 'Headline',
-      admin: { description: 'Korte samenvatting van de transformatie.' },
-    },
-    {
-      name: 'description',
-      type: 'textarea',
-      label: 'Beschrijving',
-    },
-    {
-      name: 'points',
-      type: 'array',
-      label: 'Resultaten',
-      admin: { description: 'Opsomming van behaalde resultaten.' },
-      fields: [
-        { name: 'text', type: 'text', required: true },
-      ],
-    },
-    {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
-      required: true,
-      label: 'Achtergrond afbeelding',
-    },
-    {
-      name: 'logo',
-      type: 'upload',
-      relationTo: 'media',
-      label: 'Logo',
+      unique: true,
+      admin: {
+        position: 'sidebar',
+        description: 'URL van de partnerpagina (bijv. "jh-verhuur").',
+      },
     },
     {
       name: 'published',
@@ -63,7 +36,96 @@ export const Partners: CollectionConfig = {
       name: 'order',
       type: 'number',
       label: 'Volgorde',
-      admin: { position: 'sidebar' },
+      admin: { position: 'sidebar', description: 'Lagere nummers eerst.' },
+    },
+    // ── Legacy fields kept so existing databases upgrade without data loss.
+    //    Hidden in the admin; safe to remove later via a proper migration.
+    { name: 'headline', type: 'text', admin: { hidden: true } },
+    { name: 'description', type: 'textarea', admin: { hidden: true } },
+    { name: 'image', type: 'upload', relationTo: 'media', admin: { hidden: true } },
+    { name: 'logo', type: 'upload', relationTo: 'media', admin: { hidden: true } },
+    {
+      type: 'tabs',
+      tabs: [
+        // ── TAB: Kaart (homepage card) ──
+        {
+          label: 'Kaart',
+          description: 'Hoe deze partner op de homepage wordt getoond.',
+          fields: [
+            { name: 'name', type: 'text', required: true, label: 'Bedrijfsnaam' },
+            {
+              name: 'transformation',
+              type: 'array',
+              label: 'Transformatie regels',
+              admin: { description: 'De grote regels op de kaart (bijv. "VAN BREED VERHAAL").' },
+              fields: [{ name: 'text', type: 'text', required: true }],
+            },
+            {
+              name: 'points',
+              type: 'array',
+              label: 'Resultaten',
+              fields: [{ name: 'text', type: 'text', required: true }],
+            },
+            {
+              name: 'cardImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Kaart achtergrond afbeelding',
+            },
+            {
+              name: 'featured',
+              type: 'checkbox',
+              label: 'Uitgelicht (grotere kaart)',
+              defaultValue: false,
+            },
+          ],
+        },
+        // ── TAB: Intro (top of the partner page) ──
+        {
+          label: 'Intro',
+          description: 'De koptekst en achtergrondfoto bovenaan de partnerpagina.',
+          fields: [
+            { name: 'introEyebrow', type: 'text', label: 'Label boven titel' },
+            { name: 'introTitle', type: 'text', label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+            { name: 'introDescription', type: 'textarea', label: 'Beschrijving' },
+            {
+              name: 'introImage',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Achtergrond afbeelding',
+            },
+          ],
+        },
+        // ── TAB: Secties (full page builder, same as homepage) ──
+        {
+          label: 'Secties',
+          description: 'Bouw de partnerpagina op uit secties, net als de homepage.',
+          fields: [
+            {
+              name: 'sections',
+              type: 'blocks',
+              label: ' ',
+              admin: { initCollapsed: true },
+              blocks: pageSectionBlocks,
+            },
+          ],
+        },
+        // ── TAB: SEO ──
+        {
+          label: 'SEO',
+          fields: [
+            {
+              name: 'seo',
+              type: 'group',
+              label: 'SEO',
+              fields: [
+                { name: 'metaTitle', type: 'text', label: 'Meta titel' },
+                { name: 'metaDescription', type: 'textarea', label: 'Meta beschrijving' },
+              ],
+            },
+          ],
+        },
+      ],
     },
   ],
 }
