@@ -175,6 +175,34 @@ export async function getPartnerBySlug(slug: string) {
 }
 
 /**
+ * Fetch a single published page by slug, returning the full document with
+ * `sections` left as an ordered array so it can be passed straight to
+ * <SectionRenderer />. Used by the dynamic [...slug] frontend route.
+ *
+ * Returns null when the page does not exist or is not published, so the route
+ * can render a 404.
+ */
+export async function getPageBySlug(slug: string) {
+  try {
+    const payload = await getPayload()
+    const result = await payload.find({
+      collection: 'pages',
+      where: {
+        slug: { equals: slug },
+        published: { equals: true },
+      },
+      limit: 1,
+      depth: 2,
+    })
+    const page = result.docs[0] || null
+    if (!page) return null
+    return bustImageCache(page)
+  } catch {
+    return null
+  }
+}
+
+/**
  * Fetch a single page by slug from Payload, with sections mapped.
  */
 export async function getPageContent(slug: string) {
