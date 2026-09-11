@@ -8,3 +8,4 @@ export { default as CinematicStatement } from "./CinematicStatement";
 export { default as TVSection } from "./TVSection";
 export { default as MethodRoadmap } from "./MethodRoadmap";
 export { default as BuiltToRentHarder } from "./BuiltToRentHarder";
+export { default as SeoContent } from "./SeoContent/SeoContent";

@@ -12,6 +12,7 @@ import {
   TVSection,
   MethodRoadmap,
   BuiltToRentHarder,
+  SeoContent,
 } from "@/app/components/sections";
 
 interface Props {
@@ -52,6 +53,8 @@ export default function SectionRenderer({ sections, onContactClick, episodes }: 
             return <MethodRoadmap key={i} content={block} />;
           case "caseShowcase":
             return <BuiltToRentHarder key={i} onContactClick={onContactClick} content={block} />;
+          case "seoContent":
+            return <SeoContent key={i} content={block} />;
           default:
             return null;
         }
