@@ -18,6 +18,12 @@ import {
   TextColumns,
   ImageDuo,
 } from "@/app/components/sections";
+// These four were originally built for the hoogwerker page but read the same
+// CMS block fields, so they are reused here as the shared block renderers.
+import HoogwerkerExample from "@/app/(frontend)/voor-wie/hoogwerkerverhuur/sections/HoogwerkerExample";
+import HoogwerkerPrinciple from "@/app/(frontend)/voor-wie/hoogwerkerverhuur/sections/HoogwerkerPrinciple";
+import HoogwerkerOpenMarkt from "@/app/(frontend)/voor-wie/hoogwerkerverhuur/sections/HoogwerkerOpenMarkt";
+import HoogwerkerOtherMarkets from "@/app/(frontend)/voor-wie/hoogwerkerverhuur/sections/HoogwerkerOtherMarkets";
 
 interface Props {
   sections: any[];
@@ -82,6 +88,18 @@ export default function SectionRenderer({ sections, onContactClick, episodes }: 
             break;
           case "imageDuo":
             node = <ImageDuo content={block} />;
+            break;
+          case "caseExample":
+            node = <HoogwerkerExample onContactClick={onContactClick} content={block} />;
+            break;
+          case "principleSteps":
+            node = <HoogwerkerPrinciple content={block} />;
+            break;
+          case "ctaSection":
+            node = <HoogwerkerOpenMarkt onContactClick={onContactClick} content={block} />;
+            break;
+          case "otherMarkets":
+            node = <HoogwerkerOtherMarkets content={block} />;
             break;
           default:
             return null;
