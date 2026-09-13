@@ -112,6 +112,9 @@
   letter-spacing: $tracking-wide;
   transition: all $transition-normal;
   gap: 1rem;
+  // Rendered as <a> links styled like buttons.
+  text-decoration: none;
+  cursor: pointer;
 
   @media (min-width: $bp-md) {
     font-size: 0.875rem;

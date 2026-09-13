@@ -24,6 +24,8 @@ export default function CinematicStatement({ content }: Props) {
           src="/images/8.png"
           alt=""
           fill
+          sizes="100vw"
+          quality={85}
           className={styles.bgImage}
           aria-hidden="true"
         />

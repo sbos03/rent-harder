@@ -20,9 +20,10 @@ export const SiteSettings: GlobalConfig = {
         {
           label: 'Contact',
           fields: [
-            { name: 'phone', type: 'text', label: 'Telefoonnummer' },
-            { name: 'email', type: 'text', label: 'E-mail' },
-            { name: 'whatsapp', type: 'text', label: 'WhatsApp nummer' },
+            { name: 'phone', type: 'text', label: 'Telefoonnummer', admin: { description: 'Bijv. 0599 253032. Leeg = knop "Bel ons" verborgen.' } },
+            { name: 'email', type: 'text', label: 'E-mail', admin: { description: 'Leeg = knop "Stuur een mail" verborgen.' } },
+            { name: 'whatsapp', type: 'text', label: 'WhatsApp nummer', admin: { description: 'Internationaal formaat, bijv. +31612345678. Leeg = knop "Start WhatsApp" verborgen.' } },
+            { name: 'bookingUrl', type: 'text', label: 'Afspraak / kennismaking link', admin: { description: 'Boekingslink (bijv. Calendly of Cal.com). Leeg = knop "Plan een kennismaking" verborgen.' } },
             { name: 'address', type: 'textarea', label: 'Adres' },
           ],
         },

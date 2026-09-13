@@ -46,6 +46,8 @@ export default function HeroSection({ onContactClick, content }: HeroSectionProp
           alt="Verhuurmachine in actie"
           fill
           priority
+          sizes="100vw"
+          quality={85}
           className={styles.bgImage}
         />
         <div className={styles.gradientOverlay} />

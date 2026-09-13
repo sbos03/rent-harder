@@ -9,3 +9,7 @@ export { default as TVSection } from "./TVSection";
 export { default as MethodRoadmap } from "./MethodRoadmap";
 export { default as BuiltToRentHarder } from "./BuiltToRentHarder";
 export { default as SeoContent } from "./SeoContent/SeoContent";
+export { default as FeatureColumns } from "./FeatureColumns/FeatureColumns";
+export { default as CenteredStatement } from "./CenteredStatement/CenteredStatement";
+export { default as TextColumns } from "./TextColumns/TextColumns";
+export { default as ImageDuo } from "./ImageDuo/ImageDuo";

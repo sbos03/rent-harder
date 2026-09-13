@@ -1,0 +1,50 @@
+@use '../../../styles/variables' as *;
+
+.section {
+  padding: 4rem 2rem;
+
+  @media (min-width: $bp-md) {
+    padding: 6rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 6rem 6rem;
+  }
+}
+
+.light {
+  background-color: $rent-white;
+}
+
+.dark {
+  background-color: $rent-black;
+}
+
+.inner {
+  max-width: $bp-2xl;
+  margin: 0 auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+  }
+}
+
+.figure {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}

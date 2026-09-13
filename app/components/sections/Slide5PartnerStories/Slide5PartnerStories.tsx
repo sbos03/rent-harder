@@ -88,6 +88,8 @@ export default function Slide5PartnerStories({ onContactClick, content }: Props)
                   src={story.image}
                   alt={story.imageAlt}
                   fill
+                  sizes="(max-width: 768px) 100vw, 50vw"
+                  quality={85}
                   className={styles.cardImg}
                 />
               ) : (

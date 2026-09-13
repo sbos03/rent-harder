@@ -1,0 +1,114 @@
+@use '../../../styles/variables' as *;
+
+.section {
+  padding: 8rem 2rem;
+
+  @media (min-width: $bp-md) {
+    padding: 12rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 12rem 6rem;
+  }
+}
+
+.light {
+  background-color: $rent-grey-bg;
+  color: $rent-black;
+}
+
+.dark {
+  background-color: $rent-card-dark;
+  color: $rent-white;
+}
+
+.inner {
+  max-width: $bp-2xl;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.title {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: 0.85;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  margin-bottom: 2rem;
+  color: inherit;
+}
+
+.subtitle {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1.125rem;
+  line-height: 1.5;
+  max-width: 40rem;
+  margin-bottom: 6rem;
+  opacity: 0.6;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.25rem;
+  }
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+}
+
+.column {
+  @media (min-width: $bp-md) {
+    padding: 0 2.5rem;
+    border-left: 1px solid rgba($rent-black, 0.12);
+
+    &:first-child {
+      padding-left: 0;
+      border-left: none;
+    }
+
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+}
+
+.dark .column {
+  @media (min-width: $bp-md) {
+    border-left-color: rgba($rent-white, 0.15);
+  }
+}
+
+.columnTitle {
+  font-family: $font-display;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  font-size: 1.5rem;
+  margin-bottom: 1.25rem;
+  color: inherit;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.75rem;
+  }
+}
+
+.columnDesc {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.6;
+  opacity: 0.6;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.0625rem;
+  }
+}

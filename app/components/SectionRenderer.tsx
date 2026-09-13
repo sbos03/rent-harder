@@ -13,6 +13,10 @@ import {
   MethodRoadmap,
   BuiltToRentHarder,
   SeoContent,
+  FeatureColumns,
+  CenteredStatement,
+  TextColumns,
+  ImageDuo,
 } from "@/app/components/sections";
 
 interface Props {
@@ -32,32 +36,70 @@ export default function SectionRenderer({ sections, onContactClick, episodes }: 
   return (
     <>
       {sections.map((block, i) => {
+        let node: React.ReactNode;
         switch (block.blockType) {
           case "heroSection":
-            return <HeroSection key={i} onContactClick={onContactClick} content={block} />;
+            node = <HeroSection onContactClick={onContactClick} content={block} />;
+            break;
           case "introSection":
-            return <Slide2Intro key={i} onContactClick={onContactClick} content={block} />;
+            node = <Slide2Intro onContactClick={onContactClick} content={block} />;
+            break;
           case "brandStatement":
-            return <Slide3Brand key={i} content={block} />;
+            node = <Slide3Brand content={block} />;
+            break;
           case "targetAudience":
-            return <Slide4TargetAudience key={i} onContactClick={onContactClick} content={block} />;
+            node = <Slide4TargetAudience onContactClick={onContactClick} content={block} />;
+            break;
           case "partnerStories":
-            return <Slide5PartnerStories key={i} onContactClick={onContactClick} content={block} />;
+            node = <Slide5PartnerStories onContactClick={onContactClick} content={block} />;
+            break;
           case "fullscreenStatement":
-            return <Slide6Mensenwerk key={i} content={block} />;
+            node = <Slide6Mensenwerk content={block} />;
+            break;
           case "cinematicStatement":
-            return <CinematicStatement key={i} content={block} />;
+            node = <CinematicStatement content={block} />;
+            break;
           case "tvSection":
-            return <TVSection key={i} onContactClick={onContactClick} content={block} episodes={episodes} />;
+            node = <TVSection onContactClick={onContactClick} content={block} episodes={episodes} />;
+            break;
           case "methodRoadmap":
-            return <MethodRoadmap key={i} content={block} />;
+            node = <MethodRoadmap content={block} />;
+            break;
           case "caseShowcase":
-            return <BuiltToRentHarder key={i} onContactClick={onContactClick} content={block} />;
+            node = <BuiltToRentHarder onContactClick={onContactClick} content={block} />;
+            break;
           case "seoContent":
-            return <SeoContent key={i} content={block} />;
+            node = <SeoContent content={block} />;
+            break;
+          case "featureColumns":
+            node = <FeatureColumns content={block} />;
+            break;
+          case "centeredStatement":
+            node = <CenteredStatement content={block} />;
+            break;
+          case "textColumns":
+            node = <TextColumns content={block} />;
+            break;
+          case "imageDuo":
+            node = <ImageDuo content={block} />;
+            break;
           default:
             return null;
         }
+
+        // Wrap in an anchor target only when an id is set, so #anchor links
+        // scroll to this section. scroll-margin-top keeps it clear of a
+        // sticky header.
+        const anchor = typeof block.anchor === "string" ? block.anchor.trim() : "";
+        if (anchor) {
+          return (
+            <div key={i} id={anchor} style={{ scrollMarginTop: "6rem" }}>
+              {node}
+            </div>
+          );
+        }
+
+        return <React.Fragment key={i}>{node}</React.Fragment>;
       })}
     </>
   );

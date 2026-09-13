@@ -42,7 +42,10 @@ next-env.d.ts
 
 # payload
 /public/media
-/media-uploads
+# Ignore uploaded media, but keep the folder itself so uploads never fail
+# because the target directory is missing.
+/media-uploads/*
+!/media-uploads/.gitkeep
 payload-types.ts
 /data
 /backups

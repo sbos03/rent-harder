@@ -1,0 +1,117 @@
+@use '../../../styles/variables' as *;
+
+.section {
+  padding: 6rem 2rem;
+
+  @media (min-width: $bp-md) {
+    padding: 8rem 3rem;
+  }
+
+  @media (min-width: $bp-lg) {
+    padding: 8rem 6rem;
+  }
+}
+
+.light {
+  background-color: $rent-white;
+  color: $rent-black;
+}
+
+.dark {
+  background-color: $rent-card-dark;
+  color: $rent-white;
+}
+
+.inner {
+  max-width: $bp-2xl;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.eyebrow {
+  font-family: $font-display;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 0.75rem;
+  opacity: 0.55;
+  display: block;
+  margin-bottom: 1.5rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 0.875rem;
+  }
+}
+
+.title {
+  font-family: $font-display;
+  font-weight: 900;
+  line-height: 0.9;
+  text-transform: uppercase;
+  letter-spacing: -0.05em;
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  margin-bottom: 4rem;
+  color: inherit;
+}
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+
+  @media (min-width: $bp-md) {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3.5rem;
+  }
+}
+
+.body {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.75;
+  margin-bottom: 2rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.0625rem;
+  }
+}
+
+.highlight {
+  color: $rent-sunset;
+  opacity: 1;
+  font-weight: 500;
+}
+
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.bullet {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  font-family: $font-body;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+
+  @media (min-width: $bp-md) {
+    font-size: 1rem;
+  }
+}
+
+.check {
+  width: 1.125rem;
+  height: 1.125rem;
+  flex-shrink: 0;
+  color: $rent-sunset;
+  margin-top: 0.15rem;
+  stroke-width: 3;
+}
