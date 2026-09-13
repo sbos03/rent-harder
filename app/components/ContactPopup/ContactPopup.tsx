@@ -11,8 +11,28 @@ interface ContactPopupProps {
   settings?: any;
 }
 
+/** Keep digits only, so a nicely formatted number becomes a valid wa.me / tel target. */
+function digitsOnly(value?: string) {
+  return (value || "").replace(/[^\d]/g, "");
+}
+
 export default function ContactPopup({ isOpen, onClose, settings }: ContactPopupProps) {
   const modalRef = useRef<HTMLDivElement>(null);
+
+  // Build the contact actions from CMS settings. An action only renders when
+  // its underlying field is filled in, so empty fields simply hide the button.
+  const whatsappDigits = digitsOnly(settings?.whatsapp);
+  const phoneRaw = (settings?.phone || "").trim();
+  const phoneDigits = digitsOnly(phoneRaw);
+  const email = (settings?.email || "").trim();
+  const bookingUrl = (settings?.bookingUrl || "").trim();
+
+  const waHref = whatsappDigits ? `https://wa.me/${whatsappDigits}` : null;
+  // Preserve a leading "+" (international) but never invent one for a local number.
+  const telHref = phoneDigits
+    ? `tel:${phoneRaw.startsWith("+") ? "+" : ""}${phoneDigits}`
+    : null;
+  const mailHref = email ? `mailto:${email}` : null;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -99,22 +119,40 @@ export default function ContactPopup({ isOpen, onClose, settings }: ContactPopup
             </div>
 
             <div className={styles.actions}>
-              <button className={`${styles.actionBtn} ${styles.actionPrimary}`}>
-                <MessageCircle className={styles.actionIcon} />
-                Start WhatsApp
-              </button>
-              <button className={`${styles.actionBtn} ${styles.actionDark}`}>
-                <Phone className={styles.actionIcon} />
-                Bel ons
-              </button>
-              <button className={`${styles.actionBtn} ${styles.actionOutline}`}>
-                <Mail className={styles.actionIcon} />
-                Stuur een mail
-              </button>
-              <button className={`${styles.actionBtn} ${styles.actionOutline}`}>
-                <Calendar className={styles.actionIcon} />
-                Plan een kennismaking
-              </button>
+              {waHref && (
+                <a
+                  href={waHref}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.actionBtn} ${styles.actionPrimary}`}
+                >
+                  <MessageCircle className={styles.actionIcon} />
+                  Start WhatsApp
+                </a>
+              )}
+              {telHref && (
+                <a href={telHref} className={`${styles.actionBtn} ${styles.actionDark}`}>
+                  <Phone className={styles.actionIcon} />
+                  Bel ons
+                </a>
+              )}
+              {mailHref && (
+                <a href={mailHref} className={`${styles.actionBtn} ${styles.actionOutline}`}>
+                  <Mail className={styles.actionIcon} />
+                  Stuur een mail
+                </a>
+              )}
+              {bookingUrl && (
+                <a
+                  href={bookingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${styles.actionBtn} ${styles.actionOutline}`}
+                >
+                  <Calendar className={styles.actionIcon} />
+                  Plan een kennismaking
+                </a>
+              )}
             </div>
 
             <div className={styles.footer}>

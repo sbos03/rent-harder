@@ -73,8 +73,10 @@ export default function HoogwerkerExample({ onContactClick, content }: Props) {
           <Image
             src={imageSrc}
             alt={imageAlt}
-            width={800}
-            height={600}
+            width={1000}
+            height={750}
+            sizes="(max-width: 768px) 100vw, 50vw"
+            quality={85}
             className={styles.exampleImage}
           />
         </div>

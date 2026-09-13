@@ -37,6 +37,8 @@ export default function PartnerClient({ partner, settings }: Props) {
                 alt={partner?.introImage?.alt || partner?.name || ""}
                 fill
                 priority
+                sizes="100vw"
+                quality={85}
                 className={styles.introBg}
               />
               <div className={styles.introOverlay} />

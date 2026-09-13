@@ -1,10 +1,45 @@
 import { getPayload as getPayloadInstance } from 'payload'
 import config from '@payload-config'
+import { convertLexicalToHTML } from '@payloadcms/richtext-lexical/html'
 
 export const getPayload = () =>
   getPayloadInstance({
     config,
   })
+
+/**
+ * Convert a Lexical richText value to an HTML string on the server, so client
+ * components can render it directly without pulling the converter into the
+ * browser bundle. Returns '' for empty/invalid input.
+ */
+function richTextToHtml(value: any): string {
+  if (!value || typeof value !== 'object' || !value.root) return ''
+  try {
+    return convertLexicalToHTML({ data: value })
+  } catch {
+    return ''
+  }
+}
+
+/**
+ * Walks a page's `sections` array and, for every seoContent block, pre-renders
+ * each article's richText `body` into a `bodyHtml` string. Runs server-side.
+ */
+function renderRichTextSections(sections: any[] | undefined | null): any[] {
+  if (!Array.isArray(sections)) return []
+  return sections.map((block) => {
+    if (block?.blockType !== 'seoContent' || !Array.isArray(block.articles)) {
+      return block
+    }
+    return {
+      ...block,
+      articles: block.articles.map((article: any) => ({
+        ...article,
+        bodyHtml: richTextToHtml(article?.body),
+      })),
+    }
+  })
+}
 
 /**
  * Walks any data structure and, for every media object (has a `url` and
@@ -168,7 +203,39 @@ export async function getPartnerBySlug(slug: string) {
     })
     const partner = result.docs[0] || null
     if (!partner) return null
-    return bustImageCache(partner)
+    const busted = bustImageCache(partner)
+    busted.sections = renderRichTextSections(busted.sections)
+    return busted
+  } catch {
+    return null
+  }
+}
+
+/**
+ * Fetch a single published page by slug, returning the full document with
+ * `sections` left as an ordered array so it can be passed straight to
+ * <SectionRenderer />. Used by the dynamic [...slug] frontend route.
+ *
+ * Returns null when the page does not exist or is not published, so the route
+ * can render a 404.
+ */
+export async function getPageBySlug(slug: string) {
+  try {
+    const payload = await getPayload()
+    const result = await payload.find({
+      collection: 'pages',
+      where: {
+        slug: { equals: slug },
+        published: { equals: true },
+      },
+      limit: 1,
+      depth: 2,
+    })
+    const page = result.docs[0] || null
+    if (!page) return null
+    const busted = bustImageCache(page)
+    busted.sections = renderRichTextSections(busted.sections)
+    return busted
   } catch {
     return null
   }

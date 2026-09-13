@@ -1,10 +1,39 @@
-import type { Block } from 'payload'
+import type { Block, Field } from 'payload'
 
 /**
- * Shared section blocks used by both the Pages collection and the
- * Partners collection, so partner pages can be built exactly like the homepage.
+ * Shared "Anchor / Sectie ID" field added to every block. Lets an editor give
+ * a section a stable id (e.g. "prijzen") so links like /pagina#prijzen scroll
+ * to it. The value is normalised to a URL-safe slug on save.
  */
-export const pageSectionBlocks: Block[] = [
+const anchorField: Field = {
+  name: 'anchor',
+  type: 'text',
+  label: 'Anchor / Sectie ID',
+  admin: {
+    position: 'sidebar',
+    description: 'Optioneel. Link ernaartoe met #jouw-id, bijv. "prijzen" → /pagina#prijzen. Alleen letters, cijfers en koppeltekens.',
+  },
+  hooks: {
+    beforeValidate: [
+      ({ value }) =>
+        typeof value === 'string' && value.trim() !== ''
+          ? value
+              .toLowerCase()
+              .trim()
+              .replace(/[^a-z0-9\s-]/g, '')
+              .replace(/\s+/g, '-')
+              .replace(/-+/g, '-')
+              .replace(/^-|-$/g, '')
+          : value,
+    ],
+  },
+}
+
+/**
+ * Section blocks used by both the Pages collection and the Partners collection,
+ * so partner pages can be built exactly like the homepage.
+ */
+const rawSectionBlocks: Block[] = [
   // ─── HERO ──────────────────────────────────────────────
   {
     slug: 'heroSection',
@@ -256,4 +285,134 @@ export const pageSectionBlocks: Block[] = [
       ]},
     ],
   },
+  // ─── FEATURE COLUMNS (licht, titel + subtitle + kolommen) ──
+  {
+    slug: 'featureColumns',
+    labels: { singular: '🧱 Feature Kolommen', plural: 'Feature Kolommen Secties' },
+    fields: [
+      { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      { name: 'subtitle', type: 'textarea', label: 'Ondertitel' },
+      {
+        name: 'theme',
+        type: 'select',
+        label: 'Kleurstelling',
+        defaultValue: 'light',
+        options: [
+          { label: 'Licht (witte achtergrond)', value: 'light' },
+          { label: 'Donker (zwarte achtergrond)', value: 'dark' },
+        ],
+      },
+      {
+        name: 'columns',
+        type: 'array',
+        label: 'Kolommen',
+        minRows: 1,
+        maxRows: 4,
+        fields: [
+          { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+          { name: 'description', type: 'textarea', label: 'Beschrijving' },
+        ],
+      },
+    ],
+  },
+  // ─── CENTERED STATEMENT (gecentreerde titel + paragrafen + highlight) ──
+  {
+    slug: 'centeredStatement',
+    labels: { singular: '🎯 Gecentreerd Statement', plural: 'Gecentreerde Statements' },
+    fields: [
+      { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      {
+        name: 'paragraphs',
+        type: 'array',
+        label: 'Paragrafen',
+        fields: [{ name: 'text', type: 'textarea', required: true, label: 'Tekst' }],
+      },
+      { name: 'highlightText', type: 'text', label: 'Highlight balk tekst', admin: { description: 'Optioneel. Gebruik | voor regelafbrekingen. Leeg = geen balk.' } },
+      {
+        name: 'theme',
+        type: 'select',
+        label: 'Kleurstelling',
+        defaultValue: 'light',
+        options: [
+          { label: 'Licht (witte achtergrond)', value: 'light' },
+          { label: 'Donker (zwarte achtergrond)', value: 'dark' },
+        ],
+      },
+    ],
+  },
+  // ─── TEXT COLUMNS (eyebrow + titel + kolommen met bullets) ──
+  {
+    slug: 'textColumns',
+    labels: { singular: '📰 Tekst Kolommen', plural: 'Tekst Kolommen Secties' },
+    fields: [
+      { name: 'eyebrow', type: 'text', label: 'Label boven titel' },
+      { name: 'title', type: 'text', label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      {
+        name: 'theme',
+        type: 'select',
+        label: 'Kleurstelling',
+        defaultValue: 'light',
+        options: [
+          { label: 'Licht (witte achtergrond)', value: 'light' },
+          { label: 'Donker (zwarte achtergrond)', value: 'dark' },
+        ],
+      },
+      {
+        name: 'columns',
+        type: 'array',
+        label: 'Kolommen',
+        minRows: 1,
+        maxRows: 4,
+        fields: [
+          { name: 'body', type: 'textarea', label: 'Tekst', admin: { description: 'Optioneel. Een tekstblok boven de bullets.' } },
+          {
+            name: 'highlight',
+            type: 'text',
+            label: 'Uitgelichte regel',
+            admin: { description: 'Optioneel. Wordt in accentkleur getoond, bijv. een link-achtige zin.' },
+          },
+          {
+            name: 'bullets',
+            type: 'array',
+            label: 'Bullets (met checkmark)',
+            fields: [{ name: 'text', type: 'text', required: true }],
+          },
+        ],
+      },
+    ],
+  },
+  // ─── IMAGE DUO (twee afbeeldingen naast elkaar) ────────────
+  {
+    slug: 'imageDuo',
+    labels: { singular: '🖼️ Twee Afbeeldingen', plural: 'Twee-Afbeelding Secties' },
+    fields: [
+      {
+        type: 'row',
+        fields: [
+          { name: 'imageLeft', type: 'upload', relationTo: 'media', required: true, label: 'Linker afbeelding', admin: { width: '50%' } },
+          { name: 'imageRight', type: 'upload', relationTo: 'media', required: true, label: 'Rechter afbeelding', admin: { width: '50%' } },
+        ],
+      },
+      {
+        name: 'theme',
+        type: 'select',
+        label: 'Kleurstelling',
+        defaultValue: 'light',
+        options: [
+          { label: 'Licht (witte achtergrond)', value: 'light' },
+          { label: 'Donker (zwarte achtergrond)', value: 'dark' },
+        ],
+      },
+    ],
+  },
 ]
+
+/**
+ * Every block gets the shared anchor field (in the sidebar) prepended, so any
+ * section can be given a stable id for #anchor links without repeating the
+ * field in each block definition.
+ */
+export const pageSectionBlocks: Block[] = rawSectionBlocks.map((block) => ({
+  ...block,
+  fields: [anchorField, ...block.fields],
+}))

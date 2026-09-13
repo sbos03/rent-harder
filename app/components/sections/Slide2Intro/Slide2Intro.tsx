@@ -59,8 +59,10 @@ export default function Slide2Intro({ onContactClick, content }: Slide2IntroProp
           <Image
             src={imageSrc}
             alt={imageAlt}
-            width={400}
-            height={711}
+            width={800}
+            height={1422}
+            sizes="(max-width: 768px) 100vw, 384px"
+            quality={85}
             className={styles.image}
           />
         </div>

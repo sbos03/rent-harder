@@ -36,6 +36,8 @@ export default function HoogwerkerHero({ onContactClick, content }: Props) {
           alt={bgAlt}
           fill
           priority
+          sizes="100vw"
+          quality={85}
           className={styles.heroBgImage}
         />
         <div className={styles.heroGradientRight} />

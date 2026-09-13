@@ -116,6 +116,8 @@ export default function BuiltToRentHarder({ onContactClick, content, partners }:
                 src={c.image}
                 alt={c.name}
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                quality={85}
                 className={styles.cardImage}
               />
               <div className={styles.cardGradient} />

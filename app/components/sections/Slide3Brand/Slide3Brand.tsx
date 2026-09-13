@@ -7,11 +7,16 @@ import styles from "./Slide3Brand.module.scss";
 interface Props {
   content?: {
     tagline?: string;
+    backgroundImage?: { url?: string; alt?: string } | null;
   };
 }
 
 export default function Slide3Brand({ content }: Props) {
   const tagline = content?.tagline?.replace(/\|/g, " ") || "DIGITAAL WAAR HET KAN. MENSELIJK WAAR HET MOET.";
+  // A CMS-uploaded background takes over. Only fall back to the built-in video
+  // when no image is set, so editors can swap or remove it from the admin.
+  const bgImage = content?.backgroundImage?.url || null;
+  const bgAlt = content?.backgroundImage?.alt || "";
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -43,18 +48,29 @@ export default function Slide3Brand({ content }: Props) {
 
   return (
     <section className={styles.section}>
-      <video
-        ref={videoRef}
-        className={styles.bgVideo}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="auto"
-        poster="/images/Shovel_RS.jpg"
-      >
-        <source src="/Hero_Rent_Harder.mp4" type="video/mp4" />
-      </video>
+      {bgImage ? (
+        <Image
+          src={bgImage}
+          alt={bgAlt}
+          fill
+          sizes="100vw"
+          quality={85}
+          className={styles.bgVideo}
+        />
+      ) : (
+        <video
+          ref={videoRef}
+          className={styles.bgVideo}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/images/Shovel_RS.jpg"
+        >
+          <source src="/Hero_Rent_Harder.mp4" type="video/mp4" />
+        </video>
+      )}
       <div className={styles.overlay} />
 
       <div className={styles.content}>

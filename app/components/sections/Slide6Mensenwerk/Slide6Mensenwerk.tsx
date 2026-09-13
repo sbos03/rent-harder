@@ -36,6 +36,8 @@ export default function Slide6Mensenwerk({ content }: Props) {
           src={bgImage}
           alt="Truck at sunset"
           fill
+          sizes="100vw"
+          quality={85}
           className={styles.bgImage}
         />
         <div className={styles.overlayDark} />
