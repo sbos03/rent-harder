@@ -78,10 +78,81 @@
   }
 }
 
+// A highlighted paragraph on its own line, separated from the paragraph above.
+.highlightPara {
+  margin-top: 0.5rem;
+}
+
 .highlight {
   color: $rent-sunset;
   opacity: 1;
   font-weight: 500;
+}
+
+// Rendered from the rich-text editor (Lexical → HTML). Style the raw tags.
+.richText {
+  font-family: $font-body;
+  font-weight: 300;
+  font-size: 1rem;
+  line-height: 1.7;
+  opacity: 0.85;
+  margin-bottom: 2rem;
+
+  @media (min-width: $bp-md) {
+    font-size: 1.0625rem;
+  }
+
+  p {
+    margin: 0 0 1.25rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  strong,
+  b {
+    font-weight: 700;
+    opacity: 1;
+  }
+
+  em,
+  i {
+    font-style: italic;
+  }
+
+  a {
+    color: $rent-sunset;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    font-weight: 500;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  ul,
+  ol {
+    margin: 0 0 1.25rem 1.25rem;
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+  }
+
+  ul { list-style: disc; }
+  ol { list-style: decimal; }
+
+  h2,
+  h3,
+  h4 {
+    font-family: $font-display;
+    font-weight: 700;
+    line-height: 1.15;
+    margin: 1.5rem 0 0.75rem;
+    opacity: 1;
+  }
 }
 
 .bullets {

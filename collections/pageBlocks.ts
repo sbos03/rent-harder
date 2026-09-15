@@ -364,12 +364,30 @@ const rawSectionBlocks: Block[] = [
         minRows: 1,
         maxRows: 4,
         fields: [
-          { name: 'body', type: 'textarea', label: 'Tekst', admin: { description: 'Optioneel. Een tekstblok boven de bullets.' } },
+          {
+            name: 'richBody',
+            type: 'richText',
+            label: 'Tekst',
+            admin: {
+              description:
+                'Tekst met opmaak: alinea-breaks, vet, cursief, links en lijsten. Gebruik dit veld. (De oude "Tekst (oud)" en "Uitgelichte regel" velden hieronder zijn alleen voor bestaande content.)',
+            },
+          },
+          {
+            name: 'body',
+            type: 'textarea',
+            label: 'Tekst (oud)',
+            admin: {
+              description: 'Verouderd. Laat leeg en gebruik het "Tekst" veld hierboven.',
+            },
+          },
           {
             name: 'highlight',
             type: 'text',
-            label: 'Uitgelichte regel',
-            admin: { description: 'Optioneel. Wordt in accentkleur getoond, bijv. een link-achtige zin.' },
+            label: 'Uitgelichte regel (oud)',
+            admin: {
+              description: 'Verouderd. Laat leeg en gebruik het "Tekst" veld hierboven.',
+            },
           },
           {
             name: 'bullets',
