@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import styles from "./Slide5PartnerStories.module.scss";
 import { makeCtaHandler } from "@/app/lib/ctaAction";
+import { normalizeInternalHref } from "@/app/lib/href";
 
 interface Props {
   onContactClick: () => void;
@@ -79,7 +80,7 @@ export default function Slide5PartnerStories({ onContactClick, content }: Props)
           {stories.map((story, i) => (
             <a
               key={i}
-              href={story.link || "#"}
+              href={normalizeInternalHref(story.link) || "#"}
               onClick={(e) => { if (!story.link) e.preventDefault(); }}
               className={styles.card}
             >

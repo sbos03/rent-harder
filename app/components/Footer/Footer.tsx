@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { LinkedinIcon, InstagramIcon, YoutubeIcon, FacebookIcon } from "@/app/components/SocialIcons";
+import { normalizeInternalHref } from "@/app/lib/href";
 import styles from "./Footer.module.scss";
 
 interface FooterProps {
@@ -97,7 +98,7 @@ export default function Footer({ settings }: FooterProps = {}) {
                   {col.links.map((link, li) =>
                     link.href ? (
                       <li key={li}>
-                        <Link href={link.href} className={styles.navLink}>
+                        <Link href={normalizeInternalHref(link.href)} className={styles.navLink}>
                           {link.label}
                         </Link>
                       </li>
@@ -154,7 +155,7 @@ export default function Footer({ settings }: FooterProps = {}) {
         <div className={styles.legal}>
           <span>{copyright}</span>
           {legalLinks.map((link, i) => (
-            <Link key={i} href={link.href || "#"} className={styles.legalLink}>
+            <Link key={i} href={normalizeInternalHref(link.href) || "#"} className={styles.legalLink}>
               {link.label}
             </Link>
           ))}

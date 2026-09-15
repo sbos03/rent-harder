@@ -1,5 +1,7 @@
 "use client";
 
+import { normalizeInternalHref } from "@/app/lib/href";
+
 /**
  * Returns a click handler for a CTA button based on its configured link.
  *
@@ -37,8 +39,9 @@ export function makeCtaHandler(
       return;
     }
 
-    // internal path like /contact — navigate
+    // internal path like "contact" or "/contact" — always navigate from the
+    // site root so it never resolves relative to the current page.
     e?.preventDefault();
-    window.location.href = url;
+    window.location.href = normalizeInternalHref(url);
   };
 }

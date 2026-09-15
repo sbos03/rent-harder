@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import styles from "./BuiltToRentHarder.module.scss";
 import { withLineBreaks } from "@/app/lib/renderText";
 import { makeCtaHandler } from "@/app/lib/ctaAction";
+import { normalizeInternalHref } from "@/app/lib/href";
 
 interface Props {
   onContactClick: () => void;
@@ -108,7 +109,7 @@ export default function BuiltToRentHarder({ onContactClick, content, partners }:
           {cases.map((c, i) => (
             <a
               key={i}
-              href={c.link || "#"}
+              href={normalizeInternalHref(c.link) || "#"}
               onClick={(e) => { if (!c.link) e.preventDefault(); }}
               className={`${styles.card} ${i === 0 ? styles.cardFeatured : ""}`}
             >

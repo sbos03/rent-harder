@@ -1,6 +1,7 @@
 import React from "react";
 import { ArrowRight } from "lucide-react";
 import styles from "./Hoogwerker.module.scss";
+import { normalizeInternalHref } from "@/app/lib/href";
 
 interface Props {
   content?: {
@@ -42,7 +43,7 @@ export default function HoogwerkerOtherMarkets({ content }: Props) {
           {markets.map((market) => (
             <a
               key={market.name}
-              href={market.href}
+              href={normalizeInternalHref(market.href) || "#"}
               onClick={(e) => {
                 if (!market.href || market.href === "#") e.preventDefault();
               }}
