@@ -97,12 +97,14 @@ export default function Slide5PartnerStories({ onContactClick, content }: Props)
               )}
               <div className={styles.cardGradient} />
               <div className={styles.cardContent}>
-                <span className={styles.cardLabel}>{story.eyebrow}</span>
-                <h3 className={styles.cardTitle}>{story.title}</h3>
-                {story.intro && <p className={styles.cardDesc}>{story.intro}</p>}
-              </div>
-              <div className={styles.cardArrow}>
-                <ArrowRight className={styles.arrowIcon} strokeWidth={2.5} />
+                <div className={styles.cardText}>
+                  <span className={styles.cardLabel}>{story.eyebrow}</span>
+                  <h3 className={styles.cardTitle}>{story.title}</h3>
+                  {story.intro && <p className={styles.cardDesc}>{story.intro}</p>}
+                </div>
+                <div className={styles.cardArrow}>
+                  <ArrowRight className={styles.arrowIcon} strokeWidth={2.5} />
+                </div>
               </div>
             </a>
           ))}

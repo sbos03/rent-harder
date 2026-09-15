@@ -27,22 +27,21 @@ export default function TVSection({ onContactClick, episodes: cmsEpisodes, conte
     "Verhalen, inzichten en ideeën uit de wereld van verhuur. Op locatie, tussen het materieel en met de mensen die het iedere dag doen.";
   const ctaText = content?.ctaText || "BEKIJK ALLES OP RENT HARDER.TV";
   const handleCta = makeCtaHandler(content?.ctaLink, onContactClick);
-  const defaultEpisodes = [
-    { meta: "RH.TV / 001 · DOCUMENTARY SHORT", title: "WAAR LIGT IN JOUW REGIO NOG EEN OPEN VERHUURMARKT?", time: "06:42" },
-    { meta: "RH.TV / 002 · ON SITE", title: "HOE BOUW JE EEN VERHUURMERK DAT NIEMAND MIST?", time: "05:18" },
-    { meta: "RH.TV / 003 · DOCUMENTARY SHORT", title: "MEER BEREIK MET VIDEO VAN JE MATERIEEL.", time: "04:37" },
-    { meta: "RH.TV / 004 · HARDER TALK", title: "WAT MAAKT EEN VERHUURBEDRIJF KLAAR VOOR DE VOLGENDE GROEIFASE?", time: "08:24" },
-  ];
 
-  // Use CMS episodes if available, otherwise fall back to defaults
-  const episodes = cmsEpisodes && cmsEpisodes.length > 0
-    ? cmsEpisodes.map((ep: any) => ({
-        meta: ep.meta || '',
-        title: ep.title || '',
-        time: ep.duration || '',
-        thumbnail: ep.thumbnail?.url || null,
-      }))
-    : defaultEpisodes;
+  // Only show real episodes from the CMS. No hardcoded fallback: if there are
+  // no episodes the whole section is hidden (see the null return below), so
+  // Rent Harder TV stays offline until you actually add videos.
+  const episodes = (cmsEpisodes || []).map((ep: any) => ({
+    meta: ep.meta || '',
+    title: ep.title || '',
+    time: ep.duration || '',
+    thumbnail: ep.thumbnail?.url || null,
+  }));
+
+  // Nothing to show yet → render nothing at all.
+  if (episodes.length === 0) {
+    return null;
+  }
 
   return (
     <section className={styles.section}>
@@ -80,9 +79,11 @@ export default function TVSection({ onContactClick, episodes: cmsEpisodes, conte
               className={styles.card}
             >
               <Image
-                src="/images/vertical-rectangle.png"
+                src={ep.thumbnail || "/images/vertical-rectangle.png"}
                 alt={ep.title}
                 fill
+                sizes="(max-width: 768px) 80vw, 320px"
+                quality={85}
                 className={styles.cardImage}
               />
               <div className={styles.cardGradient} />
