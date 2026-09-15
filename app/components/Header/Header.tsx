@@ -6,6 +6,7 @@ import Image from "next/image";
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import styles from "./Header.module.scss";
+import { normalizeInternalHref } from "@/app/lib/href";
 
 interface HeaderProps {
   onContactClick: () => void;
@@ -172,7 +173,7 @@ export default function Header({ onContactClick, settings }: HeaderProps) {
                       <div className={styles.navItem}>
                         <span className={styles.navNum}>{item.num}</span>
                         <Link
-                          href={item.href}
+                          href={normalizeInternalHref(item.href)}
                           onClick={() => setMenuOpen(false)}
                           className={styles.navLabel}
                         >
@@ -201,7 +202,7 @@ export default function Header({ onContactClick, settings }: HeaderProps) {
                             {item.children.map((child) => (
                               <li key={child.label}>
                                 <Link
-                                  href={child.href}
+                                  href={normalizeInternalHref(child.href)}
                                   onClick={() => setMenuOpen(false)}
                                   className={styles.submenuItem}
                                 >
@@ -216,7 +217,7 @@ export default function Header({ onContactClick, settings }: HeaderProps) {
                     </>
                   ) : (
                     <Link
-                      href={item.href}
+                      href={normalizeInternalHref(item.href)}
                       onClick={() => setMenuOpen(false)}
                       className={styles.navItem}
                     >

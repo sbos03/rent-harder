@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import styles from "./Slide5PartnerStories.module.scss";
 import { makeCtaHandler } from "@/app/lib/ctaAction";
+import { normalizeInternalHref } from "@/app/lib/href";
 
 interface Props {
   onContactClick: () => void;
@@ -79,7 +80,7 @@ export default function Slide5PartnerStories({ onContactClick, content }: Props)
           {stories.map((story, i) => (
             <a
               key={i}
-              href={story.link || "#"}
+              href={normalizeInternalHref(story.link) || "#"}
               onClick={(e) => { if (!story.link) e.preventDefault(); }}
               className={styles.card}
             >
@@ -97,12 +98,14 @@ export default function Slide5PartnerStories({ onContactClick, content }: Props)
               )}
               <div className={styles.cardGradient} />
               <div className={styles.cardContent}>
-                <span className={styles.cardLabel}>{story.eyebrow}</span>
-                <h3 className={styles.cardTitle}>{story.title}</h3>
-                {story.intro && <p className={styles.cardDesc}>{story.intro}</p>}
-              </div>
-              <div className={styles.cardArrow}>
-                <ArrowRight className={styles.arrowIcon} strokeWidth={2.5} />
+                <div className={styles.cardText}>
+                  <span className={styles.cardLabel}>{story.eyebrow}</span>
+                  <h3 className={styles.cardTitle}>{story.title}</h3>
+                  {story.intro && <p className={styles.cardDesc}>{story.intro}</p>}
+                </div>
+                <div className={styles.cardArrow}>
+                  <ArrowRight className={styles.arrowIcon} strokeWidth={2.5} />
+                </div>
               </div>
             </a>
           ))}

@@ -19,20 +19,27 @@ function digitsOnly(value?: string) {
 export default function ContactPopup({ isOpen, onClose, settings }: ContactPopupProps) {
   const modalRef = useRef<HTMLDivElement>(null);
 
-  // Build the contact actions from CMS settings. An action only renders when
-  // its underlying field is filled in, so empty fields simply hide the button.
-  const whatsappDigits = digitsOnly(settings?.whatsapp);
-  const phoneRaw = (settings?.phone || "").trim();
-  const phoneDigits = digitsOnly(phoneRaw);
-  const email = (settings?.email || "").trim();
-  const bookingUrl = (settings?.bookingUrl || "").trim();
+  // All four contact buttons are ALWAYS shown. Each uses the value from the
+  // CMS (Website Instellingen → Contact) when set, and otherwise falls back to
+  // a sensible built-in default, so a button is never a dead click.
+  //
+  // To change any of these, fill in the matching field in the admin; the CMS
+  // value takes over automatically.
+  const FALLBACK_PHONE = "0599253032"; // shown in the popup footer
+  const FALLBACK_EMAIL = "info@rentharder.nl";
+  const FALLBACK_WHATSAPP = "31599253032";
+  const FALLBACK_BOOKING = "mailto:info@rentharder.nl?subject=Kennismaking%20plannen";
 
-  const waHref = whatsappDigits ? `https://wa.me/${whatsappDigits}` : null;
+  const whatsappDigits = digitsOnly(settings?.whatsapp) || FALLBACK_WHATSAPP;
+  const phoneRaw = (settings?.phone || "").trim();
+  const phoneDigits = digitsOnly(phoneRaw) || FALLBACK_PHONE;
+  const email = (settings?.email || "").trim() || FALLBACK_EMAIL;
+  const bookingUrl = (settings?.bookingUrl || "").trim() || FALLBACK_BOOKING;
+
+  const waHref = `https://wa.me/${whatsappDigits}`;
   // Preserve a leading "+" (international) but never invent one for a local number.
-  const telHref = phoneDigits
-    ? `tel:${phoneRaw.startsWith("+") ? "+" : ""}${phoneDigits}`
-    : null;
-  const mailHref = email ? `mailto:${email}` : null;
+  const telHref = `tel:${phoneRaw.startsWith("+") ? "+" : ""}${phoneDigits}`;
+  const mailHref = `mailto:${email}`;
 
   useEffect(() => {
     if (!isOpen) return;
@@ -119,40 +126,32 @@ export default function ContactPopup({ isOpen, onClose, settings }: ContactPopup
             </div>
 
             <div className={styles.actions}>
-              {waHref && (
-                <a
-                  href={waHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${styles.actionBtn} ${styles.actionPrimary}`}
-                >
-                  <MessageCircle className={styles.actionIcon} />
-                  Start WhatsApp
-                </a>
-              )}
-              {telHref && (
-                <a href={telHref} className={`${styles.actionBtn} ${styles.actionDark}`}>
-                  <Phone className={styles.actionIcon} />
-                  Bel ons
-                </a>
-              )}
-              {mailHref && (
-                <a href={mailHref} className={`${styles.actionBtn} ${styles.actionOutline}`}>
-                  <Mail className={styles.actionIcon} />
-                  Stuur een mail
-                </a>
-              )}
-              {bookingUrl && (
-                <a
-                  href={bookingUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`${styles.actionBtn} ${styles.actionOutline}`}
-                >
-                  <Calendar className={styles.actionIcon} />
-                  Plan een kennismaking
-                </a>
-              )}
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`${styles.actionBtn} ${styles.actionPrimary}`}
+              >
+                <MessageCircle className={styles.actionIcon} />
+                Start WhatsApp
+              </a>
+              <a href={telHref} className={`${styles.actionBtn} ${styles.actionDark}`}>
+                <Phone className={styles.actionIcon} />
+                Bel ons
+              </a>
+              <a href={mailHref} className={`${styles.actionBtn} ${styles.actionOutline}`}>
+                <Mail className={styles.actionIcon} />
+                Stuur een mail
+              </a>
+              <a
+                href={bookingUrl}
+                target={bookingUrl.startsWith("http") ? "_blank" : undefined}
+                rel={bookingUrl.startsWith("http") ? "noopener noreferrer" : undefined}
+                className={`${styles.actionBtn} ${styles.actionOutline}`}
+              >
+                <Calendar className={styles.actionIcon} />
+                Plan een kennismaking
+              </a>
             </div>
 
             <div className={styles.footer}>

@@ -27,6 +27,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 2rem;
+  align-items: start;
 
   @media (min-width: $bp-md) {
     grid-template-columns: 1fr 1fr;
@@ -34,17 +35,90 @@
   }
 }
 
+// A clickable, borderless button wrapping the image. No forced aspect ratio,
+// so the image keeps its natural proportions and is never cropped.
 .figure {
-  position: relative;
+  display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  background: none;
+  cursor: zoom-in;
   border-radius: 4px;
+  overflow: hidden;
+  line-height: 0;
+
+  &:focus-visible {
+    outline: 2px solid $rent-sunset;
+    outline-offset: 3px;
+  }
 }
 
 .image {
   width: 100%;
-  height: 100%;
-  object-fit: cover;
+  height: auto; // keep natural ratio → no cropping
   display: block;
+  transition: transform $transition-normal;
+
+  .figure:hover & {
+    transform: scale(1.02);
+  }
+}
+
+// ─── LIGHTBOX ──────────────────────────────────────────────────────────────
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba($rent-black, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  cursor: zoom-out;
+}
+
+.lightboxInner {
+  position: relative;
+  max-width: 92vw;
+  max-height: 90vh;
+  cursor: default;
+}
+
+.lightboxImage {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 92vw;
+  max-height: 90vh;
+  object-fit: contain;
+  border-radius: 4px;
+}
+
+.lightboxClose {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 2001;
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($rent-white, 0.1);
+  border: 1px solid rgba($rent-white, 0.3);
+  border-radius: 999px;
+  color: $rent-white;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: rgba($rent-white, 0.2);
+  }
+
+  svg {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
 }

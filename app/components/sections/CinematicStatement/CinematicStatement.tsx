@@ -7,6 +7,7 @@ interface Props {
   content?: {
     title?: string;
     body?: string;
+    backgroundImage?: { url?: string; alt?: string } | null;
   };
 }
 
@@ -15,13 +16,15 @@ export default function CinematicStatement({ content }: Props) {
   const body =
     content?.body ||
     "Verhuur je machines, voertuigen of objecten? Dan zit er waarschijnlijk meer in jouw verhuurbedrijf dan je nu laat zien. RENT HARDER bouwt en ontwikkelt jouw complete digitale verhuurtak. Van verhuurplatform en planning tot zichtbaarheid, strategie en groei. Alles om harder te verhuren.";
+  // Use the CMS background when set, fall back to the built-in image otherwise.
+  const bgImage = content?.backgroundImage?.url || "/images/8.png";
   const words = body.split(" ");
 
   return (
     <section className={styles.section}>
       <div className={styles.bgWrap}>
         <Image
-          src="/images/8.png"
+          src={bgImage}
           alt=""
           fill
           sizes="100vw"

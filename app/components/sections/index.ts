@@ -13,3 +13,4 @@ export { default as FeatureColumns } from "./FeatureColumns/FeatureColumns";
 export { default as CenteredStatement } from "./CenteredStatement/CenteredStatement";
 export { default as TextColumns } from "./TextColumns/TextColumns";
 export { default as ImageDuo } from "./ImageDuo/ImageDuo";
+export { default as CinematicImage } from "./CinematicImage/CinematicImage";

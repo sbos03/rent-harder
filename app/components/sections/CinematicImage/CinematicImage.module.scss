@@ -1,0 +1,20 @@
+@use '../../../styles/variables' as *;
+
+.section {
+  width: 100%;
+  background-color: $rent-black;
+}
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+
+  @media (min-width: $bp-md) {
+    aspect-ratio: 21 / 9;
+  }
+}
+
+.image {
+  object-fit: cover;
+}
