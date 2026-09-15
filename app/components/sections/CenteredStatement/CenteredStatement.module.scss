@@ -82,3 +82,40 @@
     font-size: 1.5rem;
   }
 }
+
+// Rich-text (Lexical → HTML) output inside the centered body.
+.richText {
+  strong,
+  b {
+    font-weight: 700;
+  }
+
+  em,
+  i {
+    font-style: italic;
+  }
+
+  a {
+    color: $rent-sunset;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    font-weight: 500;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  ul,
+  ol {
+    margin: 0.5rem 0 1.25rem 1.25rem;
+    text-align: left;
+
+    li {
+      margin-bottom: 0.4rem;
+    }
+  }
+
+  ul { list-style: disc; }
+  ol { list-style: decimal; }
+}
