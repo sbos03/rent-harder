@@ -50,6 +50,28 @@ function renderRichTextSections(sections: any[] | undefined | null): any[] {
       }
     }
 
+    // featureColumns: richSubtitle → subtitleHtml, each column richDescription → descriptionHtml
+    if (block?.blockType === 'featureColumns') {
+      return {
+        ...block,
+        subtitleHtml: richTextToHtml(block?.richSubtitle),
+        columns: Array.isArray(block.columns)
+          ? block.columns.map((col: any) => ({
+              ...col,
+              descriptionHtml: richTextToHtml(col?.richDescription),
+            }))
+          : block.columns,
+      }
+    }
+
+    // centeredStatement: richBody → richBodyHtml
+    if (block?.blockType === 'centeredStatement') {
+      return {
+        ...block,
+        richBodyHtml: richTextToHtml(block?.richBody),
+      }
+    }
+
     return block
   })
 }

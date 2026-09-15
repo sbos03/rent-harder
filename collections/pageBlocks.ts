@@ -291,7 +291,13 @@ const rawSectionBlocks: Block[] = [
     labels: { singular: '🧱 Feature Kolommen', plural: 'Feature Kolommen Secties' },
     fields: [
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
-      { name: 'subtitle', type: 'textarea', label: 'Ondertitel' },
+      {
+        name: 'richSubtitle',
+        type: 'richText',
+        label: 'Ondertitel',
+        admin: { description: 'Tekst met opmaak (vet, links, alinea-breaks). Gebruik dit veld.' },
+      },
+      { name: 'subtitle', type: 'textarea', label: 'Ondertitel (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Ondertitel" hierboven.' } },
       {
         name: 'theme',
         type: 'select',
@@ -310,7 +316,13 @@ const rawSectionBlocks: Block[] = [
         maxRows: 4,
         fields: [
           { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
-          { name: 'description', type: 'textarea', label: 'Beschrijving' },
+          {
+            name: 'richDescription',
+            type: 'richText',
+            label: 'Beschrijving',
+            admin: { description: 'Tekst met opmaak. Gebruik dit veld.' },
+          },
+          { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
         ],
       },
     ],
@@ -322,9 +334,16 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
       {
+        name: 'richBody',
+        type: 'richText',
+        label: 'Tekst',
+        admin: { description: 'Tekst met opmaak: alinea-breaks, vet, links. Gebruik dit veld.' },
+      },
+      {
         name: 'paragraphs',
         type: 'array',
-        label: 'Paragrafen',
+        label: 'Paragrafen (oud)',
+        admin: { description: 'Verouderd. Laat leeg en gebruik "Tekst" hierboven.' },
         fields: [{ name: 'text', type: 'textarea', required: true, label: 'Tekst' }],
       },
       { name: 'highlightText', type: 'text', label: 'Highlight balk tekst', admin: { description: 'Optioneel. Gebruik | voor regelafbrekingen. Leeg = geen balk.' } },
