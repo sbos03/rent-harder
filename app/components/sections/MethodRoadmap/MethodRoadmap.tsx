@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
+import Heading from "@/app/components/Heading/Heading";
 import styles from "./MethodRoadmap.module.scss";
-import { withLineBreaks } from "@/app/lib/renderText";
 
 const defaultSteps = [
   { num: "01", title: "WAAR WIL JE NAARTOE?", desc: "We brengen jouw ambities, assortiment, werkwijze en kansen in kaart. We beginnen niet met techniek, maar met waar jij naartoe wilt.", side: "right" },
@@ -16,6 +16,8 @@ interface Props {
   content?: {
     eyebrow?: string;
     title?: string;
+    headingLevel?: string;
+    titleSizePx?: number;
     description?: string;
     steps?: { num?: string; title?: string; description?: string; side?: string }[];
   };
@@ -52,7 +54,12 @@ export default function MethodRoadmap({ content }: Props) {
             />
             <span>{eyebrow}</span>
           </div>
-          <h2 className={styles.title}>{withLineBreaks(title)}</h2>
+          <Heading
+            text={title}
+            level={content?.headingLevel}
+            sizePx={content?.titleSizePx}
+            className={styles.title}
+          />
           <p className={styles.description}>{description}</p>
         </div>
 

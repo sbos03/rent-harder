@@ -5,12 +5,15 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Button from "@/app/components/Button";
 import styles from "./HeroSection.module.scss";
+import { responsiveFontSize } from "@/app/components/Heading/Heading";
 import { makeCtaHandler } from "@/app/lib/ctaAction";
 
 interface HeroSectionProps {
   onContactClick: () => void;
   content?: {
     title?: string;
+    headingLevel?: string;
+    titleSizePx?: number;
     subtitle?: string;
     bottomText?: string;
     buttonText?: string;
@@ -38,6 +41,15 @@ export default function HeroSection({ onContactClick, content }: HeroSectionProp
 
   const titleLines = title.split("|");
 
+  // CMS-controlled semantic tag (default h1 for the hero) and optional size.
+  const TitleTag = (["h1", "h2", "h3"].includes(String(content?.headingLevel))
+    ? content?.headingLevel
+    : "h1") as "h1" | "h2" | "h3";
+  const titleStyle =
+    typeof content?.titleSizePx === "number" && content.titleSizePx > 0
+      ? { fontSize: responsiveFontSize(content.titleSizePx) }
+      : undefined;
+
   return (
     <section className={styles.hero}>
       <motion.div style={{ y: y1, scale }} className={styles.bgWrap}>
@@ -57,7 +69,7 @@ export default function HeroSection({ onContactClick, content }: HeroSectionProp
       </motion.div>
 
       <motion.div style={{ opacity }} className={styles.content}>
-        <h1 className={styles.title}>
+        <TitleTag className={styles.title} style={titleStyle}>
           {titleLines.map((line, i) => {
             // Middle line gets the outline style (matches original "RENT." styling)
             const isMiddle = titleLines.length === 3 && i === 1;
@@ -72,7 +84,7 @@ export default function HeroSection({ onContactClick, content }: HeroSectionProp
               </React.Fragment>
             );
           })}
-        </h1>
+        </TitleTag>
         <p className={styles.subtitle}>{subtitle}</p>
       </motion.div>
 

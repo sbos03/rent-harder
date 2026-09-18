@@ -1,9 +1,12 @@
 import React from "react";
+import Heading from "@/app/components/Heading/Heading";
 import styles from "./CenteredStatement.module.scss";
 
 interface Props {
   content?: {
     title?: string;
+    headingLevel?: string;
+    titleSizePx?: number;
     /** Server-rendered HTML from rich-text richBody (preferred). */
     richBodyHtml?: string;
     /** Legacy paragraph array. */
@@ -38,7 +41,12 @@ export default function CenteredStatement({ content }: Props) {
   return (
     <section className={`${styles.section} ${theme}`}>
       <div className={styles.inner}>
-        {content?.title && <h2 className={styles.title}>{lines(content.title)}</h2>}
+        <Heading
+          text={content?.title}
+          level={content?.headingLevel}
+          sizePx={content?.titleSizePx}
+          className={styles.title}
+        />
 
         {hasRich ? (
           <div

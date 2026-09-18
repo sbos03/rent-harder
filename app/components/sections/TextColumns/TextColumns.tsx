@@ -1,5 +1,6 @@
 import React from "react";
 import { Check } from "lucide-react";
+import Heading from "@/app/components/Heading/Heading";
 import styles from "./TextColumns.module.scss";
 
 interface Column {
@@ -16,20 +17,11 @@ interface Props {
   content?: {
     eyebrow?: string;
     title?: string;
+    headingLevel?: string;
+    titleSizePx?: number;
     theme?: "light" | "dark";
     columns?: Column[];
   };
-}
-
-function lines(text?: string) {
-  if (!text) return null;
-  const parts = text.split("|");
-  return parts.map((line, i) => (
-    <React.Fragment key={i}>
-      {line.trim()}
-      {i < parts.length - 1 && <br />}
-    </React.Fragment>
-  ));
 }
 
 /**
@@ -50,7 +42,12 @@ export default function TextColumns({ content }: Props) {
     <section className={`${styles.section} ${theme}`}>
       <div className={styles.inner}>
         {content?.eyebrow && <span className={styles.eyebrow}>{content.eyebrow}</span>}
-        {content?.title && <h2 className={styles.title}>{lines(content.title)}</h2>}
+        <Heading
+          text={content?.title}
+          level={content?.headingLevel}
+          sizePx={content?.titleSizePx}
+          className={styles.title}
+        />
 
         {columns.length > 0 && (
           <div className={styles.columns}>

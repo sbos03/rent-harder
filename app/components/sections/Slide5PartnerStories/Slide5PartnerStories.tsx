@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import styles from "./Slide5PartnerStories.module.scss";
+import Heading from "@/app/components/Heading/Heading";
 import { makeCtaHandler } from "@/app/lib/ctaAction";
 import { normalizeInternalHref } from "@/app/lib/href";
 
@@ -11,6 +12,8 @@ interface Props {
   onContactClick: () => void;
   content?: {
     title?: string;
+    headingLevel?: string;
+    titleSizePx?: number;
     description?: string;
     stories?: {
       eyebrow?: string;
@@ -72,7 +75,12 @@ export default function Slide5PartnerStories({ onContactClick, content }: Props)
     <section className={styles.section}>
       <div className={styles.inner}>
         <div className={styles.top}>
-          <h2 className={styles.title}>{title}</h2>
+          <Heading
+            text={title}
+            level={content?.headingLevel}
+            sizePx={content?.titleSizePx}
+            className={styles.title}
+          />
           <p className={styles.description}>{description}</p>
         </div>
 

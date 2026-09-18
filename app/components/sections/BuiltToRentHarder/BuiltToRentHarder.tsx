@@ -4,7 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import styles from "./BuiltToRentHarder.module.scss";
-import { withLineBreaks } from "@/app/lib/renderText";
+import Heading from "@/app/components/Heading/Heading";
 import { makeCtaHandler } from "@/app/lib/ctaAction";
 import { normalizeInternalHref } from "@/app/lib/href";
 
@@ -13,6 +13,8 @@ interface Props {
   content?: {
     eyebrow?: string;
     title?: string;
+    headingLevel?: string;
+    titleSizePx?: number;
     description?: string;
     ctaText?: string;
     ctaLink?: string;
@@ -100,7 +102,12 @@ export default function BuiltToRentHarder({ onContactClick, content, partners }:
             />
             <span>{eyebrow}</span>
           </div>
-          <h2 className={styles.title}>{withLineBreaks(title)}</h2>
+          <Heading
+            text={title}
+            level={content?.headingLevel}
+            sizePx={content?.titleSizePx}
+            className={styles.title}
+          />
           <p className={styles.description}>{description}</p>
         </div>
 

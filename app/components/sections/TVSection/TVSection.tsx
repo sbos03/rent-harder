@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Play } from "lucide-react";
+import Heading from "@/app/components/Heading/Heading";
 import styles from "./TVSection.module.scss";
 import { makeCtaHandler } from "@/app/lib/ctaAction";
 
@@ -13,6 +14,8 @@ interface Props {
   content?: {
     eyebrow?: string;
     title?: string;
+    headingLevel?: string;
+    titleSizePx?: number;
     description?: string;
     ctaText?: string;
     ctaLink?: string;
@@ -53,14 +56,12 @@ export default function TVSection({ onContactClick, episodes: cmsEpisodes, conte
           transition={{ duration: 0.7, ease: "easeOut" }}
         >
           <p className={styles.eyebrow}>{eyebrow}</p>
-          <h2 className={styles.title}>
-            {title.split("|").map((line, i, arr) => (
-              <React.Fragment key={i}>
-                {line.trim()}
-                {i < arr.length - 1 && <br />}
-              </React.Fragment>
-            ))}
-          </h2>
+          <Heading
+            text={title}
+            level={content?.headingLevel}
+            sizePx={content?.titleSizePx}
+            className={styles.title}
+          />
           <p className={styles.description}>{description}</p>
         </motion.div>
       </div>

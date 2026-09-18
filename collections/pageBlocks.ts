@@ -30,6 +30,44 @@ const anchorField: Field = {
 }
 
 /**
+ * Shared title controls: choose the semantic heading level (H1/H2/H3) and the
+ * visual size independently. Size presets stay responsive (they scale on
+ * mobile via clamp in the Heading component), so a title can never overflow.
+ *
+ * Added right after a block's `title` field. `default` = keep the block's
+ * original look, so existing pages don't change until an editor picks a value.
+ */
+const titleControlsFields: Field[] = [
+  {
+    name: 'headingLevel',
+    type: 'select',
+    label: 'Heading niveau',
+    defaultValue: 'h2',
+    options: [
+      { label: 'H1 (belangrijkste — 1 per pagina)', value: 'h1' },
+      { label: 'H2', value: 'h2' },
+      { label: 'H3', value: 'h3' },
+    ],
+    admin: {
+      description: 'Bepaalt de HTML-tag (voor SEO/structuur), niet de grootte. Gebruik H1 maar één keer per pagina.',
+      width: '50%',
+    },
+  },
+  {
+    name: 'titleSizePx',
+    type: 'number',
+    label: 'Titel grootte (px)',
+    min: 12,
+    max: 200,
+    admin: {
+      description: 'Optioneel. Grootte in px op desktop (bijv. 72). Leeg = standaard grootte. Schaalt automatisch mee op mobiel zodat het niet overloopt.',
+      width: '50%',
+      step: 1,
+    },
+  },
+]
+
+/**
  * Section blocks used by both the Pages collection and the Partners collection,
  * so partner pages can be built exactly like the homepage.
  */
@@ -46,6 +84,7 @@ const rawSectionBlocks: Block[] = [
           { name: 'buttonText', type: 'text', label: 'CTA knop', admin: { width: '50%' } },
         ],
       },
+      ...titleControlsFields,
       { name: 'buttonLink', type: 'text', label: 'CTA link', admin: { description: 'Leeg = opent contact popup. Of: #anchor, /contact, https://...' } },
       { name: 'subtitle', type: 'textarea', label: 'Ondertitel' },
       { name: 'bottomText', type: 'text', label: 'Tekst onderaan' },
@@ -59,6 +98,7 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'eyebrow', type: 'text', label: 'Label boven titel' },
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      ...titleControlsFields,
       { name: 'description', type: 'textarea', label: 'Beschrijving' },
       {
         type: 'row',
@@ -86,6 +126,7 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'eyebrow', type: 'text', label: 'Label' },
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      ...titleControlsFields,
       { name: 'categories', type: 'textarea', label: 'Categorieën', admin: { description: 'Opsomming van machine-types.' } },
       { name: 'ctaText', type: 'text', label: 'CTA tekst' },
       { name: 'ctaLink', type: 'text', label: 'CTA link', admin: { description: 'Leeg = opent contact popup. Of: #anchor, /contact, https://...' } },
@@ -97,6 +138,7 @@ const rawSectionBlocks: Block[] = [
     labels: { singular: '🤝 Partnerverhalen', plural: 'Partnerverhalen Secties' },
     fields: [
       { name: 'title', type: 'text', required: true, label: 'Titel' },
+      ...titleControlsFields,
       { name: 'description', type: 'textarea', label: 'Beschrijving' },
       { name: 'stories', type: 'array', label: 'Verhalen', minRows: 1, fields: [
         { name: 'eyebrow', type: 'text', label: 'Label boven titel', admin: { description: 'Bijv. "Voor infra & tijdelijke installaties"' } },
@@ -116,6 +158,7 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'eyebrow', type: 'text', label: 'Label' },
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      ...titleControlsFields,
       { name: 'bottomText', type: 'text', label: 'Tekst onderaan' },
       { name: 'backgroundImage', type: 'upload', relationTo: 'media', label: 'Achtergrond afbeelding' },
     ],
@@ -126,6 +169,7 @@ const rawSectionBlocks: Block[] = [
     labels: { singular: '✨ Cinematic Statement', plural: 'Cinematic Statements' },
     fields: [
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      ...titleControlsFields,
       { name: 'body', type: 'textarea', required: true, label: 'Tekst', admin: { description: 'Wordt woord-voor-woord getoond.' } },
       { name: 'backgroundImage', type: 'upload', relationTo: 'media', label: 'Achtergrond' },
     ],
@@ -137,6 +181,7 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'eyebrow', type: 'text', label: 'Label', defaultValue: 'RENT HARDER.TV' },
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      ...titleControlsFields,
       { name: 'description', type: 'textarea', label: 'Beschrijving' },
       { name: 'ctaText', type: 'text', label: 'CTA tekst' },
       { name: 'ctaLink', type: 'text', label: 'CTA link', admin: { description: 'Leeg = opent contact popup. Of: #anchor, /contact, https://...' } },
@@ -149,6 +194,7 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'eyebrow', type: 'text', label: 'Label' },
       { name: 'title', type: 'text', required: true, label: 'Titel' },
+      ...titleControlsFields,
       { name: 'description', type: 'textarea', label: 'Beschrijving' },
       { name: 'steps', type: 'array', label: 'Stappen', minRows: 1, fields: [
         {
@@ -170,6 +216,7 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'eyebrow', type: 'text', label: 'Label' },
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      ...titleControlsFields,
       { name: 'description', type: 'textarea', label: 'Beschrijving' },
       { name: 'cases', type: 'array', label: 'Cases', minRows: 1, fields: [
         {
@@ -225,6 +272,7 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'label', type: 'text', label: 'Label (bijv. "VOORBEELD: MEIJER VERHUUR")' },
       { name: 'title', type: 'text', required: true, label: 'Titel' },
+      ...titleControlsFields,
       { name: 'highlights', type: 'array', label: 'Highlights', fields: [
         { name: 'text', type: 'text', required: true },
       ]},
@@ -248,6 +296,7 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'label', type: 'text', label: 'Label' },
       { name: 'title', type: 'text', required: true, label: 'Titel' },
+      ...titleControlsFields,
       { name: 'description', type: 'textarea', label: 'Beschrijving' },
       { name: 'steps', type: 'array', label: 'Stappen', fields: [
         { name: 'num', type: 'text', required: true, label: 'Nr' },
@@ -274,6 +323,7 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'label', type: 'text', label: 'Label' },
       { name: 'title', type: 'text', required: true, label: 'Titel' },
+      ...titleControlsFields,
       { name: 'markets', type: 'array', label: 'Markten', fields: [
         {
           type: 'row',
@@ -291,6 +341,7 @@ const rawSectionBlocks: Block[] = [
     labels: { singular: '🧱 Feature Kolommen', plural: 'Feature Kolommen Secties' },
     fields: [
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      ...titleControlsFields,
       {
         name: 'richSubtitle',
         type: 'richText',
@@ -333,6 +384,7 @@ const rawSectionBlocks: Block[] = [
     labels: { singular: '🎯 Gecentreerd Statement', plural: 'Gecentreerde Statements' },
     fields: [
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      ...titleControlsFields,
       {
         name: 'richBody',
         type: 'richText',
@@ -366,6 +418,7 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'eyebrow', type: 'text', label: 'Label boven titel' },
       { name: 'title', type: 'text', label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
+      ...titleControlsFields,
       {
         name: 'theme',
         type: 'select',
