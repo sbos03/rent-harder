@@ -112,3 +112,49 @@
     font-size: 1.0625rem;
   }
 }
+
+// Rich-text (Lexical → HTML) output. Inherits size/colour from .subtitle or
+// .columnDesc; this just handles the inner tags.
+.richText {
+  p {
+    margin: 0 0 1rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  strong,
+  b {
+    font-weight: 700;
+    opacity: 1;
+  }
+
+  em,
+  i {
+    font-style: italic;
+  }
+
+  a {
+    color: $rent-sunset;
+    text-decoration: underline;
+    text-underline-offset: 0.15em;
+    font-weight: 500;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+
+  ul,
+  ol {
+    margin: 0.5rem 0 1rem 1.25rem;
+
+    li {
+      margin-bottom: 0.35rem;
+    }
+  }
+
+  ul { list-style: disc; }
+  ol { list-style: decimal; }
+}

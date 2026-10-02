@@ -28,16 +28,51 @@ function richTextToHtml(value: any): string {
 function renderRichTextSections(sections: any[] | undefined | null): any[] {
   if (!Array.isArray(sections)) return []
   return sections.map((block) => {
-    if (block?.blockType !== 'seoContent' || !Array.isArray(block.articles)) {
-      return block
+    // seoContent: each article's richText body → bodyHtml
+    if (block?.blockType === 'seoContent' && Array.isArray(block.articles)) {
+      return {
+        ...block,
+        articles: block.articles.map((article: any) => ({
+          ...article,
+          bodyHtml: richTextToHtml(article?.body),
+        })),
+      }
     }
-    return {
-      ...block,
-      articles: block.articles.map((article: any) => ({
-        ...article,
-        bodyHtml: richTextToHtml(article?.body),
-      })),
+
+    // textColumns: each column's richText richBody → richBodyHtml
+    if (block?.blockType === 'textColumns' && Array.isArray(block.columns)) {
+      return {
+        ...block,
+        columns: block.columns.map((col: any) => ({
+          ...col,
+          richBodyHtml: richTextToHtml(col?.richBody),
+        })),
+      }
     }
+
+    // featureColumns: richSubtitle → subtitleHtml, each column richDescription → descriptionHtml
+    if (block?.blockType === 'featureColumns') {
+      return {
+        ...block,
+        subtitleHtml: richTextToHtml(block?.richSubtitle),
+        columns: Array.isArray(block.columns)
+          ? block.columns.map((col: any) => ({
+              ...col,
+              descriptionHtml: richTextToHtml(col?.richDescription),
+            }))
+          : block.columns,
+      }
+    }
+
+    // centeredStatement: richBody → richBodyHtml
+    if (block?.blockType === 'centeredStatement') {
+      return {
+        ...block,
+        richBodyHtml: richTextToHtml(block?.richBody),
+      }
+    }
+
+    return block
   })
 }
 

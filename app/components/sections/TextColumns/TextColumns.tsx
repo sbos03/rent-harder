@@ -3,7 +3,11 @@ import { Check } from "lucide-react";
 import styles from "./TextColumns.module.scss";
 
 interface Column {
+  /** Server-rendered HTML from the rich-text `richBody` field (preferred). */
+  richBodyHtml?: string;
+  /** Legacy plain-text body, used only when richBody is empty. */
   body?: string;
+  /** Legacy accent line, used only when richBody is empty. */
   highlight?: string;
   bullets?: { text?: string }[];
 }
@@ -29,9 +33,12 @@ function lines(text?: string) {
 }
 
 /**
- * Editorial intro with an eyebrow + title, then a row of text columns. Each
- * column has an optional body paragraph, an optional accent-coloured highlight
- * line, and a list of checkmark bullets.
+ * Editorial intro with an eyebrow + title, then a row of text columns.
+ *
+ * Each column's text comes from the rich-text editor (`richBody`, rendered as
+ * HTML server-side into `richBodyHtml`) so editors can add paragraph breaks,
+ * bold, links, etc. Columns created before the editor existed fall back to the
+ * old plain `body` + `highlight` fields, so no existing content is lost.
  */
 export default function TextColumns({ content }: Props) {
   const columns = content?.columns ?? [];
@@ -49,21 +56,25 @@ export default function TextColumns({ content }: Props) {
           <div className={styles.columns}>
             {columns.map((col, i) => {
               const bullets = col.bullets ?? [];
+              const hasRich = typeof col.richBodyHtml === "string" && col.richBodyHtml.trim() !== "";
               return (
                 <div key={i} className={styles.column}>
-                  {col.body && (
-                    <p className={styles.body}>
-                      {col.body}
+                  {hasRich ? (
+                    <div
+                      className={styles.richText}
+                      dangerouslySetInnerHTML={{ __html: col.richBodyHtml as string }}
+                    />
+                  ) : (
+                    <>
+                      {col.body && <p className={styles.body}>{col.body}</p>}
                       {col.highlight && (
-                        <span className={styles.highlight}> {col.highlight}</span>
+                        <p className={`${styles.body} ${styles.highlightPara}`}>
+                          <span className={styles.highlight}>{col.highlight}</span>
+                        </p>
                       )}
-                    </p>
+                    </>
                   )}
-                  {!col.body && col.highlight && (
-                    <p className={styles.body}>
-                      <span className={styles.highlight}>{col.highlight}</span>
-                    </p>
-                  )}
+
                   {bullets.length > 0 && (
                     <ul className={styles.bullets}>
                       {bullets.map((b, j) =>
