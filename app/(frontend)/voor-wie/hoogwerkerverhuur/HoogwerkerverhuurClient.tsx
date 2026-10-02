@@ -10,7 +10,8 @@ import HoogwerkerExample from "./sections/HoogwerkerExample";
 import HoogwerkerPrinciple from "./sections/HoogwerkerPrinciple";
 import HoogwerkerSEO from "./sections/HoogwerkerSEO";
 import HoogwerkerOpenMarkt from "./sections/HoogwerkerOpenMarkt";
-import HoogwerkerCases from "./sections/HoogwerkerCases";
+// Tijdelijk uitgezet (zie render hieronder):
+// import HoogwerkerCases from "./sections/HoogwerkerCases";
 import HoogwerkerOtherMarkets from "./sections/HoogwerkerOtherMarkets";
 import HoogwerkerMethodeCTA from "./sections/HoogwerkerMethodeCTA";
 
@@ -41,7 +42,11 @@ export default function HoogwerkerverhuurClient({ cmsContent, settings }: Props)
         <HoogwerkerPrinciple content={s.principleSteps} />
         <HoogwerkerSEO content={s.seoContent} />
         <HoogwerkerOpenMarkt onContactClick={openContact} content={s.ctaSection} />
-        <HoogwerkerCases content={s.caseShowcase} />
+        {/* Tijdelijk uitgezet: "Kijk wat andere verhuurders bouwen". Deze pagina
+            is hardgecodeerd (niet CMS-gestuurd), dus dit blok kan niet via de
+            admin bewerkt/verwijderd worden. Zet terug door onderstaande regel
+            te ontcommentariëren (en de import bovenaan). */}
+        {/* <HoogwerkerCases content={s.caseShowcase} /> */}
         <HoogwerkerOtherMarkets content={s.otherMarkets} />
         <HoogwerkerMethodeCTA onContactClick={openContact} content={s.methodeCTA} />
       </main>

@@ -17,6 +17,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  // Canonical base so relative canonical/OG/sitemap URLs resolve to the live domain.
+  metadataBase: new URL("https://www.rentharder.nl"),
   title: {
     default: "RENT HARDER — De digitale sidekick achter jouw verhuur",
     template: "%s | RENT HARDER",

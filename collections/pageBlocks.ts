@@ -495,6 +495,45 @@ const rawSectionBlocks: Block[] = [
       },
     ],
   },
+  // ─── CONTENT BLOCK (tekstblok zonder foto, rich text) ──────
+  {
+    slug: 'contentBlock',
+    labels: { singular: '📝 Contentblok zonder foto', plural: 'Contentblokken zonder foto' },
+    fields: [
+      { name: 'eyebrow', type: 'text', label: 'Label boven titel', admin: { description: 'Optioneel.' } },
+      { name: 'title', type: 'text', label: 'Titel', admin: { description: 'Optioneel. Gebruik | voor regelafbrekingen.' } },
+      ...titleControlsFields,
+      {
+        name: 'richBody',
+        type: 'richText',
+        label: 'Tekst',
+        admin: {
+          description:
+            'Vrije tekst met opmaak: koppen (H2/H3), vet, cursief, links en opsommingen. Allemaal optioneel.',
+        },
+      },
+      {
+        name: 'align',
+        type: 'select',
+        label: 'Uitlijning',
+        defaultValue: 'left',
+        options: [
+          { label: 'Links', value: 'left' },
+          { label: 'Gecentreerd', value: 'center' },
+        ],
+      },
+      {
+        name: 'theme',
+        type: 'select',
+        label: 'Kleurstelling',
+        defaultValue: 'light',
+        options: [
+          { label: 'Licht (witte achtergrond)', value: 'light' },
+          { label: 'Donker (zwarte achtergrond)', value: 'dark' },
+        ],
+      },
+    ],
+  },
 ]
 
 /**

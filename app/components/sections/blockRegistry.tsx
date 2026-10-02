@@ -16,6 +16,7 @@ import {
   TextColumns,
   ImageDuo,
   CinematicImage,
+  ContentBlock,
 } from "@/app/components/sections";
 // Originally built for the hoogwerker page, but they read the same CMS block
 // fields so they double as the shared renderers for these block types.
@@ -74,6 +75,7 @@ export const blockRegistry: Record<string, BlockEntry> = {
   centeredStatement: { component: CenteredStatement },
   textColumns: { component: TextColumns },
   imageDuo: { component: ImageDuo },
+  contentBlock: { component: ContentBlock },
 };
 
 /**

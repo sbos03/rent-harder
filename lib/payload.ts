@@ -72,6 +72,14 @@ function renderRichTextSections(sections: any[] | undefined | null): any[] {
       }
     }
 
+    // contentBlock: richBody → richBodyHtml
+    if (block?.blockType === 'contentBlock') {
+      return {
+        ...block,
+        richBodyHtml: richTextToHtml(block?.richBody),
+      }
+    }
+
     return block
   })
 }
@@ -297,5 +305,56 @@ export async function getPageContent(slug: string) {
     }
   } catch {
     return null
+  }
+}
+
+/**
+ * Minimal list of a routeable entry for the sitemap.
+ */
+export interface SitemapEntry {
+  slug: string
+  updatedAt?: string
+}
+
+/**
+ * All published page slugs (excluding "home", which is the root "/").
+ * Used by app/sitemap.ts so new CMS pages get indexed automatically.
+ */
+export async function getPublishedPageSlugs(): Promise<SitemapEntry[]> {
+  try {
+    const payload = await getPayload()
+    const result = await payload.find({
+      collection: 'pages',
+      where: { published: { equals: true } },
+      limit: 1000,
+      depth: 0,
+      pagination: false,
+    })
+    return result.docs
+      .filter((d: any) => d.slug && d.slug !== 'home')
+      .map((d: any) => ({ slug: String(d.slug), updatedAt: d.updatedAt }))
+  } catch {
+    return []
+  }
+}
+
+/**
+ * All published partner slugs (they live under /partners/<slug>).
+ */
+export async function getPublishedPartnerSlugs(): Promise<SitemapEntry[]> {
+  try {
+    const payload = await getPayload()
+    const result = await payload.find({
+      collection: 'partners',
+      where: { published: { equals: true } },
+      limit: 1000,
+      depth: 0,
+      pagination: false,
+    })
+    return result.docs
+      .filter((d: any) => d.slug)
+      .map((d: any) => ({ slug: String(d.slug), updatedAt: d.updatedAt }))
+  } catch {
+    return []
   }
 }
