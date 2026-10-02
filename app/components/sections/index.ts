@@ -14,3 +14,4 @@ export { default as CenteredStatement } from "./CenteredStatement/CenteredStatem
 export { default as TextColumns } from "./TextColumns/TextColumns";
 export { default as ImageDuo } from "./ImageDuo/ImageDuo";
 export { default as CinematicImage } from "./CinematicImage/CinematicImage";
+export { default as ContentBlock } from "./ContentBlock/ContentBlock";
