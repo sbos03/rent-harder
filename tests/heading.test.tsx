@@ -54,20 +54,55 @@ describe("Heading component", () => {
     const { container } = render(<Heading text={undefined} />);
     expect(container.querySelector("h1,h2,h3")).toBeNull();
   });
-});
 
-describe("responsiveFontSize", () => {
-  it("clamps between a floor and the given desktop px", () => {
-    const css = responsiveFontSize(100);
-    expect(css).toMatch(/^clamp\(/);
-    expect(css).toContain("100px"); // desktop upper bound
-    // floor is ~48% but never below 20px
-    expect(css).toMatch(/clamp\(48px,/);
+  it("always renders text as typed (text-transform:none, never forced caps)", () => {
+    const { container } = render(<Heading text="Normale Tekst" />);
+    const el = container.querySelector("h2") as HTMLElement;
+    expect(el.style.textTransform).toBe("none");
   });
 
-  it("keeps a floor of at least 20px for small sizes", () => {
-    const css = responsiveFontSize(24);
-    // 48% of 24 = ~11.5 → floored to 20
-    expect(css).toContain("20px");
+  it("keeps text-transform:none together with a custom size", () => {
+    const { container } = render(<Heading text="A" sizePx={80} />);
+    const el = container.querySelector("h2") as HTMLElement;
+    expect(el.style.textTransform).toBe("none");
+    expect(el.style.fontSize).toContain("80px");
+  });
+});
+
+// Parse "clamp(MINpx, ... , MAXpx)" into numbers for assertions.
+function parseClamp(css: string) {
+  const m = css.match(/^clamp\(\s*([\d.]+)px\s*,\s*(.+?)\s*,\s*([\d.]+)px\s*\)$/);
+  if (!m) throw new Error(`not a clamp: ${css}`);
+  return { min: parseFloat(m[1]), preferred: m[2], max: parseFloat(m[3]) };
+}
+
+describe("responsiveFontSize", () => {
+  it("uses the typed px as the upper bound (desktop size)", () => {
+    expect(parseClamp(responsiveFontSize(100)).max).toBe(100);
+    expect(parseClamp(responsiveFontSize(24)).max).toBe(24);
+    expect(parseClamp(responsiveFontSize(16)).max).toBe(16);
+  });
+
+  it("never lets the floor exceed the typed size (no inversion)", () => {
+    // Regression: 16px previously produced clamp(20px, .., 16px) → min > max,
+    // which CSS resolves to the larger min, inflating a 16px title to 20px.
+    for (const px of [12, 16, 20, 24, 32, 48, 72, 96]) {
+      const { min, max } = parseClamp(responsiveFontSize(px));
+      expect(min).toBeLessThanOrEqual(max);
+    }
+  });
+
+  it("keeps small titles close to the typed size (24px stays near 24, not ~9)", () => {
+    const { min, max } = parseClamp(responsiveFontSize(24));
+    expect(max).toBe(24);
+    // Floor should be a large fraction of 24 for small sizes, so it reads ~24.
+    expect(min).toBeGreaterThanOrEqual(18);
+    expect(min).toBeLessThanOrEqual(24);
+  });
+
+  it("still allows big display titles to shrink meaningfully on mobile", () => {
+    const { min, max } = parseClamp(responsiveFontSize(96));
+    expect(max).toBe(96);
+    expect(min).toBeLessThan(96 * 0.75); // noticeable downscale for huge titles
   });
 });

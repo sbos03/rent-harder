@@ -15,6 +15,7 @@ interface Props {
     title?: string;
     headingLevel?: string;
     titleSizePx?: number;
+    preserveCase?: boolean;
     /** Server-rendered HTML from rich-text richSubtitle (preferred). */
     subtitleHtml?: string;
     /** Legacy plain-text subtitle. */
@@ -57,6 +58,7 @@ export default function FeatureColumns({ content }: Props) {
           text={content?.title}
           level={content?.headingLevel}
           sizePx={content?.titleSizePx}
+          preserveCase={content?.preserveCase}
           className={styles.title}
         />
         {hasHtml(content?.subtitleHtml) ? (

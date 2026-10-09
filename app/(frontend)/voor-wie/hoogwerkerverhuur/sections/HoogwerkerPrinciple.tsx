@@ -5,8 +5,15 @@ interface Props {
   content?: {
     label?: string;
     title?: string;
+    /** Server-rendered HTML from rich-text richDescription (preferred). */
+    descriptionHtml?: string;
     description?: string;
-    steps?: { num?: string; title?: string; description?: string }[];
+    steps?: {
+      num?: string;
+      title?: string;
+      descriptionHtml?: string;
+      description?: string;
+    }[];
   };
 }
 
@@ -18,11 +25,16 @@ export default function HoogwerkerPrinciple({ content }: Props) {
     "Je hoeft niet de grootste verhuurder van Nederland te zijn. Je moet digitaal de logischste keuze worden binnen jouw regio, assortiment en doelgroep.";
   const steps =
     content?.steps && content.steps.length > 0
-      ? content.steps.map((s) => ({ num: s.num || "", title: s.title || "", desc: s.description || "" }))
+      ? content.steps.map((s) => ({
+          num: s.num || "",
+          title: s.title || "",
+          desc: s.description || "",
+          descHtml: s.descriptionHtml || "",
+        }))
       : [
-          { num: "1", title: "REGIO.", desc: "Waar wil je daadwerkelijk opdrachten winnen?" },
-          { num: "2", title: "ASSORTIMENT.", desc: "Welke hoogwerkers en machines wil je vaker verhuren?" },
-          { num: "3", title: "KLANT.", desc: "Wie zoekt ze, wanneer en met welke informatiebehoefte?" },
+          { num: "1", title: "REGIO.", desc: "Waar wil je daadwerkelijk opdrachten winnen?", descHtml: "" },
+          { num: "2", title: "ASSORTIMENT.", desc: "Welke hoogwerkers en machines wil je vaker verhuren?", descHtml: "" },
+          { num: "3", title: "KLANT.", desc: "Wie zoekt ze, wanneer en met welke informatiebehoefte?", descHtml: "" },
         ];
 
   return (
@@ -37,14 +49,28 @@ export default function HoogwerkerPrinciple({ content }: Props) {
             </React.Fragment>
           ))}
         </h2>
-        <p className={styles.sectionDesc}>{description}</p>
+        {content?.descriptionHtml && content.descriptionHtml.trim() !== "" ? (
+          <div
+            className={`${styles.sectionDesc} rh-rich`}
+            dangerouslySetInnerHTML={{ __html: content.descriptionHtml }}
+          />
+        ) : (
+          <p className={styles.sectionDesc}>{description}</p>
+        )}
 
         <div className={styles.principleSteps}>
           {steps.map((step, i) => (
             <div key={i} className={styles.principleStep}>
               <div className={styles.principleNum}>{step.num}</div>
               <h3 className={styles.principleStepTitle}>{step.title}</h3>
-              <p className={styles.principleStepDesc}>{step.desc}</p>
+              {step.descHtml && step.descHtml.trim() !== "" ? (
+                <div
+                  className={`${styles.principleStepDesc} rh-rich`}
+                  dangerouslySetInnerHTML={{ __html: step.descHtml }}
+                />
+              ) : (
+                <p className={styles.principleStepDesc}>{step.desc}</p>
+              )}
             </div>
           ))}
         </div>

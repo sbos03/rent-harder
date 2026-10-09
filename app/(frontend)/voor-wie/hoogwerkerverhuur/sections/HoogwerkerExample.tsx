@@ -11,6 +11,8 @@ interface Props {
     label?: string;
     title?: string;
     highlights?: { text?: string }[];
+    /** Server-rendered HTML from rich-text richDescription (preferred). */
+    descriptionHtml?: string;
     description?: string;
     bulletPoints?: { text?: string }[];
     ctaText?: string;
@@ -57,7 +59,14 @@ export default function HoogwerkerExample({ onContactClick, content }: Props) {
               <span key={i}>{h}</span>
             ))}
           </div>
-          <p className={styles.sectionDesc}>{description}</p>
+          {content?.descriptionHtml && content.descriptionHtml.trim() !== "" ? (
+            <div
+              className={`${styles.sectionDesc} rh-rich`}
+              dangerouslySetInnerHTML={{ __html: content.descriptionHtml }}
+            />
+          ) : (
+            <p className={styles.sectionDesc}>{description}</p>
+          )}
           <ul className={styles.bulletList}>
             {bulletPoints.map((b, i) => (
               <li key={i}><span className={styles.bulletDot} />{b}</li>

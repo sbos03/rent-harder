@@ -5,21 +5,10 @@ import Header from "@/app/components/Header";
 import Footer from "@/app/components/Footer";
 import ContactPopup from "@/app/components/ContactPopup";
 import FloatingCTA from "@/app/components/FloatingCTA";
-import {
-  HeroSection,
-  Slide2Intro,
-  Slide3Brand,
-  Slide4TargetAudience,
-  Slide5PartnerStories,
-  Slide6Mensenwerk,
-  CinematicStatement,
-  TVSection,
-  MethodRoadmap,
-  BuiltToRentHarder,
-} from "@/app/components/sections";
+import SectionRenderer from "@/app/components/SectionRenderer";
 
 export interface CMSContent {
-  sections: Record<string, any>;
+  sections: any[];
   seo: any;
   partners: any[];
   episodes: any[];
@@ -36,9 +25,21 @@ export default function HomeClient({ cmsContent }: Props) {
   const openContact = () => setPopupOpen(true);
   const closeContact = () => setPopupOpen(false);
 
-  const s = cmsContent?.sections || {};
+  const sections = Array.isArray(cmsContent?.sections) ? cmsContent!.sections : [];
   const episodes = cmsContent?.episodes || null;
+  const partners = cmsContent?.partners || null;
   const settings = cmsContent?.settings || null;
+
+  // Preserve the homepage's legacy #anchor targets that the header/footer nav
+  // link to. Applied to the first block of each type when it has no explicit
+  // anchor set in the CMS. An editor can still override via the block's anchor.
+  const defaultAnchors: Record<string, string> = {
+    introSection: "wat-we-bouwen",
+    targetAudience: "voor-wie",
+    tvSection: "rent-harder-tv",
+    methodRoadmap: "methode",
+    caseShowcase: "built-to-rent-harder",
+  };
 
   return (
     <>
@@ -46,26 +47,13 @@ export default function HomeClient({ cmsContent }: Props) {
       <Header onContactClick={openContact} settings={settings} />
 
       <main>
-        <HeroSection onContactClick={openContact} content={s.heroSection} />
-        <div id="wat-we-bouwen">
-          <Slide2Intro onContactClick={openContact} content={s.introSection} />
-        </div>
-        <Slide3Brand content={s.brandStatement} />
-        <div id="voor-wie">
-          <Slide4TargetAudience onContactClick={openContact} content={s.targetAudience} />
-        </div>
-        <Slide5PartnerStories onContactClick={openContact} content={s.partnerStories} />
-        <Slide6Mensenwerk content={s.fullscreenStatement} />
-        <CinematicStatement content={s.cinematicStatement} />
-        <div id="rent-harder-tv">
-          <TVSection onContactClick={openContact} content={s.tvSection} episodes={episodes} />
-        </div>
-        <div id="methode">
-          <MethodRoadmap content={s.methodRoadmap} />
-        </div>
-        <div id="built-to-rent-harder">
-          <BuiltToRentHarder onContactClick={openContact} content={s.caseShowcase} partners={cmsContent?.partners || null} />
-        </div>
+        <SectionRenderer
+          sections={sections}
+          onContactClick={openContact}
+          episodes={episodes}
+          partners={partners}
+          defaultAnchors={defaultAnchors}
+        />
       </main>
 
       <Footer settings={settings} />

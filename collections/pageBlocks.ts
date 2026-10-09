@@ -99,7 +99,8 @@ const rawSectionBlocks: Block[] = [
       { name: 'eyebrow', type: 'text', label: 'Label boven titel' },
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
       ...titleControlsFields,
-      { name: 'description', type: 'textarea', label: 'Beschrijving' },
+      { name: 'richDescription', type: 'richText', label: 'Beschrijving', admin: { description: 'Tekst met opmaak (vet, cursief, links, lijsten). Gebruik dit veld.' } },
+      { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
       {
         type: 'row',
         fields: [
@@ -139,11 +140,13 @@ const rawSectionBlocks: Block[] = [
     fields: [
       { name: 'title', type: 'text', required: true, label: 'Titel' },
       ...titleControlsFields,
-      { name: 'description', type: 'textarea', label: 'Beschrijving' },
+      { name: 'richDescription', type: 'richText', label: 'Beschrijving', admin: { description: 'Tekst met opmaak (vet, cursief, links, lijsten). Gebruik dit veld.' } },
+      { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
       { name: 'stories', type: 'array', label: 'Verhalen', minRows: 1, fields: [
         { name: 'eyebrow', type: 'text', label: 'Label boven titel', admin: { description: 'Bijv. "Voor infra & tijdelijke installaties"' } },
         { name: 'name', type: 'text', required: true, label: 'Titel' },
-        { name: 'intro', type: 'textarea', label: 'Korte intro' },
+        { name: 'richIntro', type: 'richText', label: 'Korte intro', admin: { description: 'Tekst met opmaak. Gebruik dit veld.' } },
+        { name: 'intro', type: 'textarea', label: 'Korte intro (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Korte intro" hierboven.' } },
         { name: 'link', type: 'text', label: 'Link naar pagina', admin: { description: 'Bijv. /partners/leidingverhuur' } },
         { name: 'image', type: 'upload', relationTo: 'media', label: 'Afbeelding' },
       ]},
@@ -182,7 +185,8 @@ const rawSectionBlocks: Block[] = [
       { name: 'eyebrow', type: 'text', label: 'Label', defaultValue: 'RENT HARDER.TV' },
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
       ...titleControlsFields,
-      { name: 'description', type: 'textarea', label: 'Beschrijving' },
+      { name: 'richDescription', type: 'richText', label: 'Beschrijving', admin: { description: 'Tekst met opmaak (vet, cursief, links, lijsten). Gebruik dit veld.' } },
+      { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
       { name: 'ctaText', type: 'text', label: 'CTA tekst' },
       { name: 'ctaLink', type: 'text', label: 'CTA link', admin: { description: 'Leeg = opent contact popup. Of: #anchor, /contact, https://...' } },
     ],
@@ -195,7 +199,8 @@ const rawSectionBlocks: Block[] = [
       { name: 'eyebrow', type: 'text', label: 'Label' },
       { name: 'title', type: 'text', required: true, label: 'Titel' },
       ...titleControlsFields,
-      { name: 'description', type: 'textarea', label: 'Beschrijving' },
+      { name: 'richDescription', type: 'richText', label: 'Beschrijving', admin: { description: 'Tekst met opmaak (vet, cursief, links, lijsten). Gebruik dit veld.' } },
+      { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
       { name: 'steps', type: 'array', label: 'Stappen', minRows: 1, fields: [
         {
           type: 'row',
@@ -205,7 +210,8 @@ const rawSectionBlocks: Block[] = [
             { name: 'side', type: 'select', options: [{ label: 'Links', value: 'left' }, { label: 'Rechts', value: 'right' }], defaultValue: 'right', label: 'Kant', admin: { width: '20%' } },
           ],
         },
-        { name: 'description', type: 'textarea', required: true, label: 'Beschrijving' },
+        { name: 'richDescription', type: 'richText', label: 'Beschrijving', admin: { description: 'Tekst met opmaak. Gebruik dit veld.' } },
+        { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
       ]},
     ],
   },
@@ -217,7 +223,8 @@ const rawSectionBlocks: Block[] = [
       { name: 'eyebrow', type: 'text', label: 'Label' },
       { name: 'title', type: 'text', required: true, label: 'Titel', admin: { description: 'Gebruik | voor regelafbrekingen' } },
       ...titleControlsFields,
-      { name: 'description', type: 'textarea', label: 'Beschrijving' },
+      { name: 'richDescription', type: 'richText', label: 'Beschrijving', admin: { description: 'Tekst met opmaak (vet, cursief, links, lijsten). Gebruik dit veld.' } },
+      { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
       { name: 'cases', type: 'array', label: 'Cases', minRows: 1, fields: [
         {
           type: 'row',
@@ -245,7 +252,8 @@ const rawSectionBlocks: Block[] = [
     labels: { singular: '🔘 CTA Sectie', plural: 'CTA Secties' },
     fields: [
       { name: 'heading', type: 'text', required: true, label: 'Titel' },
-      { name: 'description', type: 'textarea', label: 'Beschrijving' },
+      { name: 'richDescription', type: 'richText', label: 'Beschrijving', admin: { description: 'Tekst met opmaak (vet, cursief, links, lijsten). Gebruik dit veld.' } },
+      { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
       {
         type: 'row',
         fields: [
@@ -276,7 +284,8 @@ const rawSectionBlocks: Block[] = [
       { name: 'highlights', type: 'array', label: 'Highlights', fields: [
         { name: 'text', type: 'text', required: true },
       ]},
-      { name: 'description', type: 'textarea', label: 'Beschrijving' },
+      { name: 'richDescription', type: 'richText', label: 'Beschrijving', admin: { description: 'Tekst met opmaak (vet, cursief, links, lijsten). Gebruik dit veld.' } },
+      { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
       { name: 'bulletPoints', type: 'array', label: 'Bullet points', fields: [
         { name: 'text', type: 'text', required: true },
       ]},
@@ -297,11 +306,13 @@ const rawSectionBlocks: Block[] = [
       { name: 'label', type: 'text', label: 'Label' },
       { name: 'title', type: 'text', required: true, label: 'Titel' },
       ...titleControlsFields,
-      { name: 'description', type: 'textarea', label: 'Beschrijving' },
+      { name: 'richDescription', type: 'richText', label: 'Beschrijving', admin: { description: 'Tekst met opmaak (vet, cursief, links, lijsten). Gebruik dit veld.' } },
+      { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
       { name: 'steps', type: 'array', label: 'Stappen', fields: [
         { name: 'num', type: 'text', required: true, label: 'Nr' },
         { name: 'title', type: 'text', required: true, label: 'Titel' },
-        { name: 'description', type: 'textarea', required: true, label: 'Beschrijving' },
+        { name: 'richDescription', type: 'richText', label: 'Beschrijving', admin: { description: 'Tekst met opmaak. Gebruik dit veld.' } },
+        { name: 'description', type: 'textarea', label: 'Beschrijving (oud)', admin: { description: 'Verouderd. Laat leeg en gebruik "Beschrijving" hierboven.' } },
       ]},
     ],
   },

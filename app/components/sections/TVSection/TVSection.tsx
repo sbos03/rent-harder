@@ -16,6 +16,9 @@ interface Props {
     title?: string;
     headingLevel?: string;
     titleSizePx?: number;
+    preserveCase?: boolean;
+    /** Server-rendered HTML from rich-text richDescription (preferred). */
+    descriptionHtml?: string;
     description?: string;
     ctaText?: string;
     ctaLink?: string;
@@ -60,9 +63,17 @@ export default function TVSection({ onContactClick, episodes: cmsEpisodes, conte
             text={title}
             level={content?.headingLevel}
             sizePx={content?.titleSizePx}
+            preserveCase={content?.preserveCase}
             className={styles.title}
           />
-          <p className={styles.description}>{description}</p>
+          {content?.descriptionHtml && content.descriptionHtml.trim() !== "" ? (
+            <div
+              className={`${styles.description} rh-rich`}
+              dangerouslySetInnerHTML={{ __html: content.descriptionHtml }}
+            />
+          ) : (
+            <p className={styles.description}>{description}</p>
+          )}
         </motion.div>
       </div>
 

@@ -8,6 +8,7 @@ interface Props {
     title?: string;
     headingLevel?: string;
     titleSizePx?: number;
+    preserveCase?: boolean;
     body?: string;
     backgroundImage?: { url?: string; alt?: string } | null;
   };
@@ -43,6 +44,7 @@ export default function CinematicStatement({ content }: Props) {
           text={title}
           level={content?.headingLevel}
           sizePx={content?.titleSizePx}
+          preserveCase={content?.preserveCase}
           className={styles.title}
         />
         <p className={styles.textReveal}>
