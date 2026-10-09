@@ -1,6 +1,7 @@
 import { getPayload as getPayloadInstance } from 'payload'
 import config from '@payload-config'
 import { convertLexicalToHTML } from '@payloadcms/richtext-lexical/html'
+import { defaultHomeSections } from './defaultHomeSections'
 
 export const getPayload = () =>
   getPayloadInstance({
@@ -77,6 +78,64 @@ function renderRichTextSections(sections: any[] | undefined | null): any[] {
       return {
         ...block,
         richBodyHtml: richTextToHtml(block?.richBody),
+      }
+    }
+
+    // ─── Description-style rich text (richDescription → descriptionHtml) ───
+    // These blocks gained an optional WYSIWYG description field. The old plain
+    // `description` textarea is kept as a fallback in the component.
+    if (
+      block?.blockType === 'introSection' ||
+      block?.blockType === 'tvSection' ||
+      block?.blockType === 'caseShowcase' ||
+      block?.blockType === 'caseExample' ||
+      block?.blockType === 'ctaSection'
+    ) {
+      return {
+        ...block,
+        descriptionHtml: richTextToHtml(block?.richDescription),
+      }
+    }
+
+    // partnerStories: section description + each story's intro
+    if (block?.blockType === 'partnerStories') {
+      return {
+        ...block,
+        descriptionHtml: richTextToHtml(block?.richDescription),
+        stories: Array.isArray(block.stories)
+          ? block.stories.map((s: any) => ({
+              ...s,
+              introHtml: richTextToHtml(s?.richIntro),
+            }))
+          : block.stories,
+      }
+    }
+
+    // methodRoadmap: section description + each step's description
+    if (block?.blockType === 'methodRoadmap') {
+      return {
+        ...block,
+        descriptionHtml: richTextToHtml(block?.richDescription),
+        steps: Array.isArray(block.steps)
+          ? block.steps.map((st: any) => ({
+              ...st,
+              descriptionHtml: richTextToHtml(st?.richDescription),
+            }))
+          : block.steps,
+      }
+    }
+
+    // principleSteps: section description + each step's description
+    if (block?.blockType === 'principleSteps') {
+      return {
+        ...block,
+        descriptionHtml: richTextToHtml(block?.richDescription),
+        steps: Array.isArray(block.steps)
+          ? block.steps.map((st: any) => ({
+              ...st,
+              descriptionHtml: richTextToHtml(st?.richDescription),
+            }))
+          : block.steps,
       }
     }
 
@@ -187,14 +246,28 @@ export async function getHomePageContent() {
 
     const page = pages.docs[0] || null
 
+    // Ordered sections array (same shape the other pages use), so the homepage
+    // renders whatever blocks the editor adds, in order, via <SectionRenderer/>.
+    const busted = page ? bustImageCache(page) : null
+    const cmsSections = Array.isArray(busted?.sections) ? busted!.sections : []
+    // Fall back to the default block set when the CMS home page has no blocks
+    // yet, so the homepage is never blank. Real CMS blocks always win.
+    const rawSections = cmsSections.length > 0 ? cmsSections : defaultHomeSections
+    const sections = renderRichTextSections(rawSections as any[])
+
     return {
-      sections: sectionsToMap(page?.sections as any[]),
+      sections,
       seo: page?.seo || null,
       partners: bustImageCache(partners.docs),
       episodes: bustImageCache(episodes.docs),
       settings,
     }
-  } catch {
+  } catch (e) {
+    // Surface the real reason instead of silently returning an empty homepage.
+    // A common cause is the DB schema lagging behind the code (missing column
+    // after adding a CMS field) — run scripts/sync-richtext-cols.mjs or the
+    // dev-server schema push to fix.
+    console.error('[getHomePageContent] failed:', (e as Error)?.message)
     return null
   }
 }
@@ -249,7 +322,8 @@ export async function getPartnerBySlug(slug: string) {
     const busted = bustImageCache(partner)
     busted.sections = renderRichTextSections(busted.sections)
     return busted
-  } catch {
+  } catch (e) {
+    console.error('[getPartnerBySlug] failed:', (e as Error)?.message)
     return null
   }
 }
@@ -279,7 +353,8 @@ export async function getPageBySlug(slug: string) {
     const busted = bustImageCache(page)
     busted.sections = renderRichTextSections(busted.sections)
     return busted
-  } catch {
+  } catch (e) {
+    console.error('[getPageBySlug] failed:', (e as Error)?.message)
     return null
   }
 }
@@ -303,7 +378,8 @@ export async function getPageContent(slug: string) {
       sections: sectionsToMap(page.sections as any[]),
       seo: page.seo || null,
     }
-  } catch {
+  } catch (e) {
+    console.error('[getPageContent] failed:', (e as Error)?.message)
     return null
   }
 }

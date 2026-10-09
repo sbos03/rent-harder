@@ -32,6 +32,8 @@ import HoogwerkerOtherMarkets from "@/app/(frontend)/voor-wie/hoogwerkerverhuur/
 export interface BlockRenderContext {
   onContactClick: () => void;
   episodes?: unknown[] | null;
+  /** Published partners list (for the case/partner-story blocks). */
+  partners?: unknown[] | null;
 }
 
 /**
@@ -45,6 +47,8 @@ export interface BlockEntry {
   needsContact?: boolean;
   /** Pass the TV episodes list. */
   needsEpisodes?: boolean;
+  /** Pass the published partners list. */
+  needsPartners?: boolean;
 }
 
 /**
@@ -64,7 +68,7 @@ export const blockRegistry: Record<string, BlockEntry> = {
   cinematicStatement: { component: CinematicStatement },
   tvSection: { component: TVSection, needsContact: true, needsEpisodes: true },
   methodRoadmap: { component: MethodRoadmap },
-  caseShowcase: { component: BuiltToRentHarder, needsContact: true },
+  caseShowcase: { component: BuiltToRentHarder, needsContact: true, needsPartners: true },
   ctaSection: { component: HoogwerkerOpenMarkt, needsContact: true },
   cinematicImage: { component: CinematicImage },
   caseExample: { component: HoogwerkerExample, needsContact: true },
@@ -104,6 +108,7 @@ export function renderBlock(
   const props: Record<string, unknown> = { content: block };
   if (entry.needsContact) props.onContactClick = ctx.onContactClick;
   if (entry.needsEpisodes) props.episodes = ctx.episodes;
+  if (entry.needsPartners) props.partners = ctx.partners;
 
   return <Component {...props} />;
 }

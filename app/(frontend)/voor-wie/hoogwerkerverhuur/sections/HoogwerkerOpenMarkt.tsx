@@ -8,6 +8,8 @@ interface Props {
   onContactClick: () => void;
   content?: {
     heading?: string;
+    /** Server-rendered HTML from rich-text richDescription (preferred). */
+    descriptionHtml?: string;
     description?: string;
     buttonText?: string;
     buttonLink?: string;
@@ -34,7 +36,14 @@ export default function HoogwerkerOpenMarkt({ onContactClick, content }: Props) 
             </React.Fragment>
           ))}
         </h2>
-        <p className={styles.openMarktDesc}>{description}</p>
+        {content?.descriptionHtml && content.descriptionHtml.trim() !== "" ? (
+          <div
+            className={`${styles.openMarktDesc} rh-rich`}
+            dangerouslySetInnerHTML={{ __html: content.descriptionHtml }}
+          />
+        ) : (
+          <p className={styles.openMarktDesc}>{description}</p>
+        )}
         <button onClick={handleCta} className={styles.skewCta}>
           <div className={styles.skewCtaInner}>{buttonText}</div>
         </button>

@@ -18,8 +18,17 @@ interface Props {
     title?: string;
     headingLevel?: string;
     titleSizePx?: number;
+    preserveCase?: boolean;
+    /** Server-rendered HTML from rich-text richDescription (preferred). */
+    descriptionHtml?: string;
     description?: string;
-    steps?: { num?: string; title?: string; description?: string; side?: string }[];
+    steps?: {
+      num?: string;
+      title?: string;
+      descriptionHtml?: string;
+      description?: string;
+      side?: string;
+    }[];
   };
 }
 
@@ -35,9 +44,10 @@ export default function MethodRoadmap({ content }: Props) {
           num: st.num || "",
           title: st.title || "",
           desc: st.description || "",
+          descHtml: st.descriptionHtml || "",
           side: st.side || "right",
         }))
-      : defaultSteps;
+      : defaultSteps.map((st) => ({ ...st, descHtml: "" }));
 
   return (
     <section className={styles.section}>
@@ -58,9 +68,17 @@ export default function MethodRoadmap({ content }: Props) {
             text={title}
             level={content?.headingLevel}
             sizePx={content?.titleSizePx}
+            preserveCase={content?.preserveCase}
             className={styles.title}
           />
-          <p className={styles.description}>{description}</p>
+          {content?.descriptionHtml && content.descriptionHtml.trim() !== "" ? (
+            <div
+              className={`${styles.description} rh-rich`}
+              dangerouslySetInnerHTML={{ __html: content.descriptionHtml }}
+            />
+          ) : (
+            <p className={styles.description}>{description}</p>
+          )}
         </div>
 
         {/* Timeline */}
@@ -76,7 +94,14 @@ export default function MethodRoadmap({ content }: Props) {
               <div className={styles.stepCard}>
                 <span className={styles.stepNum}>{step.num}.</span>
                 <h3 className={styles.stepTitle}>{step.title}</h3>
-                <p className={styles.stepDesc}>{step.desc}</p>
+                {step.descHtml && step.descHtml.trim() !== "" ? (
+                  <div
+                    className={`${styles.stepDesc} rh-rich`}
+                    dangerouslySetInnerHTML={{ __html: step.descHtml }}
+                  />
+                ) : (
+                  <p className={styles.stepDesc}>{step.desc}</p>
+                )}
               </div>
             </div>
           ))}

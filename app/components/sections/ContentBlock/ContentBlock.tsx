@@ -8,6 +8,7 @@ interface Props {
     title?: string;
     headingLevel?: string;
     titleSizePx?: number;
+    preserveCase?: boolean;
     /** Server-rendered HTML from the rich-text richBody (done in lib/payload.ts). */
     richBodyHtml?: string;
     align?: "left" | "center";
@@ -40,6 +41,7 @@ export default function ContentBlock({ content }: Props) {
             text={title}
             level={content?.headingLevel}
             sizePx={content?.titleSizePx}
+            preserveCase={content?.preserveCase}
             className={styles.title}
           />
         )}

@@ -19,6 +19,7 @@ interface Props {
     title?: string;
     headingLevel?: string;
     titleSizePx?: number;
+    preserveCase?: boolean;
     theme?: "light" | "dark";
     columns?: Column[];
   };
@@ -46,6 +47,7 @@ export default function TextColumns({ content }: Props) {
           text={content?.title}
           level={content?.headingLevel}
           sizePx={content?.titleSizePx}
+          preserveCase={content?.preserveCase}
           className={styles.title}
         />
 

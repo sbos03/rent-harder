@@ -36,8 +36,17 @@ export default buildConfig({
     client: {
       url: process.env.DATABASE_URL || 'file:./data/payload.db',
     },
-    // Auto-sync schema on startup. Works on all Node versions.
-    push: true,
+    // Schema sync.
+    //
+    // `push` (Payload's auto-sync) runs on EVERY request in dev and, on this
+    // sqlite setup, repeatedly tries to re-CREATE indexes that already exist.
+    // That throws during page render and makes pages come back empty. So push
+    // is OFF by default; schema changes are applied explicitly with the
+    // additive scripts in /scripts (sync-title-size.mjs, sync-richtext-cols.mjs).
+    //
+    // To let Payload push intentionally (e.g. after adding a brand-new block),
+    // start the server once with PAYLOAD_PUSH=true.
+    push: process.env.PAYLOAD_PUSH === 'true',
   }),
 
   sharp,

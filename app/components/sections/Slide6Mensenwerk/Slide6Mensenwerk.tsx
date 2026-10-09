@@ -12,6 +12,7 @@ interface Props {
     title?: string;
     headingLevel?: string;
     titleSizePx?: number;
+    preserveCase?: boolean;
     bottomText?: string;
     backgroundImage?: { url?: string } | null;
   };
@@ -36,10 +37,13 @@ export default function Slide6Mensenwerk({ content }: Props) {
     ? (content?.headingLevel as "h1" | "h2" | "h3")
     : "h2";
   const MotionTitle = motion[levelKey];
-  const titleStyle =
-    typeof content?.titleSizePx === "number" && content.titleSizePx > 0
-      ? { fontSize: responsiveFontSize(content.titleSizePx) }
-      : undefined;
+  const hasSize =
+    typeof content?.titleSizePx === "number" && content.titleSizePx > 0;
+  // Title renders exactly as typed (overrides the SCSS uppercase).
+  const titleStyle: React.CSSProperties = {
+    textTransform: "none",
+    ...(hasSize ? { fontSize: responsiveFontSize(content!.titleSizePx as number) } : {}),
+  };
 
   return (
     <section ref={targetRef} className={styles.section}>

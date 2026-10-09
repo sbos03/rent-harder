@@ -14,6 +14,7 @@ interface HeroSectionProps {
     title?: string;
     headingLevel?: string;
     titleSizePx?: number;
+    preserveCase?: boolean;
     subtitle?: string;
     bottomText?: string;
     buttonText?: string;
@@ -45,10 +46,13 @@ export default function HeroSection({ onContactClick, content }: HeroSectionProp
   const TitleTag = (["h1", "h2", "h3"].includes(String(content?.headingLevel))
     ? content?.headingLevel
     : "h1") as "h1" | "h2" | "h3";
-  const titleStyle =
-    typeof content?.titleSizePx === "number" && content.titleSizePx > 0
-      ? { fontSize: responsiveFontSize(content.titleSizePx) }
-      : undefined;
+  const hasHeroSize =
+    typeof content?.titleSizePx === "number" && content.titleSizePx > 0;
+  // Title renders exactly as typed (overrides the SCSS uppercase).
+  const titleStyle: React.CSSProperties = {
+    textTransform: "none",
+    ...(hasHeroSize ? { fontSize: responsiveFontSize(content!.titleSizePx as number) } : {}),
+  };
 
   return (
     <section className={styles.hero}>

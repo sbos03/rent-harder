@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { getPublishedPageSlugs, getPublishedPartnerSlugs } from "@/lib/payload";
+import { cleanSitemapSlug } from "@/app/lib/sitemapSlug";
 
 // Canonical site URL. Keep in sync with metadataBase and robots.ts.
 const SITE_URL = "https://www.rentharder.nl";
@@ -27,9 +28,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
+  // Dedupe by final URL so a page and partner can never collide / repeat.
+  const seen = new Set<string>([`${SITE_URL}/`]);
+
   for (const p of pages) {
+    const slug = cleanSitemapSlug(p.slug);
+    if (!slug) continue;
+    const url = `${SITE_URL}/${slug}`;
+    if (seen.has(url)) continue;
+    seen.add(url);
     entries.push({
-      url: `${SITE_URL}/${p.slug}`,
+      url,
       lastModified: toDate(p.updatedAt),
       changeFrequency: "monthly",
       priority: 0.8,
@@ -37,8 +46,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }
 
   for (const p of partners) {
+    const slug = cleanSitemapSlug(p.slug);
+    if (!slug) continue;
+    const url = `${SITE_URL}/partners/${slug}`;
+    if (seen.has(url)) continue;
+    seen.add(url);
     entries.push({
-      url: `${SITE_URL}/partners/${p.slug}`,
+      url,
       lastModified: toDate(p.updatedAt),
       changeFrequency: "monthly",
       priority: 0.7,

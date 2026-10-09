@@ -7,6 +7,7 @@ interface Props {
     title?: string;
     headingLevel?: string;
     titleSizePx?: number;
+    preserveCase?: boolean;
     /** Server-rendered HTML from rich-text richBody (preferred). */
     richBodyHtml?: string;
     /** Legacy paragraph array. */
@@ -45,6 +46,7 @@ export default function CenteredStatement({ content }: Props) {
           text={content?.title}
           level={content?.headingLevel}
           sizePx={content?.titleSizePx}
+          preserveCase={content?.preserveCase}
           className={styles.title}
         />
 
