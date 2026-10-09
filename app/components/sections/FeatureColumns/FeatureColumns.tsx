@@ -1,4 +1,5 @@
 import React from "react";
+import Heading from "@/app/components/Heading/Heading";
 import styles from "./FeatureColumns.module.scss";
 
 interface Column {
@@ -12,6 +13,8 @@ interface Column {
 interface Props {
   content?: {
     title?: string;
+    headingLevel?: string;
+    titleSizePx?: number;
     /** Server-rendered HTML from rich-text richSubtitle (preferred). */
     subtitleHtml?: string;
     /** Legacy plain-text subtitle. */
@@ -50,7 +53,12 @@ export default function FeatureColumns({ content }: Props) {
   return (
     <section className={`${styles.section} ${theme}`}>
       <div className={styles.inner}>
-        {content?.title && <h2 className={styles.title}>{lines(content.title)}</h2>}
+        <Heading
+          text={content?.title}
+          level={content?.headingLevel}
+          sizePx={content?.titleSizePx}
+          className={styles.title}
+        />
         {hasHtml(content?.subtitleHtml) ? (
           <div
             className={`${styles.subtitle} ${styles.richText}`}

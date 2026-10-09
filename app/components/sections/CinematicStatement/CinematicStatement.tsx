@@ -1,11 +1,13 @@
 import React from "react";
 import Image from "next/image";
+import Heading from "@/app/components/Heading/Heading";
 import styles from "./CinematicStatement.module.scss";
-import { withLineBreaks } from "@/app/lib/renderText";
 
 interface Props {
   content?: {
     title?: string;
+    headingLevel?: string;
+    titleSizePx?: number;
     body?: string;
     backgroundImage?: { url?: string; alt?: string } | null;
   };
@@ -37,7 +39,12 @@ export default function CinematicStatement({ content }: Props) {
       </div>
 
       <div className={styles.content}>
-        <h2 className={styles.title}>{withLineBreaks(title)}</h2>
+        <Heading
+          text={title}
+          level={content?.headingLevel}
+          sizePx={content?.titleSizePx}
+          className={styles.title}
+        />
         <p className={styles.textReveal}>
           {words.map((word, i) => (
             <span key={i} className={styles.word}>{word} </span>

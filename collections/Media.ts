@@ -24,11 +24,17 @@ export const Media: CollectionConfig = {
     staticDir: path.resolve(dirname, '../media-uploads'),
     mimeTypes: ['image/*', 'video/*'],
     focalPoint: true,
+    // Resize variants by WIDTH only (no fixed height → no forced cover-crop).
+    // The old fixed width+height crop made Sharp decode+crop every image, which
+    // intermittently failed on WebP (and some PNG) with large/odd/animated
+    // sources, surfacing as "There was a problem while uploading the file".
+    // Width-only + withoutEnlargement keeps aspect ratio and is far more
+    // tolerant; it never upscales, so small sources never error.
     imageSizes: [
-      { name: 'thumbnail', width: 400, height: 300, position: 'focalPoint' },
-      { name: 'card', width: 768, height: 512, position: 'focalPoint' },
-      { name: 'hero', width: 1920, height: 1080, position: 'focalPoint' },
-      { name: 'portrait', width: 600, height: 1067, position: 'focalPoint' },
+      { name: 'thumbnail', width: 400, withoutEnlargement: true },
+      { name: 'card', width: 768, withoutEnlargement: true },
+      { name: 'hero', width: 1920, withoutEnlargement: true },
+      { name: 'portrait', width: 600, withoutEnlargement: true },
     ],
   },
   fields: [

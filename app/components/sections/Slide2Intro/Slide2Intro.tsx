@@ -2,8 +2,8 @@
 
 import React from "react";
 import Image from "next/image";
+import Heading from "@/app/components/Heading/Heading";
 import styles from "./Slide2Intro.module.scss";
-import { withLineBreaks } from "@/app/lib/renderText";
 import { makeCtaHandler } from "@/app/lib/ctaAction";
 
 interface Slide2IntroProps {
@@ -11,6 +11,8 @@ interface Slide2IntroProps {
   content?: {
     eyebrow?: string;
     title?: string;
+    headingLevel?: string;
+    titleSizePx?: number;
     description?: string;
     ctaText?: string;
     ctaLink?: string;
@@ -45,7 +47,12 @@ export default function Slide2Intro({ onContactClick, content }: Slide2IntroProp
             <span>{eyebrow}</span>
           </div>
 
-          <h2 className={styles.title}>{withLineBreaks(title)}</h2>
+          <Heading
+            text={title}
+            level={content?.headingLevel}
+            sizePx={content?.titleSizePx}
+            className={styles.title}
+          />
 
           <p className={styles.description}>{description}</p>
 

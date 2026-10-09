@@ -10,6 +10,7 @@ import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Partners } from './collections/Partners'
 import { TVEpisodes } from './collections/TVEpisodes'
+import { FormSubmissions } from './collections/FormSubmissions'
 import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -25,7 +26,7 @@ export default buildConfig({
 
   editor: lexicalEditor(),
 
-  collections: [Users, Media, Pages, Partners, TVEpisodes],
+  collections: [Users, Media, Pages, Partners, TVEpisodes, FormSubmissions],
 
   globals: [SiteSettings],
 
